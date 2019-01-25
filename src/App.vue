@@ -1,19 +1,24 @@
 <template>
-  <v-app>
-  
-    <v-content>
-      <router-view/>
-    </v-content>
-  </v-app>
+    <v-app class="grey lighten-4">
+        <NavBar />
+        <v-content class="ma-4">
+            <router-view/>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
+import NavBar from '@/components/NavBar.vue'
+
 export default {
-  name: 'App',
-  data () {
-    return {
-      //
-    };
-  }
+    name: 'App',
+    components: {
+        NavBar,
+    },
+    data () {
+        return {
+        //
+        };
+    },
 }
 </script>

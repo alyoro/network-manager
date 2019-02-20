@@ -80,7 +80,7 @@ const moduleTestData = {
   },
   getters:{
     getTestData: (state) => {
-      return state.testData.filter(item => item.type === state.selectedType && item.identifier === state.insertedIdentifier)
+      return state.testData.filter(item => item.type === state.selectedType || item.identifier === state.insertedIdentifier)
     },
   },
   mutations:{

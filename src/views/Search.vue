@@ -22,6 +22,9 @@
                         @click="searchForData()"
                     >Search</v-btn>
                 </v-form>
+
+                <v-divider></v-divider>
+
                 <div v-if="searchArgs.devType === 'PatchPanel'">
                     <PatchPanelDisplayInfo />
                 </div>

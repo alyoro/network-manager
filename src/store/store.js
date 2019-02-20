@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+
+const moduleAdding ={
   state: {
     deviceTypes: [
       {name: 'Patch Panel', idType: 'PatchPanel'},
@@ -42,5 +43,11 @@ export default new Vuex.Store({
   },
   actions: {
 
+  }
+}
+
+export default new Vuex.Store({
+  modules:{
+    moduleAdding: moduleAdding,
   }
 })

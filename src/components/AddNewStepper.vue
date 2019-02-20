@@ -153,8 +153,7 @@ export default {
         },
     computed: {
         ...mapGetters({
-            getDeviceTypes: 'moduleAdding/getDeviceTypes', 
-            
+            getDeviceTypes: 'getDeviceTypes',       
     })
     }
 }

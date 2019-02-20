@@ -1,6 +1,6 @@
 <template>
 <v-container>
-    <v-btn @click="getAll()">Load data</v-btn>
+    <!-- <v-btn @click="getAll()">Load data</v-btn> -->
     <v-card flat xl2 v-for="item in getTestData" :key="item.id">
             <v-divider></v-divider>
             <v-layout row class="pa-2">
@@ -45,27 +45,27 @@ import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
 export default {
     data() {
         return{
-            getTestData: [],
+            // getTestData: [],
         }
     },
 
     computed: {
-        // ...mapGetters({
-        //     getTestData: 'moduleTestData/getTestData',
+        ...mapGetters({
+            getTestData: 'moduleTestData/getTestData',
             
-        // })
+        })
     },
 
-    methods:{
-        getAll() {
-            NetworkManagerBackend.getAll('/PatchPanel/getAll')
-            .then(data => {
-            this.getTestData = data
-            this.submitted = true
-            })
-            .catch(error => console.log(error))
-        }
-    }
+    // methods:{
+    //     getAll() {
+    //         NetworkManagerBackend.getAll('/PatchPanel/getAll')
+    //             .then(data => {
+    //                 this.getTestData = data
+    //                 this.submitted = true
+    //             })
+    //             .catch(error => console.log(error))
+    //     }
+    // }
 
 }
 </script>

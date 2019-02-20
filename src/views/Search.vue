@@ -9,11 +9,11 @@
                        label="Device Types"
                        item-text="name"
                        item-value="idType"
-                       v-model="searchArgs.devType"
+                       v-model="devType"
                        :items="getDeviceTypes"
                     ></v-select>
                     <v-text-field
-                        v-model="searchArgs.identifier"
+                        v-model="identifier"
                         label="Search for ID (whatever it can be)"
                     >
                     </v-text-field>
@@ -25,35 +25,35 @@
 
                 <v-divider></v-divider>
 
-                <div v-if="searchArgs.devType === 'PatchPanel'">
+                <div v-if="devType === 'PatchPanel'">
                     <PatchPanelDisplayInfo />
                 </div>
 
-                <div v-if="searchArgs.devType === 'RoomSocket'">
+                <div v-if="devType === 'RoomSocket'">
                                     
                 </div>
 
-                <div v-if="searchArgs.devType === 'Switch'">
+                <div v-if="devType === 'Switch'">
                                     
                 </div>
 
-                <div v-if="searchArgs.devType === 'Router'">
+                <div v-if="devType === 'Router'">
                                     
                 </div>
 
-                <div v-if="searchArgs.devType === 'Server'">
+                <div v-if="devType === 'Server'">
                                     
                 </div>
 
-                <div v-if="searchArgs.devType === 'Printer'">
+                <div v-if="devType === 'Printer'">
                                     
                 </div>
 
-                <div v-if="searchArgs.devType === 'AccessPoint'">
+                <div v-if="devType === 'AccessPoint'">
                                     
                 </div>
 
-                <div v-if="searchArgs.devType === 'IPPhone'">
+                <div v-if="devType === 'IPPhone'">
 
                 </div>
                                     
@@ -72,21 +72,26 @@ export default {
     },
     data() {
         return {
-            searchArgs:{
-                devType: '',
-                identifier: '',
-            }
-
+            devType: '',
+            identifier: '',
         }
     },
     computed: {
+        url: function(){
+            return '/'+this.devType+'/getAll'
+        },
         ...mapGetters({
             getDeviceTypes: 'getDeviceTypes',       
     })
     },
     methods: {
         searchForData(){
-            this.$store.commit('moduleTestData/search',this.searchArgs);
+            var payload = {
+                devType: this.devType,
+                identifier: this.identifier,
+                url: this.url
+            }
+            this.$store.dispatch('moduleTestData/getAll',payload);
         }    
     }
 }

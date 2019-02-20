@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
 
 Vue.use(Vuex)
 
@@ -44,49 +45,30 @@ const moduleTestData = {
   state: {
     selectedType: '',
     insertedIdentifier: '',
-    testData: [
-          {
-              type: 'PatchPanel',
-              building: 'test1',
-              room: 'test1',
-              identifier: 'test1',
-              localization: 'test1',
-              description: 'test1',
-              numberOfPorts: 12
-          },
-
-          {
-              type: 'PatchPanel',
-              building: 'test2',
-              room: 'test2',
-              identifier: 'test2',
-              localization: 'test2',
-              description: 'test2',
-              numberOfPorts: 12
-          },
-          {
-              type: 'Server',
-              localization: 'Stest1',
-              ip: 'Stest1',
-          },
-
-          {
-              type: 'Server',
-              localization: 'Stest2',
-              ip: 'Stest2',
-          },
-
-      ]
+    testData: []
   },
   getters:{
-    getTestData: (state) => {
-      return state.testData.filter(item => item.type === state.selectedType || item.identifier === state.insertedIdentifier)
+    getTestData: (state) => {     
+      // return state.testData.filter(item => item.identifier === state.insertedIdentifier)
+      return state.testData
     },
   },
   mutations:{
-    search: (state, payload) => {
-      state.selectedType = payload.devType;
-      state.insertedIdentifier = payload.identifier;
+    setSearchConditions: (state, payload) => {
+      state.insertedIdentifier = payload
+    },
+    setTestData: (state, payload) => {
+      state.testData = payload
+    }
+  },
+  actions:{
+    getAll: (context, payload) => {
+      NetworkManagerBackend.getAll(payload.url)
+      .then(data => {
+        context.commit('setSearchConditions',payload.identifier)
+        context.commit('setTestData',data)
+      })
+      .catch(error => console.log(error))
     }
   },
 }

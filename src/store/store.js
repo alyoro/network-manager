@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 const moduleAdding ={
+  namespaced: true,
   state: {
     deviceTypes: [
       {name: 'Patch Panel', idType: 'PatchPanel'},
@@ -18,29 +18,37 @@ const moduleAdding ={
 
     ],
 
-    deviceInfo:{
-      building: '',
-      room: '',
-      identifier: '',
-      localization: '',
-      description: '',
-      numberOfPorts: 0
-    }
+    deviceInfo: [
+        {
+          type: 'PatchPanel',
+          building: '',
+          room: '',
+          identifier: '',
+          localization: '',
+          description: '',
+          numberOfPorts: 0
+      }
+    ],
+
   },
+
   getters: {
     getDeviceTypes: (state) => {
       return state.deviceTypes
     },
 
     getDeviceInfo: (state) => {
-      return state.deviceInfo
+      return (payload) => state.deviceInfo.find(item => item.type === payload)
     }
   },
+
   mutations: {
     saveDeviceInfo: (state, payload) => {
-      state.deviceInfo = payload
+      const item = state.deviceInfo.find(item => item.type === payload.type);
+      Object.assign(item, payload);
     }
   },
+  
   actions: {
 
   }
@@ -50,4 +58,5 @@ export default new Vuex.Store({
   modules:{
     moduleAdding: moduleAdding,
   }
+
 })

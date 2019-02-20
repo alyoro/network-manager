@@ -56,6 +56,7 @@ export default {
         return{
             valid: false,
             deviceInfo:{
+                type: 'PatchPanel',
                 building: '',
                 room: '',
                 identifier: '',
@@ -69,7 +70,7 @@ export default {
 
     methods:{
         saveToStore(){
-            this.$store.commit('saveDeviceInfo',this.deviceInfo);
+            this.$store.commit('moduleAdding/saveDeviceInfo',this.deviceInfo);
         },
     }
 }

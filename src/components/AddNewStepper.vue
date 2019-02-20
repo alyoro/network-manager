@@ -19,7 +19,7 @@
                             <v-radio-group class="ma-2 pa-2" v-model="radioDevice">
                                 <v-radio
                                     v-for="type in getDeviceTypes"
-                                    :key="`${type.id}`"
+                                    :key="`${type.idType}`"
                                     :label="`${type.name}`"
                                     :value="`${type.idType}`"                                
                                 ></v-radio>
@@ -152,11 +152,10 @@ export default {
             }
         },
     computed: {
-        ...mapGetters([
-            'getDeviceTypes', 
-            'getDeviceInfo'
+        ...mapGetters({
+            getDeviceTypes: 'moduleAdding/getDeviceTypes', 
             
-        ])
+    })
     }
 }
 </script>

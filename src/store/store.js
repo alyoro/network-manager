@@ -36,7 +36,14 @@ const moduleAdding ={
   },
   
   actions: {
-
+    sendDataToServer: (context, payload) => {
+      const item = context.state.deviceInfo.find(item => item.type === payload.type);
+      var clone = Object.assign({}, item);
+      delete clone.type;
+      NetworkManagerBackend.saveNewElement(payload.type, clone)
+        .then(response => console.log(response))
+        .catch(error => console.log('Error: '+error))
+    }
   }
 }
 

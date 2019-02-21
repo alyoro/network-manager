@@ -31,12 +31,19 @@
                     <div>{{getDeviceInfo('PatchPanel').numberOfPorts}}</div>
                 </v-flex>
             </v-layout>
+
+            <v-btn @click="sendDataToServer">Save in Database</v-btn>
     </v-card>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
 export default {
+    data(){
+        return{
+            
+        }
+    },
     computed: {
         ...mapGetters({
             getDeviceInfo: 'moduleAdding/getDeviceInfo',
@@ -44,7 +51,9 @@ export default {
         })
     },
     methods: {
-
+        sendDataToServer(){
+            this.$store.dispatch('moduleAdding/sendDataToServer',{type: 'PatchPanel'})
+        }
     }
 }
 </script>

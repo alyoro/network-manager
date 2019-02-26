@@ -43,6 +43,14 @@ const moduleAdding ={
       NetworkManagerBackend.saveNewElement(payload.type, clone)
         .then(response => console.log(response))
         .catch(error => console.log('Error: '+error))
+    },
+
+    savePortToServer: (context, payload) => {
+      const url = '/'+payload.url.deviceType+'/addPort?id='+payload.url.deviceID
+      console.log(url)
+      NetworkManagerBackend.addNewPort(url, payload.port)
+      .then(response => console.log(response))
+      .catch(error => console.log('Error: '+error))
     }
   }
 }
@@ -88,14 +96,15 @@ export default new Vuex.Store({
   },
   state: {
     deviceTypes: [
-      {name: 'Patch Panel', idType: 'PatchPanel'},
-      {name: 'Room Socket', idType: 'RoomSocket'},
-      {name: 'Switch', idType: 'Switch'},
-      {name: 'Router', idType: 'Router'},
-      {name: 'Server', idType: 'Server'},
-      {name: 'Printer', idType: 'Printer'},
-      {name: 'Access Point', idType: 'AccessPoint'},
-      {name: 'IP Phone', idType: 'IPPhone'},
+      {name: 'Patch Panel', idType: 'PATCH_PANEL'},
+      {name: 'Room Socket', idType: 'ROOM_SOCKET'},
+      {name: 'Switch', idType: 'SWITCH'},
+      {name: 'Router', idType: 'ROUTER'},
+      {name: 'Server', idType: 'SERVER'},
+      {name: 'Printer', idType: 'PRINTER'},
+      {name: 'Access Point', idType: 'ACCESS_POINT'},
+      {name: 'IP Phone', idType: 'IP_PHONE'},
+      {name: 'None', idType: 'NONE'},
 
     ],
   },

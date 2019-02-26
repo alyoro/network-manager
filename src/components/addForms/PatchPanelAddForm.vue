@@ -56,7 +56,7 @@ export default {
         return{
             valid: false,
             deviceInfo:{
-                type: 'PatchPanel',
+                type: 'PATCH_PANEL',
                 building: '',
                 room: '',
                 identifier: '',

@@ -1,16 +1,15 @@
 <template>
 <v-container>
-    <!-- <v-btn @click="getAll()">Load data</v-btn> -->
     <v-expansion-panel>
         <v-expansion-panel-content flat xl2 v-for="item in getTestData" :key="item.id">
                 <div slot="header">
-                <v-layout row class="pa-1">
-                    <v-flex xs12 md6 class="pa-1">
+                <v-layout row class="pa-1" align-content-space-around="left">
+                    <v-flex xs12 md6 lg1 class="pa-1">
                         <div class="grey--text subheading">Building</div>
                         <div>{{item.building}}</div>
                     </v-flex>
 
-                    <v-flex xs12 md6 class="pa-1">
+                    <v-flex xs12 md6 lg1 class="pa-1">
                         <div class="grey--text subheading">Room</div>
                         <div>{{item.room}}</div>
                     </v-flex>
@@ -30,9 +29,13 @@
                         <div>{{item.description}}</div>
                     </v-flex>
 
-                    <v-flex xs12 md6 class="pa-1">
+                    <v-flex xs12 md6 lg2 class="pa-1">
                         <div class="grey--text subheading">Number of Ports</div>
                         <div>{{item.numberOfPorts}}</div>
+                    </v-flex>
+
+                    <v-flex xs12 md6 lg2 class="pa-1">
+                        <AddPortDialog v-bind:deviceID="item.id" deviceType="PATCH_PANEL"/>
                     </v-flex>
                 </v-layout>
                 </div>
@@ -46,7 +49,7 @@
 
                         <v-flex xs12 md6 class="pa-1">
                             <div class="grey--text subheading">Device plugged</div>
-                            <div>{{port.devicePlugged}}</div>
+                            <div>{{displayDevicePlugged(`${port.devicePlugged}`)}}</div>
                         </v-flex>
 
                         <v-flex xs12 md6 class="pa-1">
@@ -63,32 +66,28 @@
 <script>
 import {mapGetters} from 'vuex';
 import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
+import AddPortDialog from '@/components/addForms/AddPortDialog.vue'
 
 export default {
-    data() {
-        return{
-            // getTestData: [],
-        }
+
+    components:{
+        AddPortDialog,
     },
 
     computed: {
         ...mapGetters({
             getTestData: 'moduleTestData/getTestData',
-            
-        })
+            getDeviceTypes: 'getDeviceTypes',  
+        }),
+
     },
 
-    // methods:{
-    //     getAll() {
-    //         NetworkManagerBackend.getAll('/PatchPanel/getAll')
-    //             .then(data => {
-    //                 this.getTestData = data
-    //                 this.submitted = true
-    //             })
-    //             .catch(error => console.log(error))
-    //     }
-    // }
+    methods: {
+        displayDevicePlugged(devicePlugged){
+            return this.getDeviceTypes.find(item => {if (item.idType === devicePlugged) return item;}).name
 
+        }, 
+    }
 }
 </script>
 

@@ -25,35 +25,35 @@
 
                 <v-divider></v-divider>
 
-                <div v-if="devType === 'PatchPanel'">
+                <div v-if="devType === 'PATCH_PANEL'">
                     <PatchPanelDisplayInfo />
                 </div>
 
-                <div v-if="devType === 'RoomSocket'">
+                <div v-if="devType === 'ROOM_SOCKET'">
                                     
                 </div>
 
-                <div v-if="devType === 'Switch'">
+                <div v-if="devType === 'SWITCH'">
                                     
                 </div>
 
-                <div v-if="devType === 'Router'">
+                <div v-if="devType === 'ROUTER'">
                                     
                 </div>
 
-                <div v-if="devType === 'Server'">
+                <div v-if="devType === 'SERVER'">
                                     
                 </div>
 
-                <div v-if="devType === 'Printer'">
+                <div v-if="devType === 'PRINTER'">
                                     
                 </div>
 
-                <div v-if="devType === 'AccessPoint'">
+                <div v-if="devType === 'ACCESS_POINT'">
                                     
                 </div>
 
-                <div v-if="devType === 'IPPhone'">
+                <div v-if="devType === 'IP_PHONE'">
 
                 </div>
                                     

@@ -1,16 +1,25 @@
 import axios from 'axios';
 
 export default{
+
     
+
     getAll(url){
-        return axios.get("http://localhost:8090/api"+url)
+        return axios.get(url)
         .then(response => {
             return response.data
         })
     },
 
     saveNewElement(url, payload){
-        return axios.post("http://localhost:8090/api/"+url+"/add", payload)
+        return axios.post(url+"/add", payload)
+        .then(response => {
+            return response.data
+        })
+    },
+
+    addNewPort(url, payload){
+        return axios.post(url, payload)
         .then(response => {
             return response.data
         })

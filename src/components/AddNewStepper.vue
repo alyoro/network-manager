@@ -37,35 +37,35 @@
                             flat
                             
                         >
-                            <div v-if="radioDevice === 'PatchPanel'">
+                            <div v-if="radioDevice === 'PATCH_PANEL'">
                                    <PatchPanelAddForm />
                             </div>
 
-                            <div v-if="radioDevice === 'RoomSocket'">
+                            <div v-if="radioDevice === 'ROOM_SOCKET'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Switch'">
+                            <div v-if="radioDevice === 'SWITCH'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Router'">
+                            <div v-if="radioDevice === 'ROUTER'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Server'">
+                            <div v-if="radioDevice === 'SERVER'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Printer'">
+                            <div v-if="radioDevice === 'PRINTER'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'AccessPoint'">
+                            <div v-if="radioDevice === 'ACCESS_POINT'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'IPPhone'">
+                            <div v-if="radioDevice === 'IP_PHONE'">
                                     
                             </div>
                         </v-card>
@@ -84,35 +84,35 @@
                             color="grey lighten-5"
                             flat
                         >
-                            <div v-if="radioDevice === 'PatchPanel'">
+                            <div v-if="radioDevice === 'PATCH_PANEL'">
                                    <PatchPanelInfoToSend />
                             </div>
 
-                            <div v-if="radioDevice === 'RoomSocket'">
+                            <div v-if="radioDevice === 'ROOM_SOCKET'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Switch'">
+                            <div v-if="radioDevice === 'SWITCH'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Router'">
+                            <div v-if="radioDevice === 'ROUTER'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Server'">
+                            <div v-if="radioDevice === 'SERVER'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'Printer'">
+                            <div v-if="radioDevice === 'PRINTER'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'AccessPoint'">
+                            <div v-if="radioDevice === 'ACCESS_POINT'">
                                     
                             </div>
 
-                            <div v-if="radioDevice === 'IPPhone'">
+                            <div v-if="radioDevice === 'IP_PHONE'">
                                     
                             </div>
                         </v-card>

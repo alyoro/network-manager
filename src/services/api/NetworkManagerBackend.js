@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export default{
 
-    
 
     getAll(url){
         return axios.get(url)

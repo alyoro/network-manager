@@ -1,7 +1,7 @@
 <template>
     <v-layout column justify-center>
         <v-dialog v-model="dialog" persistent max-width="600px">
-            <v-btn slot="activator">Add Port</v-btn>
+            <v-btn flat slot="activator">Add Port</v-btn>
             <v-card>
                 <v-card-title>
                     <span class="headline">Add Port</span>
@@ -14,8 +14,8 @@
                                 </v-flex>
                                 <v-flex xs12 lg6 class="pa-1">
                                     <v-text-field label="Port On the upper element" v-model="port.portOnTheUpperElement"></v-text-field>
-                                </v-flex>                            
-                                <v-flex xs12 lg6> 
+                                </v-flex>
+                                <v-flex xs12 lg6>
                                     <v-select
                                     label="Device Types"
                                     item-text="name"
@@ -42,8 +42,8 @@ import {mapGetters} from 'vuex';
 
 export default {
     props: {
-        deviceID: null, 
-        deviceType: null,  
+        deviceID: null,
+        deviceType: null,
     },
 
     data() {
@@ -59,7 +59,7 @@ export default {
 
     computed:{
         ...mapGetters({
-            getDeviceTypes: 'getDeviceTypes',  
+            getDeviceTypes: 'getDeviceTypes',
         })
     },
 

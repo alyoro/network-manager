@@ -37,6 +37,10 @@
                     <v-flex xs12 md6 lg2 class="pa-1">
                         <AddPortDialog v-bind:deviceID="item.id" deviceType="PATCH_PANEL"/>
                     </v-flex>
+
+                    <v-flex xs12 md6 lg2 class="pa-1">
+                        <AddDeviceToConnectCart v-bind:device="item" deviceType="PATCH_PANEL"/>
+                    </v-flex>
                 </v-layout>
                 </div>
                 <v-card>
@@ -67,17 +71,19 @@
 import {mapGetters} from 'vuex';
 import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
 import AddPortDialog from '@/components/addForms/AddPortDialog.vue'
+import AddDeviceToConnectCart from '@/components/addForms/AddDeviceToConnectCart.vue'
 
 export default {
 
     components:{
         AddPortDialog,
+        AddDeviceToConnectCart,
     },
 
     computed: {
         ...mapGetters({
             getTestData: 'moduleTestData/getTestData',
-            getDeviceTypes: 'getDeviceTypes',  
+            getDeviceTypes: 'getDeviceTypes',
         }),
 
     },
@@ -86,7 +92,7 @@ export default {
         displayDevicePlugged(devicePlugged){
             return this.getDeviceTypes.find(item => {if (item.idType === devicePlugged) return item;}).name
 
-        }, 
+        },
     }
 }
 </script>

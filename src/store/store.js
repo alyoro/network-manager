@@ -34,7 +34,7 @@ const moduleAdding ={
       Object.assign(item, payload);
     }
   },
-  
+
   actions: {
     sendDataToServer: (context, payload) => {
       const item = context.state.deviceInfo.find(item => item.type === payload.type);
@@ -63,7 +63,7 @@ const moduleTestData = {
     testData: []
   },
   getters:{
-    getTestData: (state) => {     
+    getTestData: (state) => {
       // return state.testData.filter(item => item.identifier === state.insertedIdentifier)
       return state.testData
     },
@@ -92,7 +92,7 @@ const moduleConnectionsToMakeCart = {
   namespaced: true,
   state: {
     deviceList: [],
-  }, 
+  },
   getters:{
     getDeviceList: (state) => {
       return state.deviceList;
@@ -134,5 +134,5 @@ export default new Vuex.Store({
       return state.deviceTypes
     },
   }
-  
+
 })

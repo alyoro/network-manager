@@ -37,7 +37,8 @@ export default {
             buttons: [
                 {title: 'Dashboard', icon: 'dashboard', route: '/'},
                 {title: 'Search', icon: 'search', route: '/search'},
-                {title: 'Add New', icon: 'add_box', route: '/add'}
+                {title: 'Add New', icon: 'add_box', route: '/add'},
+                {title: 'Connect Devices', icon: 'settings_input_component', route: '/connect'}
             ]
         }
     }

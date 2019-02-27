@@ -23,5 +23,10 @@ export default new Router({
       name: 'add',
       component: () => import('./views/AddNew.vue'),
     },
+    {
+      path: '/connect',
+      name: 'connect',
+      component: () => import('./views/ConnectDevices.vue'),
+    },
   ],
 });

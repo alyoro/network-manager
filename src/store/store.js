@@ -88,11 +88,32 @@ const moduleTestData = {
   },
 }
 
+const moduleConnectionsToMakeCart = {
+  namespaced: true,
+  state: {
+    deviceList: [],
+  }, 
+  getters:{
+    getDeviceList: (state) => {
+      return state.deviceList;
+    }
+  },
+  mutations:{
+    addNewDevice: (state, payload) => {
+      state.deviceList.push(payload)
+    },
+    clearDeviceList: (state) => {
+      state.deviceList.length = 0
+    }
+  }
+}
+
 
 export default new Vuex.Store({
   modules:{
     moduleAdding: moduleAdding,
     moduleTestData: moduleTestData,
+    moduleConnectionsToMakeCart, moduleConnectionsToMakeCart,
   },
   state: {
     deviceTypes: [

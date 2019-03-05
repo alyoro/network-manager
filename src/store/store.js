@@ -10,7 +10,7 @@ const moduleAdding ={
 
     deviceInfo: [
         {
-          type: 'PatchPanel',
+        type: 'PATCH_PANEL',
           building: '',
           room: '',
           identifier: '',

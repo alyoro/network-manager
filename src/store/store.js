@@ -104,6 +104,9 @@ const moduleConnectionsToMakeCart = {
     },
     clearDeviceList: (state) => {
       state.deviceList.length = 0
+    },
+    deleteOneItem: (state, payload) => {
+      state.deviceList = state.deviceList.filter(item => item.device.id !== payload.device.id)
     }
   }
 }

@@ -8,13 +8,18 @@
             <v-spacer></v-spacer>
           <v-btn flat @click="clear">Clear list</v-btn>
         </v-subheader>
-        <v-list-tile v-for="item in getDeviceList" :key="item.device.id" @click="sheet = false">
+        <v-list-tile v-for="item in getDeviceList" :key="item.device.id" @click="sheet = sheet">
             <v-list-tile-content v-if="item.deviceType === 'PATCH_PANEL'">
                     <v-container>
                         <v-list-tile-title class="primary--text title">Patch Panel</v-list-tile-title>
-                        <DisplayInfoPatchPanel  :item="item.device"/>
+                        <DisplayInfoPatchPanel :item="item.device"/>
                     </v-container>
             </v-list-tile-content>
+            <v-list-tile-action>
+                <v-btn icon ripple @click="deleteFromCart(item)">
+                    <v-icon>remove_circle_outline</v-icon>
+                </v-btn>
+            </v-list-tile-action>
         </v-list-tile>
 
       </v-list>
@@ -44,13 +49,13 @@ export default {
     clear() {
       this.sheet = false;
       this.$store.commit("moduleConnectionsToMakeCart/clearDeviceList");
+    },
+    deleteFromCart(item) {
+        this.$store.commit("moduleConnectionsToMakeCart/deleteOneItem",item);
     }
   }
 };
 </script>
 
 <style>
-.test {
-  background-color: aquamarine;
-}
 </style>

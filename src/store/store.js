@@ -133,6 +133,10 @@ export default new Vuex.Store({
     getDeviceTypes: (state) => {
       return state.deviceTypes
     },
+
+    // getTypeName: (state, payload) => {
+    //   return state.deviceTypes.find(item => item.idType === payload).name
+    // }
   }
 
 })

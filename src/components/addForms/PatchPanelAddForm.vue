@@ -41,7 +41,6 @@
             <v-btn
                 color="primary"
                 @click="saveToStore()"
-                
             >Save changes</v-btn>
         </v-form>
 

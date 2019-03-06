@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <h1 class="subheading">Search</h1>
-        
+
         <v-container class="my-5">
             <v-card flat xs12 md4 lg3 class="pa-3">
                 <v-form>
@@ -30,33 +30,33 @@
                 </div>
 
                 <div v-if="devType === 'ROOM_SOCKET'">
-                                    
+
                 </div>
 
                 <div v-if="devType === 'SWITCH'">
-                                    
+
                 </div>
 
                 <div v-if="devType === 'ROUTER'">
-                                    
+
                 </div>
 
                 <div v-if="devType === 'SERVER'">
-                                    
+
                 </div>
 
                 <div v-if="devType === 'PRINTER'">
-                                    
+
                 </div>
 
                 <div v-if="devType === 'ACCESS_POINT'">
-                                    
+
                 </div>
 
                 <div v-if="devType === 'IP_PHONE'">
 
                 </div>
-                                    
+
             </v-card>
         </v-container>
     </div>
@@ -81,7 +81,7 @@ export default {
             return '/'+this.devType+'/getAll'
         },
         ...mapGetters({
-            getDeviceTypes: 'getDeviceTypes',       
+            getDeviceTypes: 'getDeviceTypes',
     })
     },
     methods: {
@@ -92,7 +92,7 @@ export default {
                 url: this.url
             }
             this.$store.dispatch('moduleTestData/getAll',payload);
-        }    
+        }
     }
 }
 </script>

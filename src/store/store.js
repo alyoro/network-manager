@@ -107,6 +107,11 @@ const moduleConnectionsToMakeCart = {
     },
     deleteOneItem: (state, payload) => {
       state.deviceList = state.deviceList.filter(item => item.device.id !== payload.device.id)
+    },
+    setMaster: (state, payload) => {
+      state.deviceList.forEach(item => item.deviceMaster = false);
+      const index = state.deviceList.findIndex(item => item.device.id === payload.device.id)
+      state.deviceList[index].deviceMaster = true;
     }
   }
 }
@@ -137,9 +142,9 @@ export default new Vuex.Store({
       return state.deviceTypes
     },
 
-    // getTypeName: (state, payload) => {
-    //   return state.deviceTypes.find(item => item.idType === payload).name
-    // }
+    getTypeName: (state) => {
+      return (payload) => state.deviceTypes.find(item => item.idType === payload).name
+    }
   }
 
 })

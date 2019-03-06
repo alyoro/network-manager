@@ -19,7 +19,8 @@ export default {
         addToCart(){
             const payload = {
                 device: this.device,
-                deviceType: this.deviceType
+                deviceType: this.deviceType,
+                deviceMaster: false
             }
             this.$store.commit('moduleConnectionsToMakeCart/addNewDevice', payload)
         }

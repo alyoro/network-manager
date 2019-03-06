@@ -64,7 +64,6 @@ const moduleTestData = {
   },
   getters:{
     getTestData: (state) => {
-      // return state.testData.filter(item => item.identifier === state.insertedIdentifier)
       return state.testData
     },
   },
@@ -96,6 +95,13 @@ const moduleConnectionsToMakeCart = {
   getters:{
     getDeviceList: (state) => {
       return state.deviceList;
+    },
+    getSlaves: (state) => {
+      return state.deviceList.filter(item => item.deviceMaster === false)
+    },
+    getMaster: (state) => {
+      const index = state.deviceList.findIndex(item => item.deviceMaster === true)
+      return state.deviceList[index]
     }
   },
   mutations:{

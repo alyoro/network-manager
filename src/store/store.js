@@ -91,6 +91,8 @@ const moduleConnectionsToMakeCart = {
   namespaced: true,
   state: {
     deviceList: [],
+    portMaster: {},
+    portSlave: {}
   },
   getters: {
     getDeviceList: (state) => {
@@ -101,6 +103,12 @@ const moduleConnectionsToMakeCart = {
     },
     getMaster: (state) => {
       return state.deviceList.filter(item => item.deviceMaster === true)
+    },
+    getPortMaster: (state) => {
+      return state.portMaster
+    },
+    getPortSlave: (state) => {
+      return state.portSlave
     }
   },
   mutations: {
@@ -126,9 +134,26 @@ const moduleConnectionsToMakeCart = {
       if (index > -1) {
         state.deviceList[index].deviceSlave = !state.deviceList[index].deviceSlave;
       }
+    },
+    setPortMaster: (state, payload) => {
+      if (state.portMaster === payload){
+        state.portMaster = {}
+      }else{
+        state.portMaster = payload
+      }
+
+    },
+    setPortSlave: (state, payload) => {
+      if (state.portSlave === payload) {
+        state.portSlave = {}
+      } else {
+        state.portSlave = payload
+      }
     }
+
   }
 }
+
 
 
 export default new Vuex.Store({

@@ -8,7 +8,7 @@
           <v-spacer></v-spacer>
           <v-btn flat @click="clear">Clear list</v-btn>
           <v-btn icon ripple @click="sheet = false">
-            <v-icon>clear</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
         </v-subheader>
       </DisplayDeviceListActions>

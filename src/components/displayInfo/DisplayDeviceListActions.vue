@@ -2,7 +2,7 @@
   <v-list three-line>
       <slot></slot>
     <v-list-tile v-for="item in items" :key="item.device.id">
-      <DisplayAllDevices :item="item"/>
+      <DisplayDeviceList :item="item"/>
       <v-list-tile-action>
         <v-container>
           <v-layout row wrap>
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import DisplayAllDevices from "@/components/displayInfo/DisplayAllDevices.vue";
+import DisplayDeviceList from "@/components/displayInfo/DisplayDeviceList.vue";
 
 export default {
   props: ["items"],
     components: {
-    DisplayAllDevices
+    DisplayDeviceList
   },
   methods: {
     clear() {

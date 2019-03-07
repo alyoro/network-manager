@@ -100,8 +100,7 @@ const moduleConnectionsToMakeCart = {
       return state.deviceList.filter(item => item.deviceMaster === false)
     },
     getMaster: (state) => {
-      const index = state.deviceList.findIndex(item => item.deviceMaster === true)
-      return state.deviceList[index]
+      return state.deviceList.filter(item => item.deviceMaster === true)
     }
   },
   mutations:{

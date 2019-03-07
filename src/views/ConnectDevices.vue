@@ -1,5 +1,13 @@
 <template>
   <div class="connect">
+    <v-container >
+      <v-layout justify-center>
+        <v-flex class="text-xs-center">
+          <v-btn class="primary">Make Connection</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
+
     <v-card>
       <v-card-title class="primary white--text title">Master Device</v-card-title>
       <v-card-text>

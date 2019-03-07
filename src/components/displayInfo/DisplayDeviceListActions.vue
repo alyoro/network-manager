@@ -11,7 +11,7 @@
                 <v-icon v-if="item.deviceMaster">star</v-icon>
                 <v-icon v-if="!item.deviceMaster">star_border</v-icon>
               </v-btn>
-              <v-btn icon ripple @click="deleteFromList(item)">
+              <v-btn icon ripple @click="deleteFromList(item)" class="ml-1">
                 <v-icon>remove_circle_outline</v-icon>
               </v-btn>
             </v-flex>

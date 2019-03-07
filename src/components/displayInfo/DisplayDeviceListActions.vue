@@ -1,8 +1,6 @@
 <template>
   <v-list three-line>
-    <v-subheader>
       <slot></slot>
-    </v-subheader>
     <v-list-tile v-for="item in items" :key="item.device.id">
       <DisplayAllDevices :item="item"/>
       <v-list-tile-action>

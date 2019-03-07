@@ -7,6 +7,9 @@
         <v-subheader>Devices
           <v-spacer></v-spacer>
           <v-btn flat @click="clear">Clear list</v-btn>
+          <v-btn icon ripple @click="sheet = false">
+            <v-icon>clear</v-icon>
+          </v-btn>
         </v-subheader>
         <v-list-tile v-for="item in getDeviceList" :key="item.device.id" @click="sheet = sheet">
           <v-list-tile-content v-if="item.deviceType === 'PATCH_PANEL'">

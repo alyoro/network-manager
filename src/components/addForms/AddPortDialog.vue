@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   props: {
@@ -62,7 +62,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      getDeviceTypes: "getDeviceTypes"
+      getDeviceTypes: 'getDeviceTypes'
     })
   },
 
@@ -76,7 +76,7 @@ export default {
         port: this.port
       };
       console.log(payload);
-      this.$store.dispatch("moduleAdding/savePortToServer", payload);
+      this.$store.dispatch('moduleAdding/savePortToServer', payload);
       this.dialog = false;
     }
   }

@@ -8,9 +8,16 @@
     </v-card>
 
     <v-card>
-      <v-card-title class="secondary white--text title">Slave Devices</v-card-title>
+      <v-card-title class="primary white--text title">Slave Device</v-card-title>
       <v-card-text>
-        <DisplayDeviceListActions :items="getSlaves" />
+        <DisplayDeviceListActions :items="getSlave" />
+      </v-card-text>
+    </v-card>
+
+    <v-card>
+      <v-card-title class="secondary white--text title">All Devices</v-card-title>
+      <v-card-text>
+        <DisplayDeviceListActions :items="getDeviceList" />
       </v-card-text>
     </v-card>
   </div>
@@ -28,7 +35,7 @@ export default {
     ...mapGetters({
       getDeviceList: "moduleConnectionsToMakeCart/getDeviceList",
       getMaster: "moduleConnectionsToMakeCart/getMaster",
-      getSlaves: "moduleConnectionsToMakeCart/getSlaves"
+      getSlave: "moduleConnectionsToMakeCart/getSlave"
     })
   }
 };

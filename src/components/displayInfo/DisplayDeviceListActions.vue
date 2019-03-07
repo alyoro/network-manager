@@ -11,6 +11,10 @@
                 <v-icon v-if="item.deviceMaster">star</v-icon>
                 <v-icon v-if="!item.deviceMaster">star_border</v-icon>
               </v-btn>
+              <v-btn icon ripple @click="setSlave(item)" class="ml-1">
+                <v-icon v-if="item.deviceSlave">check_circle</v-icon>
+                <v-icon v-if="!item.deviceSlave">check_circle_outline</v-icon>
+              </v-btn>
               <v-btn icon ripple @click="deleteFromList(item)" class="ml-1">
                 <v-icon>remove_circle_outline</v-icon>
               </v-btn>
@@ -39,6 +43,9 @@ export default {
     },
     setMaster(item) {
       this.$store.commit("moduleConnectionsToMakeCart/setMaster", item);
+    },
+    setSlave(item) {
+      this.$store.commit("moduleConnectionsToMakeCart/setSlave", item);
     }
   }
 };

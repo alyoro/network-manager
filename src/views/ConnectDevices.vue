@@ -3,7 +3,7 @@
     <v-container >
       <v-layout justify-center>
         <v-flex class="text-xs-center">
-          <v-btn class="primary">Make Connection</v-btn>
+          <v-btn class="primary" @click="makeConnection">Make Connection</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -47,6 +47,11 @@ export default {
       getMaster: "moduleConnectionsToMakeCart/getMaster",
       getSlave: "moduleConnectionsToMakeCart/getSlave"
     })
+  },
+  methods: {
+    makeConnection() {
+      this.$store.dispatch("moduleConnectionsToMakeCart/makeConnection")
+    }
   }
 };
 </script>

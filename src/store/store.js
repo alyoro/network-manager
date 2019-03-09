@@ -150,7 +150,24 @@ const moduleConnectionsToMakeCart = {
         state.portSlave = payload
       }
     }
-
+  },
+  actions: {
+    makeConnection: (context) => {
+      const url = '/connections'
+      if(context.portMaster !== {} && context.portSlave !=={}){
+      var payload = []
+        payload.push(context.state.portMaster, context.state.portSlave)
+      console.log(payload)
+      NetworkManagerBackend.addNewConnection(url, payload)
+        .then(response => {
+          console.log(response)
+          context.state.deviceList.forEach(item => {item.deviceSlave = false; item.deviceMaster = false});
+          context.state.portMaster = {}
+          context.state.portSlave = {}
+        })
+        .catch(error => console.log('Error: ' + error))
+        }
+    }
   }
 }
 

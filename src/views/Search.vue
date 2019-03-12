@@ -78,10 +78,11 @@ export default {
     },
     computed: {
         url: function(){
-            return '/'+this.devType+'/getAll'
+            return '/' + this.getUrl(this.devType);
         },
         ...mapGetters({
             getDeviceTypes: 'getDeviceTypes',
+            getUrl: 'getUrlByType'
     })
     },
     methods: {

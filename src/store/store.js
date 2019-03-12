@@ -40,15 +40,14 @@ const moduleAdding = {
       const item = context.state.deviceInfo.find(item => item.type === payload.type);
       var clone = Object.assign({}, item);
       delete clone.type;
-      NetworkManagerBackend.saveNewElement(payload.type, clone)
+      NetworkManagerBackend.post(payload.url, clone)
         .then(response => console.log(response))
         .catch(error => console.log('Error: ' + error))
     },
 
     savePortToServer: (context, payload) => {
-      const url = '/' + payload.url.deviceType + '/addPort?id=' + payload.url.deviceID
-      console.log(url)
-      NetworkManagerBackend.addNewPort(url, payload.port)
+      console.log(payload.url)
+      NetworkManagerBackend.post(payload.url, payload.port)
         .then(response => console.log(response))
         .catch(error => console.log('Error: ' + error))
     }
@@ -77,7 +76,7 @@ const moduleTestData = {
   },
   actions: {
     getAll: (context, payload) => {
-      NetworkManagerBackend.getAll(payload.url)
+      NetworkManagerBackend.get(payload.url)
         .then(data => {
           context.commit('setSearchConditions', payload.identifier)
           context.commit('setTestData', data)
@@ -158,7 +157,7 @@ const moduleConnectionsToMakeCart = {
       var payload = []
         payload.push(context.state.portMaster, context.state.portSlave)
       console.log(payload)
-      NetworkManagerBackend.addNewConnection(url, payload)
+      NetworkManagerBackend.post(url, payload)
         .then(response => {
           console.log(response)
           context.state.deviceList.forEach(item => {item.deviceSlave = false; item.deviceMaster = false});
@@ -181,8 +180,8 @@ export default new Vuex.Store({
   },
   state: {
     deviceTypes: [
-      { name: 'Patch Panel', idType: 'PATCH_PANEL' },
-      { name: 'Room Socket', idType: 'ROOM_SOCKET' },
+      { name: 'Patch Panel', idType: 'PATCH_PANEL', apiUrl: 'patchpanels'},
+      { name: 'Room Socket', idType: 'ROOM_SOCKET', apiUrl: 'roomsockets'},
       { name: 'Switch', idType: 'SWITCH' },
       { name: 'Router', idType: 'ROUTER' },
       { name: 'Server', idType: 'SERVER' },
@@ -200,6 +199,10 @@ export default new Vuex.Store({
 
     getTypeName: (state) => {
       return (payload) => state.deviceTypes.find(item => item.idType === payload).name
+    },
+
+    getUrlByType: (state) => {
+      return (payload) => state.deviceTypes.find(item => item.idType === payload).apiUrl
     }
   }
 

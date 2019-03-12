@@ -27,6 +27,8 @@
                   :items="getDeviceTypes"
                 ></v-select>
               </v-flex>
+              <v-flex>
+              </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -61,21 +63,21 @@ export default {
   },
 
   computed: {
+    apiUrl: function(){
+      return '/' + this.getUrlByType(this.deviceType) + '/' + this.deviceID + '/ports'
+    },
     ...mapGetters({
-      getDeviceTypes: 'getDeviceTypes'
+      getDeviceTypes: 'getDeviceTypes',
+      getUrlByType: 'getUrlByType'
     })
   },
 
   methods: {
     addPort() {
       var payload = {
-        url: {
-          deviceID: this.deviceID,
-          deviceType: this.deviceType
-        },
+        url: this.apiUrl,
         port: this.port
       };
-      console.log(payload);
       this.$store.dispatch('moduleAdding/savePortToServer', payload);
       this.dialog = false;
     }

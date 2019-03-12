@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         sendDataToServer(){
-            this.$store.dispatch('moduleAdding/sendDataToServer',{type: 'PATCH_PANEL'})
+            this.$store.dispatch('moduleAdding/sendDataToServer',{url: '/patchpanels'})
         }
     }
 }

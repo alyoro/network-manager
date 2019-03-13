@@ -36,6 +36,7 @@ export default {
   methods: {
     clear() {
       this.$store.commit("moduleConnectionsToMakeCart/clearDeviceList");
+      this.sheet = false;
     },
     deleteFromList(item) {
       this.$store.commit("moduleConnectionsToMakeCart/deleteOneItem", item);

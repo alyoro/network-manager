@@ -25,35 +25,35 @@
 
                 <v-divider></v-divider>
 
-                <div v-if="devType === 'PATCH_PANEL'">
+                <div v-if="devType === 'PatchPanel'">
                     <PatchPanelDisplayInfo />
                 </div>
 
-                <div v-if="devType === 'ROOM_SOCKET'">
+                <div v-if="devType === 'RoomSocket'">
 
                 </div>
 
-                <div v-if="devType === 'SWITCH'">
+                <div v-if="devType === 'Switch'">
 
                 </div>
 
-                <div v-if="devType === 'ROUTER'">
+                <div v-if="devType === 'Router'">
 
                 </div>
 
-                <div v-if="devType === 'SERVER'">
+                <div v-if="devType === 'Server'">
 
                 </div>
 
-                <div v-if="devType === 'PRINTER'">
+                <div v-if="devType === 'Printer'">
 
                 </div>
 
-                <div v-if="devType === 'ACCESS_POINT'">
+                <div v-if="devType === 'AccessPoint'">
 
                 </div>
 
-                <div v-if="devType === 'IP_PHONE'">
+                <div v-if="devType === 'IPPhone'">
 
                 </div>
 
@@ -77,12 +77,12 @@ export default {
         }
     },
     computed: {
-        url: function(){
-            return '/' + this.getUrl(this.devType);
+        url(){
+            return '/' + this.getUrlByType(this.devType);
         },
         ...mapGetters({
             getDeviceTypes: 'getDeviceTypes',
-            getUrl: 'getUrlByType'
+            getUrlByType: 'getUrlByType'
     })
     },
     methods: {

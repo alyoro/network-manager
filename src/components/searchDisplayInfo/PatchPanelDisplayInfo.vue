@@ -35,11 +35,11 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <AddPortDialog v-bind:deviceID="item.id" deviceType="PATCH_PANEL"/>
+              <AddPortDialog v-bind:deviceID="item.id" deviceType="PatchPanel"/>
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <AddDeviceToConnectCart :device="item" deviceType="PATCH_PANEL"/>
+              <AddDeviceToConnectCart :device="item" deviceType="PatchPanel"/>
             </v-flex>
           </v-layout>
         </div>
@@ -82,15 +82,14 @@ export default {
   computed: {
     ...mapGetters({
       getTestData: "moduleTestData/getTestData",
-      getDeviceTypes: "getDeviceTypes"
+      getDeviceTypes: "getDeviceTypes",
+      getTypeName: "getTypeName"
     })
   },
 
   methods: {
     displayDevicePlugged(devicePlugged) {
-      return this.getDeviceTypes.find(item => {
-        if (item.idType === devicePlugged) return item;
-      }).name;
+      return this.getTypeName(devicePlugged)
     }
   }
 };

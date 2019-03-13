@@ -10,7 +10,7 @@ const moduleAdding = {
 
     deviceInfo: [
       {
-        type: 'PATCH_PANEL',
+        type: 'PatchPanel',
         building: '',
         room: '',
         identifier: '',
@@ -180,15 +180,15 @@ export default new Vuex.Store({
   },
   state: {
     deviceTypes: [
-      { name: 'Patch Panel', idType: 'PATCH_PANEL', apiUrl: 'patchpanels'},
-      { name: 'Room Socket', idType: 'ROOM_SOCKET', apiUrl: 'roomsockets'},
-      { name: 'Switch', idType: 'SWITCH' },
-      { name: 'Router', idType: 'ROUTER' },
-      { name: 'Server', idType: 'SERVER' },
-      { name: 'Printer', idType: 'PRINTER' },
-      { name: 'Access Point', idType: 'ACCESS_POINT' },
-      { name: 'IP Phone', idType: 'IP_PHONE' },
-      { name: 'None', idType: 'NONE' },
+      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels'},
+      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets'},
+      { name: 'Switch', idType: 'Switch' },
+      { name: 'Router', idType: 'Router' },
+      { name: 'Server', idType: 'Server' },
+      { name: 'Printer', idType: 'Printer' },
+      { name: 'Access Point', idType: 'AccessPoint' },
+      { name: 'IP Phone', idType: 'IPPhone' },
+      { name: 'None', idType: 'None' },
 
     ],
   },
@@ -198,12 +198,11 @@ export default new Vuex.Store({
     },
 
     getTypeName: (state) => {
-      return (payload) => state.deviceTypes.find(item => item.idType === payload).name
+          return (payload) => state.deviceTypes.find(item => item.idType === payload).name
     },
 
     getUrlByType: (state) => {
       return (payload) => state.deviceTypes.find(item => item.idType === payload).apiUrl
     }
   }
-
 })

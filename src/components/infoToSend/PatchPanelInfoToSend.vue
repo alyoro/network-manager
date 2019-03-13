@@ -3,32 +3,32 @@
             <v-layout column class="pa-2" >
                 <v-flex xs12 md6 class="pa-2">
                     <div class="grey--text subheading">Building</div>
-                    <div>{{getDeviceInfo('PATCH_PANEL').building}}</div>
+                    <div>{{getDeviceInfo('PatchPanel').building}}</div>
                 </v-flex>
 
                 <v-flex xs12 md6 class="pa-2">
                     <div class="grey--text subheading">Room</div>
-                    <div>{{getDeviceInfo('PATCH_PANEL').room}}</div>
+                    <div>{{getDeviceInfo('PatchPanel').room}}</div>
                 </v-flex>
 
                 <v-flex xs12 md6 class="pa-2">
                     <div class="grey--text subheading">Identifier</div>
-                    <div>{{getDeviceInfo('PATCH_PANEL').identifier}}</div>
+                    <div>{{getDeviceInfo('PatchPanel').identifier}}</div>
                 </v-flex>
 
                 <v-flex xs12 md6 class="pa-2">
                     <div class="grey--text subheading">Localization</div>
-                    <div>{{getDeviceInfo('PATCH_PANEL').localization}}</div>
+                    <div>{{getDeviceInfo('PatchPanel').localization}}</div>
                 </v-flex>
 
                 <v-flex xs12 md6 class="pa-2">
                     <div class="grey--text subheading">Description</div>
-                    <div>{{getDeviceInfo('PATCH_PANEL').description}}</div>
+                    <div>{{getDeviceInfo('PatchPanel').description}}</div>
                 </v-flex>
 
                 <v-flex xs12 md6 class="pa-2">
                     <div class="grey--text subheading">Number of Ports</div>
-                    <div>{{getDeviceInfo('PATCH_PANEL').numberOfPorts}}</div>
+                    <div>{{getDeviceInfo('PatchPanel').numberOfPorts}}</div>
                 </v-flex>
             </v-layout>
 

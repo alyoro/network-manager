@@ -21,7 +21,7 @@
                                     v-for="type in getDeviceTypes"
                                     :key="`${type.idType}`"
                                     :label="`${type.name}`"
-                                    :value="`${type.idType}`"                                
+                                    :value="`${type.idType}`"
                                 ></v-radio>
                             </v-radio-group>
                         </v-card>
@@ -35,45 +35,45 @@
                     <v-stepper-content step="2">
                         <v-card class="mb-5"
                             flat
-                            
+
                         >
-                            <div v-if="radioDevice === 'PATCH_PANEL'">
+                            <div v-if="radioDevice === 'PatchPanel'">
                                    <PatchPanelAddForm />
                             </div>
 
-                            <div v-if="radioDevice === 'ROOM_SOCKET'">
-                                    
+                            <div v-if="radioDevice === 'RoomSocket'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'SWITCH'">
-                                    
+                            <div v-if="radioDevice === 'Switch'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'ROUTER'">
-                                    
+                            <div v-if="radioDevice === 'Router'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'SERVER'">
-                                    
+                            <div v-if="radioDevice === 'Server'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'PRINTER'">
-                                    
+                            <div v-if="radioDevice === 'Printer'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'ACCESS_POINT'">
-                                    
+                            <div v-if="radioDevice === 'AccessPoint'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'IP_PHONE'">
-                                    
+                            <div v-if="radioDevice === 'IPPhone'">
+
                             </div>
                         </v-card>
                         <v-btn
                             color="primary"
                             @click="stepperStage = 3">
                         Continue</v-btn>
-                        <v-btn 
+                        <v-btn
                             flat
                             @click="stepperStage -= 1"
                         >Back</v-btn>
@@ -84,43 +84,43 @@
                             color="grey lighten-5"
                             flat
                         >
-                            <div v-if="radioDevice === 'PATCH_PANEL'">
+                            <div v-if="radioDevice === 'PatchPanel'">
                                    <PatchPanelInfoToSend />
                             </div>
 
-                            <div v-if="radioDevice === 'ROOM_SOCKET'">
-                                    
+                            <div v-if="radioDevice === 'RoomSocket'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'SWITCH'">
-                                    
+                            <div v-if="radioDevice === 'Switch'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'ROUTER'">
-                                    
+                            <div v-if="radioDevice === 'Router'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'SERVER'">
-                                    
+                            <div v-if="radioDevice === 'Server'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'PRINTER'">
-                                    
+                            <div v-if="radioDevice === 'Printer'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'ACCESS_POINT'">
-                                    
+                            <div v-if="radioDevice === 'AccessPoint'">
+
                             </div>
 
-                            <div v-if="radioDevice === 'IP_PHONE'">
-                                    
+                            <div v-if="radioDevice === 'IPPhone'">
+
                             </div>
                         </v-card>
                         <v-btn
                             color="primary"
                             @click="stepperStage = 1"
                         >Add New Device</v-btn>
-                        <v-btn 
+                        <v-btn
                             flat
                             @click="stepperStage -= 1"
                         >Back</v-btn>
@@ -129,7 +129,7 @@
                 </v-stepper-items>
             </v-stepper>
 
-            
+
 </template>
 
 <script>
@@ -153,7 +153,7 @@ export default {
         },
     computed: {
         ...mapGetters({
-            getDeviceTypes: 'getDeviceTypes',       
+            getDeviceTypes: 'getDeviceTypes',
     })
     }
 }

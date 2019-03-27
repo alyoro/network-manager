@@ -12,23 +12,29 @@
               <v-flex xs12 lg6 class="pa-1">
                 <v-text-field label="Port Number*" required v-model="port.portNumber"></v-text-field>
               </v-flex>
+
               <v-flex xs12 lg6 class="pa-1">
-                <v-text-field
-                  label="Port On the upper element"
-                  v-model="port.portOnTheUpperElement"
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12 lg6>
                 <v-select
-                  label="Device Types"
+                  label="Port Type"
+                  v-model="portType"
                   item-text="name"
-                  item-value="idType"
-                  v-model="port.devicePlugged"
-                  :items="getDeviceTypes"
+                  item-value="value"
+                  :items="portTypes"
                 ></v-select>
               </v-flex>
-              <v-flex>
+
+              <v-flex xs12 lg6 v-if="portType == 'logical'">
+                <v-combobox
+                  label="Insert Vlans"
+                  v-model="vlanType"
+                  :items="vlans"
+                  chips
+                  multiple
+                  persistent-hint
+                  hide-selected
+                ></v-combobox>
               </v-flex>
+
             </v-layout>
           </v-container>
         </v-card-text>
@@ -54,11 +60,18 @@ export default {
   data() {
     return {
       dialog: false,
+      portType: "physical",
+      vlanType: [],
       port: {
         portNumber: null,
         portOnTheUpperElement: null,
         devicePlugged: null
-      }
+      }, portTypes: [
+        {name: "Physical", value: "physical"},
+        {name: "Logical", value: "logical"}
+      ],
+      vlans: ["vlan1","vlan2"]
+
     };
   },
 

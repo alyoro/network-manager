@@ -35,7 +35,7 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <AddPortDialog v-bind:deviceID="item.id" deviceType="PatchPanel"/>
+              <AddPortDialog :deviceID="item.id" deviceType="PatchPanel"/>
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">

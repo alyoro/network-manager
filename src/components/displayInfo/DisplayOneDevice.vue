@@ -15,6 +15,9 @@
 
       <div v-if="item.deviceType === 'Switch'">
         <div class="primary--text title">Switch</div>
+        <DisplayInfoSwitch :item="item.device" :extend="extend" :masterBtn="masterBtn">
+                <slot></slot>
+              </DisplayInfoSwitch>
       </div>
 
       <div v-if="item.deviceType === 'Router'">
@@ -42,11 +45,13 @@
 
 <script>
 import DisplayInfoPatchPanel from "@/components/displayInfo/DisplayInfoPatchPanel.vue";
+import DisplayInfoSwitch from "@/components/displayInfo/DisplayInfoSwitch.vue";
 
 export default {
   props: ['items', 'extend' , 'masterBtn'],
   components: {
-    DisplayInfoPatchPanel
+    DisplayInfoPatchPanel,
+    DisplayInfoSwitch
   }
 };
 </script>

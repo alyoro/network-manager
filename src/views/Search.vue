@@ -34,7 +34,7 @@
                 </div>
 
                 <div v-if="devType === 'Switch'">
-
+                    <SwitchDisplayInfo />
                 </div>
 
                 <div v-if="devType === 'Router'">
@@ -65,10 +65,12 @@
 import {mapGetters} from 'vuex';
 
 import PatchPanelDisplayInfo from '../components/searchDisplayInfo/PatchPanelDisplayInfo.vue';
+import SwitchDisplayInfo from '../components/searchDisplayInfo/SwitchDisplayInfo.vue';
 
 export default {
     components:{
         PatchPanelDisplayInfo,
+        SwitchDisplayInfo,
     },
     data() {
         return {

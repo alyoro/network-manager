@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-expansion-panel>
-      <v-expansion-panel-content flat xl2 v-for="item in getTestData" :key="item.id">
+      <v-expansion-panel-content flat xl2 v-for="item in getTestData('patchpanels')" :key="item.id">
         <div slot="header">
           <v-layout row class="pa-1" align-content-space-around="left">
             <v-flex xs12 md6 lg1 class="pa-1">
@@ -77,6 +77,12 @@ export default {
   components: {
     AddPortDialog,
     AddDeviceToConnectCart
+  },
+
+  data() {
+    return{
+      name: 'patchpanels'
+    }
   },
 
   computed: {

@@ -59,11 +59,15 @@ const moduleTestData = {
   state: {
     selectedType: '',
     insertedIdentifier: '',
-    testData: []
+    testData: [
+      {type: 'patchpanels', testData: []},
+      {type: 'switches', testData: []}
+    ]
   },
   getters: {
-    getTestData: (state) => {
-      return state.testData
+    getTestData: (state) => (payload) =>{
+      let resultArr = state.testData.find(item => item.type == payload)
+      return resultArr.testData
     },
   },
   mutations: {
@@ -71,15 +75,24 @@ const moduleTestData = {
       state.insertedIdentifier = payload
     },
     setTestData: (state, payload) => {
-      state.testData = payload
+      const index = state.testData.findIndex(item => item.type == payload.type)
+      if (index > -1) {
+        console.log(index)
+        state.testData[index].type = payload.type
+        state.testData[index].testData = payload.reciviedData
+      }
     }
   },
   actions: {
     getAll: (context, payload) => {
       NetworkManagerBackend.get(payload.url)
         .then(data => {
-          context.commit('setSearchConditions', payload.identifier)
-          context.commit('setTestData', data)
+          var setData = {
+            type: payload.url.substring(1),
+            reciviedData: data
+          }
+          // context.commit('setSearchConditions', payload.identifier)
+          context.commit('setTestData', setData)
         })
         .catch(error => console.log(error))
     }

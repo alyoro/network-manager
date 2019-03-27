@@ -12,7 +12,7 @@
 
     <v-container v-if="item.deviceType === 'Switch'">
       <v-list-tile-title class="primary--text title">Switch</v-list-tile-title>
-
+        <DisplayInfoSwitch :item="item.device"/>
     </v-container>
 
     <v-container v-if="item.deviceType === 'Router'">
@@ -44,11 +44,13 @@
 
 <script>
 import DisplayInfoPatchPanel from "@/components/displayInfo/DisplayInfoPatchPanel.vue";
+import DisplayInfoSwitch from "@/components/displayInfo/DisplayInfoSwitch.vue";
 
 export default {
   props: ["item"],
   components: {
-    DisplayInfoPatchPanel
+    DisplayInfoPatchPanel,
+    DisplayInfoSwitch
   }
 };
 </script>

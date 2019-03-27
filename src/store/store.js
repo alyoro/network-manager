@@ -108,11 +108,14 @@ const moduleConnectionsToMakeCart = {
     },
     getPortSlave: (state) => {
       return state.portSlave
+    },
+    getDeviceById: (state) => {
+      return (id) => state.deviceList.filter(item => item.device.id === id)
     }
   },
   mutations: {
     addNewDevice: (state, payload) => {
-      state.deviceList.push(payload)
+        state.deviceList.push(payload)
     },
     clearDeviceList: (state) => {
       state.deviceList.length = 0

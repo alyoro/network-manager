@@ -3,13 +3,19 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   props: {
     device: null,
     deviceType: null
   },
+  computed: {
+    ...mapGetters({
+      getDeviceById: "moduleConnectionsToMakeCart/getDeviceById"
+    })
+  },
+
   methods: {
     addToCart() {
       const payload = {
@@ -18,7 +24,9 @@ export default {
         deviceMaster: false,
         deviceSlave: false
       };
-      this.$store.commit("moduleConnectionsToMakeCart/addNewDevice", payload);
+      if(this.getDeviceById(payload.device.id).length < 1){
+        this.$store.commit("moduleConnectionsToMakeCart/addNewDevice", payload);
+      }
     }
   }
 };

@@ -94,7 +94,7 @@ export default {
                 identifier: this.identifier,
                 url: this.url
             }
-            this.$store.dispatch('moduleTestData/getAll',payload);
+            this.$store.dispatch('moduleData/getAll',payload);
         }
     }
 }

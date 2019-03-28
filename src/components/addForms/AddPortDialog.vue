@@ -88,6 +88,7 @@ export default {
   methods: {
     addPort() {
       var payload = {
+        deviceID: this.deviceID,
         url: this.apiUrl,
         port: this.port
       };

@@ -46,41 +46,56 @@ const moduleAdding = {
     },
 
     savePortToServer: (context, payload) => {
-      console.log(payload.url)
       NetworkManagerBackend.post(payload.url, payload.port)
-        .then(response => console.log(response))
+        .then(response => {
+          var newPort = {
+            id: payload.deviceID,
+            port: response,
+            type: payload.url.split("/")[1]
+          }
+          context.commit('moduleData/addCreatedPort', newPort, {root: true})
+        })
         .catch(error => console.log('Error: ' + error))
     }
   }
 }
 
-const moduleTestData = {
+const moduleData = {
   namespaced: true,
   state: {
     selectedType: '',
     insertedIdentifier: '',
-    testData: [
-      {type: 'patchpanels', testData: []},
-      {type: 'switches', testData: []}
+    data: [
+      {type: 'patchpanels', devices: []},
+      {type: 'switches', devices: []}
     ]
   },
   getters: {
-    getTestData: (state) => (payload) =>{
-      let resultArr = state.testData.find(item => item.type == payload)
-      return resultArr.testData
+    getData: (state) => (payload) =>{
+      let resultArr = state.data.find(item => item.type == payload)
+      return resultArr.devices
     },
   },
   mutations: {
     setSearchConditions: (state, payload) => {
       state.insertedIdentifier = payload
     },
-    setTestData: (state, payload) => {
-      const index = state.testData.findIndex(item => item.type == payload.type)
+    setData: (state, payload) => {
+      const index = state.data.findIndex(item => item.type == payload.type)
       if (index > -1) {
         console.log(index)
-        state.testData[index].type = payload.type
-        state.testData[index].testData = payload.reciviedData
+        state.data[index].type = payload.type
+        state.data[index].devices = payload.reciviedData
       }
+    },
+    addCreatedPort: (state, payload) => {
+      const indexType = state.data.findIndex(item => item.type == payload.type)
+      if(indexType > -1){
+        const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.id)
+        if(indexDevice > -1){
+          state.data[indexType].devices[indexDevice].ports.push(payload.port)
+        }
+    }
     }
   },
   actions: {
@@ -92,7 +107,7 @@ const moduleTestData = {
             reciviedData: data
           }
           // context.commit('setSearchConditions', payload.identifier)
-          context.commit('setTestData', setData)
+          context.commit('setData', setData)
         })
         .catch(error => console.log(error))
     }
@@ -191,7 +206,7 @@ const moduleConnectionsToMakeCart = {
 export default new Vuex.Store({
   modules: {
     moduleAdding: moduleAdding,
-    moduleTestData: moduleTestData,
+    moduleData: moduleData,
     moduleConnectionsToMakeCart, moduleConnectionsToMakeCart,
   },
   state: {

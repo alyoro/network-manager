@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-expansion-panel>
-      <v-expansion-panel-content flat xl2 v-for="item in getTestData('switches')" :key="item.id">
+      <v-expansion-panel-content flat xl2 v-for="item in getData('switches')" :key="item.id">
         <div slot="header">
           <v-layout row class="pa-1" align-content-space-around="left">
 
@@ -78,7 +78,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      getTestData: "moduleTestData/getTestData",
+      getData: "moduleData/getData",
       getDeviceTypes: "getDeviceTypes",
       getTypeName: "getTypeName"
     })

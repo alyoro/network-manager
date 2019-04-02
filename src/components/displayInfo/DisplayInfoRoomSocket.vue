@@ -1,24 +1,24 @@
 <template>
   <div>
     <v-layout row justify-center class="ma-1">
-            <v-flex xs12 md6 class="pa-2">
+      <v-flex xs12 md6 class="pa-2">
         <div class="grey--text subheading">Building</div>
-        <div>{{getDeviceInfo(deviceType).building}}</div>
+        <div>{{item.building}}</div>
       </v-flex>
 
       <v-flex xs12 md6 class="pa-2">
         <div class="grey--text subheading">Room</div>
-        <div>{{getDeviceInfo(deviceType).room}}</div>
+        <div>{{item.room}}</div>
       </v-flex>
 
       <v-flex xs12 md6 class="pa-2">
         <div class="grey--text subheading">Identifier</div>
-        <div>{{getDeviceInfo(deviceType).identifier}}</div>
+        <div>{{item.identifier}}</div>
       </v-flex>
 
       <v-flex xs12 md6 class="pa-2">
         <div class="grey--text subheading">Description</div>
-        <div>{{getDeviceInfo(deviceType).description}}</div>
+        <div>{{item.description}}</div>
       </v-flex>
 
       <v-flex xs12 md6 class="pa-1">

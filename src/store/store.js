@@ -89,7 +89,7 @@ const moduleAdding = {
       let clone = Object.assign({}, item);
       delete clone.type;
       NetworkManagerBackend.post(url, clone)
-        .then(response => console.log(response))
+        .then(/* TODO add to store */)
         .catch(error => console.log('Error: ' + error))
     },
 
@@ -199,9 +199,9 @@ const moduleData = {
     deletePort: (context, payload) => {
       let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.deviceId + "/ports/" + payload.portId
       NetworkManagerBackend.delete(url)
-      .then(respone => {
-        context.commit("deletePortFromStore", payload)
-      })
+        .then(respone => {
+          context.commit("deletePortFromStore", payload)
+        })
         .catch(error => console.log('Error: ' + error));
     },
   },

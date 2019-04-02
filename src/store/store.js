@@ -166,7 +166,7 @@ const moduleData = {
     deletePortFromStore: (state, payload) => {
       const indexType = state.data.findIndex(item => item.type == payload.type)
       if (indexType > -1) {
-        const indexDevice = state.data[indexType].devices.findIndex(item => item.deviceIdd == payload.id)
+        const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.deviceId)
         if (indexDevice > -1) {
           const indexPort = state.data[indexType].devices[indexDevice].ports.findIndex(item => item.id == payload.portId)
           if (indexPort > -1) {

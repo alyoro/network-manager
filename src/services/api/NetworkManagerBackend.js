@@ -16,8 +16,8 @@ export default{
 
     async delete(url){
         return axios.delete(url)
-        .then(resposne => {
-            return resposne
+        .then(response => {
+            return response.status
         })
     }
 }

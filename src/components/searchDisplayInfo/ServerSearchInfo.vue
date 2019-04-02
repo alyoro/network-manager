@@ -49,6 +49,10 @@
               <div class="grey--text subheading">portOnTheUpperElement</div>
               <div>{{port.portOnTheUpperElement}}</div>
             </v-flex>
+
+            <v-flex xs12 md6 lg2 class="pa-1">
+              <v-btn @click="deletePort(item.id, port.id)" flat>{{port.id}}DELETE</v-btn>
+            </v-flex>
           </v-layout>
         </div>
       </v-expansion-panel-content>
@@ -85,6 +89,19 @@ export default {
   methods: {
     displayDevicePlugged(devicePlugged) {
       return this.getTypeName(devicePlugged);
+    },
+    deleteDevice(id) {
+      this.$store.dispatch("moduleData/deleteDevice", {
+        id: id,
+        type: this.deviceType
+      });
+    },
+    deletePort(deviceId, portId) {
+      this.$store.dispatch("moduleData/deletePort", {
+        deviceId: deviceId,
+        portId: portId,
+        type: this.deviceType
+      });
     }
   }
 };

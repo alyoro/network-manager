@@ -154,12 +154,24 @@ const moduleData = {
         }
       }
     },
-    deleteFromStore: (state, payload) => {
+    deleteDeviceFromStore: (state, payload) => {
       const indexType = state.data.findIndex(item => item.type == payload.type)
       if (indexType > -1) {
         const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.id)
         if (indexDevice > -1) {
           state.data[indexType].devices.splice(indexDevice, 1)
+        }
+      }
+    },
+    deletePortFromStore: (state, payload) => {
+      const indexType = state.data.findIndex(item => item.type == payload.type)
+      if (indexType > -1) {
+        const indexDevice = state.data[indexType].devices.findIndex(item => item.deviceIdd == payload.id)
+        if (indexDevice > -1) {
+          const indexPort = state.data[indexType].devices[indexDevice].ports.findIndex(item => item.id == payload.portId)
+          if (indexPort > -1) {
+            state.data[indexType].devices[indexDevice].ports.splice(indexPort, 1)
+          }
         }
       }
     },
@@ -177,13 +189,21 @@ const moduleData = {
         .catch(error => console.log(error))
     },
     deleteDevice: (context, payload) => {
-      let url = "/"+ context.rootGetters.getUrlByType(payload.type) +"/" + payload.id
+      let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.id
       NetworkManagerBackend.delete(url)
-      .then(res => {
-        context.commit("deleteFromStore", payload)
+        .then(res => {
+          context.commit("deleteDeviceFromStore", payload)
+        })
+        .catch(error => console.log('Error: ' + error));
+    },
+    deletePort: (context, payload) => {
+      let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.deviceId + "/ports/" + payload.portId
+      NetworkManagerBackend.delete(url)
+      .then(respone => {
+        context.commit("deletePortFromStore", payload)
       })
         .catch(error => console.log('Error: ' + error));
-    }
+    },
   },
 }
 

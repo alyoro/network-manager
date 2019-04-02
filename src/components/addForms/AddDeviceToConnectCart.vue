@@ -1,5 +1,5 @@
 <template>
-  <v-btn flat grey @click="addToCart" @click.native.stop>Add Connection to Cart</v-btn>
+  <v-btn flat grey @click="addToCart" @click.native.stop>Add to Cart</v-btn>
 </template>
 
 <script>

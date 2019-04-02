@@ -12,5 +12,12 @@ export default{
     async post(url, payload){
         const response = await axios.post(url, payload);
         return response.data;
+    },
+
+    async delete(url){
+        return axios.delete(url)
+        .then(resposne => {
+            return resposne
+        })
     }
 }

@@ -4,7 +4,6 @@
       <v-expansion-panel-content flat xl2 v-for="item in getData(deviceType)" :key="item.id">
         <div slot="header">
           <v-layout row class="pa-1" align-content-space-around="left">
-
             <v-flex xs12 md6 class="pa-1">
               <div class="grey--text subheading">Identifier</div>
               <div>{{item.identifier}}</div>
@@ -35,9 +34,12 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <AddDeviceToConnectCart :device="item" :deviceType="deviceType"/>
+              <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
             </v-flex>
 
+            <v-flex xs12 md6 lg2 class="pa-1">
+              <AddDeviceToConnectCart :device="item" :deviceType="deviceType"/>
+            </v-flex>
           </v-layout>
         </div>
         <div>
@@ -80,7 +82,7 @@ export default {
     deviceType: {
       type: String,
       required: true
-    },
+    }
   },
 
   computed: {
@@ -92,7 +94,13 @@ export default {
 
   methods: {
     displayDevicePlugged(devicePlugged) {
-      return this.getTypeName(devicePlugged)
+      return this.getTypeName(devicePlugged);
+    },
+    deleteDevice(id) {
+      this.$store.dispatch("moduleData/deleteDevice", {
+        id: id,
+        type: this.deviceType
+      });
     }
   }
 };

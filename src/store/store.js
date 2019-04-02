@@ -85,7 +85,7 @@ const moduleAdding = {
   actions: {
     sendDataToServer: (context, payload) => {
       const item = context.state.deviceInfo.find(item => item.type === payload.type);
-      let url = "/"+ context.rootGetters.getUrlByType(payload.type)
+      let url = "/" + context.rootGetters.getUrlByType(payload.type)
       let clone = Object.assign({}, item);
       delete clone.type;
       NetworkManagerBackend.post(url, clone)
@@ -146,14 +146,23 @@ const moduleData = {
       if (indexType > -1) {
         const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.id)
         if (indexDevice > -1) {
-          if(state.data[indexType].devices[indexDevice].ports !== null){
+          if (state.data[indexType].devices[indexDevice].ports !== null) {
             state.data[indexType].devices[indexDevice].ports.push(payload.port)
-          }else{
+          } else {
             state.data[indexType].devices[indexDevice].ports = [payload.port]
           }
         }
       }
-    }
+    },
+    deleteFromStore: (state, payload) => {
+      const indexType = state.data.findIndex(item => item.type == payload.type)
+      if (indexType > -1) {
+        const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.id)
+        if (indexDevice > -1) {
+          state.data[indexType].devices.splice(indexDevice, 1)
+        }
+      }
+    },
   },
   actions: {
     getAll: (context, payload) => {
@@ -166,6 +175,14 @@ const moduleData = {
           context.commit('setData', setData)
         })
         .catch(error => console.log(error))
+    },
+    deleteDevice: (context, payload) => {
+      let url = "/"+ context.rootGetters.getUrlByType(payload.type) +"/" + payload.id
+      NetworkManagerBackend.delete(url)
+      .then(res => {
+        context.commit("deleteFromStore", payload)
+      })
+        .catch(error => console.log('Error: ' + error));
     }
   },
 }
@@ -246,7 +263,6 @@ const moduleConnectionsToMakeCart = {
         console.log(payload)
         NetworkManagerBackend.post(url, payload)
           .then(response => {
-            console.log(response)
             context.state.deviceList.forEach(item => { item.deviceSlave = false; item.deviceMaster = false });
             context.state.portMaster = {}
             context.state.portSlave = {}
@@ -267,21 +283,21 @@ export default new Vuex.Store({
   },
   state: {
     deviceTypes: [
-      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels'},
-      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets'},
-      { name: 'Switch', idType: 'Switch', apiUrl: 'switches'},
+      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels' },
+      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
+      { name: 'Switch', idType: 'Switch', apiUrl: 'switches' },
       // { name: 'Router', idType: 'Router', apiUrl: 'routers'},
-      { name: 'Server', idType: 'Server', apiUrl: 'servers'},
-      { name: 'Printer', idType: 'Printer', apiUrl: 'printers'},
-      { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints'},
-      { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones'},
-      { name: 'None', idType: 'None'},
+      { name: 'Server', idType: 'Server', apiUrl: 'servers' },
+      { name: 'Printer', idType: 'Printer', apiUrl: 'printers' },
+      { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },
+      { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
+      { name: 'None', idType: 'None' },
 
     ],
   },
   getters: {
     getDeviceTypes: (state) => {
-      return state.deviceTypes.slice(0,-1)
+      return state.deviceTypes.slice(0, -1)
     },
 
     getTypeName: (state) => {

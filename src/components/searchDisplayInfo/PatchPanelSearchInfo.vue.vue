@@ -39,6 +39,10 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
+              <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
+            </v-flex>
+
+            <v-flex xs12 md6 lg2 class="pa-1">
               <AddDeviceToConnectCart :device="item" :deviceType="deviceType"/>
             </v-flex>
           </v-layout>
@@ -83,7 +87,7 @@ export default {
     deviceType: {
       type: String,
       required: true
-    },
+    }
   },
 
   computed: {
@@ -96,6 +100,12 @@ export default {
   methods: {
     displayDevicePlugged(devicePlugged) {
       return this.getTypeName(devicePlugged);
+    },
+    deleteDevice(id) {
+      this.$store.dispatch("moduleData/deleteDevice", {
+        id: id,
+        type: this.deviceType
+      });
     }
   }
 };

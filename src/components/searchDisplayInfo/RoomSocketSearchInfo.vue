@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-expansion-panel>
-      <v-expansion-panel-content flat xl2 v-for="item in getData(name)" :key="item.id">
+      <v-expansion-panel-content flat xl2 v-for="item in getData(deviceType)" :key="item.id">
         <div slot="header">
           <v-layout row class="pa-1" align-content-space-around="left">
             <v-flex xs12 md6 lg1 class="pa-1">
@@ -79,16 +79,11 @@ export default {
       type: String,
       required: true
     },
-    name: {
-      type: String,
-      required: true
-    }
   },
 
   computed: {
     ...mapGetters({
       getData: "moduleData/getData",
-      getDeviceTypes: "getDeviceTypes",
       getTypeName: "getTypeName"
     })
   },

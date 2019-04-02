@@ -90,7 +90,8 @@ export default {
       var payload = {
         deviceID: this.deviceID,
         url: this.apiUrl,
-        port: this.port
+        port: this.port,
+        deviceType: this.deviceType
       };
       this.$store.dispatch('moduleAdding/savePortToServer', payload);
       this.dialog = false;

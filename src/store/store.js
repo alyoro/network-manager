@@ -51,7 +51,7 @@ const moduleAdding = {
           var newPort = {
             id: payload.deviceID,
             port: response,
-            type: payload.url.split("/")[1]
+            type: payload.deviceType
           }
           context.commit('moduleData/addCreatedPort', newPort, { root: true })
         })
@@ -66,8 +66,8 @@ const moduleData = {
     selectedType: '',
     insertedIdentifier: '',
     data: [
-      { type: 'patchpanels', devices: [] },
-      { type: 'switches', devices: [] }
+      { type: 'PatchPanel', devices: [] },
+      { type: 'Switch', devices: [] }
     ]
   },
   getters: {
@@ -102,10 +102,9 @@ const moduleData = {
       NetworkManagerBackend.get(payload.url)
         .then(data => {
           var setData = {
-            type: payload.url.substring(1),
+            type: context.rootGetters.getTypeByUrl(payload.url.split("/")[1]),
             reciviedData: data
           }
-          // context.commit('setSearchConditions', payload.identifier)
           context.commit('setData', setData)
         })
         .catch(error => console.log(error))
@@ -233,6 +232,10 @@ export default new Vuex.Store({
 
     getUrlByType: (state) => {
       return (payload) => state.deviceTypes.find(item => item.idType === payload).apiUrl
+    },
+
+    getTypeByUrl: (state) => {
+      return (payload) => state.deviceTypes.find(item => item.apiUrl === payload).idType
     }
   }
 })

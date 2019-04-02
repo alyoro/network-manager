@@ -1,15 +1,13 @@
 <template>
   <div class="pa-4">
     <v-form v-model="valid">
-      <v-text-field v-model="deviceInfo.building" label="Building" required></v-text-field>
-
-      <v-text-field v-model="deviceInfo.room" label="Room" required></v-text-field>
-
       <v-text-field v-model="deviceInfo.identifier" label="Identifier" required></v-text-field>
 
       <v-text-field v-model="deviceInfo.localization" label="Localization" required></v-text-field>
 
-      <v-text-field v-model="deviceInfo.description" label="Description" required></v-text-field>
+      <v-text-field v-model="deviceInfo.dateOfPurchase" label="Date of purchase" required></v-text-field>
+
+      <v-text-field v-model="deviceInfo.managementIP" label="Managment IP" required></v-text-field>
 
       <v-text-field
         v-model="deviceInfo.numberOfPorts"
@@ -39,11 +37,10 @@ export default {
       valid: false,
       deviceInfo: {
         type: this.deviceType,
-        building: "",
-        room: "",
         identifier: "",
         localization: "",
-        description: "",
+        dateOfPurchase: "",
+        managementIP: "",
         numberOfPorts: 0
       }
     };

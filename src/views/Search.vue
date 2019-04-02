@@ -23,22 +23,32 @@
         </div>
 
         <div v-if="devType === 'RoomSocket'">
-          <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>>
+          <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
 
         <div v-if="devType === 'Switch'">
           <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
+        <!--
+        <div v-if="devType === 'Router'">
+          <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+        </div>-->
 
-        <div v-if="devType === 'Router'"></div>
+        <div v-if="devType === 'Server'">
+          <ServerSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+        </div>
 
-        <div v-if="devType === 'Server'"></div>
+        <div v-if="devType === 'Printer'">
+          <PrinterSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+        </div>
 
-        <div v-if="devType === 'Printer'"></div>
+        <div v-if="devType === 'AccessPoint'">
+          <AccessPointSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+        </div>
 
-        <div v-if="devType === 'AccessPoint'"></div>
-
-        <div v-if="devType === 'IPPhone'"></div>
+        <div v-if="devType === 'IPPhone'">
+          <IPPhoneSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+        </div>
       </v-card>
     </v-container>
   </div>
@@ -46,13 +56,23 @@
 <script>
 import { mapGetters } from "vuex";
 
-import PatchPanelSearchInfo from "../components/searchDisplayInfo/PatchPanelSearchInfo.vue";
-import SwitchSearchInfo from "../components/searchDisplayInfo/SwitchSearchInfo.vue";
+import PatchPanelSearchInfo from "@/components/searchDisplayInfo/PatchPanelSearchInfo.vue";
+import RoomSocketSearchInfo from "@/components/searchDisplayInfo/RoomSocketSearchInfo.vue";
+import SwitchSearchInfo from "@/components/searchDisplayInfo/SwitchSearchInfo.vue";
+import ServerSearchInfo from "@/components/searchDisplayInfo/ServerSearchInfo.vue";
+import PrinterSearchInfo from "@/components/searchDisplayInfo/PrinterSearchInfo.vue";
+import AccessPointSearchInfo from "@/components/searchDisplayInfo/AccessPointSearchInfo.vue";
+import IPPhoneSearchInfo from "@/components/searchDisplayInfo/IPPhoneSearchInfo.vue";
 
 export default {
   components: {
     PatchPanelSearchInfo,
-    SwitchSearchInfo
+    RoomSocketSearchInfo,
+    SwitchSearchInfo,
+    ServerSearchInfo,
+    PrinterSearchInfo,
+    AccessPointSearchInfo,
+    IPPhoneSearchInfo
   },
   data() {
     return {

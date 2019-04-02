@@ -7,8 +7,6 @@
 
       <v-text-field v-model="deviceInfo.identifier" label="Identifier" required></v-text-field>
 
-      <v-text-field v-model="deviceInfo.localization" label="Localization" required></v-text-field>
-
       <v-text-field v-model="deviceInfo.description" label="Description" required></v-text-field>
 
       <v-text-field
@@ -42,9 +40,8 @@ export default {
         building: "",
         room: "",
         identifier: "",
-        localization: "",
         description: "",
-        numberOfPorts: 0
+        numberOfPorts: 2
       }
     };
   },

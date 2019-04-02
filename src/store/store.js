@@ -17,7 +17,54 @@ const moduleAdding = {
         localization: '',
         description: '',
         numberOfPorts: 0
-      }
+      },
+
+      {
+        type: 'RoomSocket',
+        building: '',
+        room: '',
+        identifier: '',
+        description: '',
+        numberOfPorts: 0
+      },
+
+      {
+        type: 'Switch',
+        identifier: '',
+        localization: '',
+        dateOfPurchase: '',
+        managementIP: '',
+        numberOfPorts: 0
+      },
+
+      {
+        type: 'Server',
+        localization: '',
+        ip: '',
+        numberOfPorts: 0
+      },
+
+      {
+        type: 'Printer',
+        localization: '',
+        ip: '',
+        numberOfPorts: 0
+      },
+
+      {
+        type: 'AccessPoint',
+        localization: '',
+        ip: '',
+        numberOfPorts: 0
+      },
+
+      {
+        type: 'IPPhone',
+        localization: '',
+        ip: '',
+        numberOfPorts: 0
+      },
+
     ],
 
   },
@@ -38,9 +85,10 @@ const moduleAdding = {
   actions: {
     sendDataToServer: (context, payload) => {
       const item = context.state.deviceInfo.find(item => item.type === payload.type);
-      var clone = Object.assign({}, item);
+      let url = "/"+ context.rootGetters.getUrlByType(payload.type)
+      let clone = Object.assign({}, item);
       delete clone.type;
-      NetworkManagerBackend.post(payload.url, clone)
+      NetworkManagerBackend.post(url, clone)
         .then(response => console.log(response))
         .catch(error => console.log('Error: ' + error))
     },
@@ -67,7 +115,13 @@ const moduleData = {
     insertedIdentifier: '',
     data: [
       { type: 'PatchPanel', devices: [] },
-      { type: 'Switch', devices: [] }
+      { type: 'RoomSocket', devices: [] },
+      { type: 'Switch', devices: [] },
+      { type: 'Router', devices: [] },
+      { type: 'Server', devices: [] },
+      { type: 'Printer', devices: [] },
+      { type: 'AccessPoint', devices: [] },
+      { type: 'IPPhone', devices: [] }
     ]
   },
   getters: {
@@ -209,21 +263,21 @@ export default new Vuex.Store({
   },
   state: {
     deviceTypes: [
-      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels' },
-      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
-      { name: 'Switch', idType: 'Switch', apiUrl: 'switches' },
-      { name: 'Router', idType: 'Router' },
-      { name: 'Server', idType: 'Server' },
-      { name: 'Printer', idType: 'Printer' },
-      { name: 'Access Point', idType: 'AccessPoint' },
-      { name: 'IP Phone', idType: 'IPPhone' },
-      { name: 'None', idType: 'None' },
+      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels'},
+      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets'},
+      { name: 'Switch', idType: 'Switch', apiUrl: 'switches'},
+      // { name: 'Router', idType: 'Router', apiUrl: 'routers'},
+      { name: 'Server', idType: 'Server', apiUrl: 'servers'},
+      { name: 'Printer', idType: 'Printer', apiUrl: 'printers'},
+      { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints'},
+      { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones'},
+      { name: 'None', idType: 'None'},
 
     ],
   },
   getters: {
     getDeviceTypes: (state) => {
-      return state.deviceTypes
+      return state.deviceTypes.slice(0,-1)
     },
 
     getTypeName: (state) => {

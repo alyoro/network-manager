@@ -20,11 +20,6 @@
             </v-flex>
 
             <v-flex xs12 md6 class="pa-1">
-              <div class="grey--text subheading">Localization</div>
-              <div>{{item.localization}}</div>
-            </v-flex>
-
-            <v-flex xs12 md6 class="pa-1">
               <div class="grey--text subheading">Description</div>
               <div>{{item.description}}</div>
             </v-flex>

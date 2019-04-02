@@ -83,7 +83,6 @@ const moduleData = {
     setData: (state, payload) => {
       const index = state.data.findIndex(item => item.type == payload.type)
       if (index > -1) {
-        console.log(index)
         state.data[index].type = payload.type
         state.data[index].devices = payload.reciviedData
       }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-expansion-panel>
-      <v-expansion-panel-content flat xl2 v-for="item in getData('switches')" :key="item.id">
+      <v-expansion-panel-content flat xl2 v-for="item in getData(name)" :key="item.id">
         <div slot="header">
           <v-layout row class="pa-1" align-content-space-around="left">
 
@@ -31,11 +31,11 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <AddPortDialog :deviceID="item.id" deviceType="Switch"/>
+              <AddPortDialog :deviceID="item.id" :deviceType="deviceType"/>
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <AddDeviceToConnectCart :device="item" deviceType="Switch"/>
+              <AddDeviceToConnectCart :device="item" :deviceType="deviceType"/>
             </v-flex>
 
           </v-layout>
@@ -74,6 +74,17 @@ export default {
   components: {
     AddPortDialog,
     AddDeviceToConnectCart
+  },
+
+  props: {
+    deviceType: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
   },
 
   computed: {

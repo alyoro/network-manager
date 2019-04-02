@@ -19,13 +19,15 @@
         <v-divider></v-divider>
 
         <div v-if="devType === 'PatchPanel'">
-          <PatchPanelSearchInfo/>
+          <PatchPanelSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
 
-        <div v-if="devType === 'RoomSocket'"></div>
+        <div v-if="devType === 'RoomSocket'">
+          <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>>
+        </div>
 
         <div v-if="devType === 'Switch'">
-          <SwitchSearchInfo/>
+          <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
 
         <div v-if="devType === 'Router'"></div>

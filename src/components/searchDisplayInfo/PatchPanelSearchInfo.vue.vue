@@ -80,9 +80,9 @@ export default {
   },
 
   data() {
-    return{
-      name: 'patchpanels'
-    }
+    return {
+      name: "patchpanels"
+    };
   },
 
   computed: {
@@ -95,7 +95,7 @@ export default {
 
   methods: {
     displayDevicePlugged(devicePlugged) {
-      return this.getTypeName(devicePlugged)
+      return this.getTypeName(devicePlugged);
     }
   }
 };

@@ -2,22 +2,22 @@
   <div>
     <div v-for="item in items" :key="item.device.id">
       <div v-if="item.deviceType === 'PatchPanel'">
-              <div class="primary--text title">Patch Panel</div>
-              <DisplayInfoPatchPanel :item="item.device" :extend="extend" :masterBtn="masterBtn">
-                <slot></slot>
-              </DisplayInfoPatchPanel>
+        <div class="primary--text title">Patch Panel</div>
+        <DisplayInfoPatchPanel :item="item.device" :extend="extend" :masterBtn="masterBtn">
+          <slot></slot>
+        </DisplayInfoPatchPanel>
       </div>
 
       <div v-if="item.deviceType === 'RoomSocket'">
         <div class="primary--text title">Room Socket</div>
-                <slot></slot>
+        <slot></slot>
       </div>
 
       <div v-if="item.deviceType === 'Switch'">
         <div class="primary--text title">Switch</div>
         <DisplayInfoSwitch :item="item.device" :extend="extend" :masterBtn="masterBtn">
-                <slot></slot>
-              </DisplayInfoSwitch>
+          <slot></slot>
+        </DisplayInfoSwitch>
       </div>
 
       <div v-if="item.deviceType === 'Router'">
@@ -48,7 +48,7 @@ import DisplayInfoPatchPanel from "@/components/displayInfo/DisplayInfoPatchPane
 import DisplayInfoSwitch from "@/components/displayInfo/DisplayInfoSwitch.vue";
 
 export default {
-  props: ['items', 'extend' , 'masterBtn'],
+  props: ["items", "extend", "masterBtn"],
   components: {
     DisplayInfoPatchPanel,
     DisplayInfoSwitch

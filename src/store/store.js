@@ -53,7 +53,7 @@ const moduleAdding = {
             port: response,
             type: payload.url.split("/")[1]
           }
-          context.commit('moduleData/addCreatedPort', newPort, {root: true})
+          context.commit('moduleData/addCreatedPort', newPort, { root: true })
         })
         .catch(error => console.log('Error: ' + error))
     }
@@ -66,12 +66,12 @@ const moduleData = {
     selectedType: '',
     insertedIdentifier: '',
     data: [
-      {type: 'patchpanels', devices: []},
-      {type: 'switches', devices: []}
+      { type: 'patchpanels', devices: [] },
+      { type: 'switches', devices: [] }
     ]
   },
   getters: {
-    getData: (state) => (payload) =>{
+    getData: (state) => (payload) => {
       let resultArr = state.data.find(item => item.type == payload)
       return resultArr.devices
     },
@@ -90,12 +90,12 @@ const moduleData = {
     },
     addCreatedPort: (state, payload) => {
       const indexType = state.data.findIndex(item => item.type == payload.type)
-      if(indexType > -1){
+      if (indexType > -1) {
         const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.id)
-        if(indexDevice > -1){
+        if (indexDevice > -1) {
           state.data[indexType].devices[indexDevice].ports.push(payload.port)
         }
-    }
+      }
     }
   },
   actions: {
@@ -143,7 +143,7 @@ const moduleConnectionsToMakeCart = {
   },
   mutations: {
     addNewDevice: (state, payload) => {
-        state.deviceList.push(payload)
+      state.deviceList.push(payload)
     },
     clearDeviceList: (state) => {
       state.deviceList.length = 0
@@ -159,16 +159,16 @@ const moduleConnectionsToMakeCart = {
       }
     },
     setSlave: (state, payload) => {
-      state.deviceList.forEach(item => {if (item.device.id !== payload.device.id) item.deviceSlave = false});
+      state.deviceList.forEach(item => { if (item.device.id !== payload.device.id) item.deviceSlave = false });
       const index = state.deviceList.findIndex(item => item.device.id === payload.device.id && item.deviceMaster === false)
       if (index > -1) {
         state.deviceList[index].deviceSlave = !state.deviceList[index].deviceSlave;
       }
     },
     setPortMaster: (state, payload) => {
-      if (state.portMaster === payload){
+      if (state.portMaster === payload) {
         state.portMaster = {}
-      }else{
+      } else {
         state.portMaster = payload
       }
 
@@ -184,19 +184,19 @@ const moduleConnectionsToMakeCart = {
   actions: {
     makeConnection: (context) => {
       const url = '/connections'
-      if(context.portMaster !== {} && context.portSlave !=={}){
-      var payload = []
+      if (context.portMaster !== {} && context.portSlave !== {}) {
+        var payload = []
         payload.push(context.state.portMaster, context.state.portSlave)
-      console.log(payload)
-      NetworkManagerBackend.post(url, payload)
-        .then(response => {
-          console.log(response)
-          context.state.deviceList.forEach(item => {item.deviceSlave = false; item.deviceMaster = false});
-          context.state.portMaster = {}
-          context.state.portSlave = {}
-        })
-        .catch(error => console.log('Error: ' + error))
-        }
+        console.log(payload)
+        NetworkManagerBackend.post(url, payload)
+          .then(response => {
+            console.log(response)
+            context.state.deviceList.forEach(item => { item.deviceSlave = false; item.deviceMaster = false });
+            context.state.portMaster = {}
+            context.state.portSlave = {}
+          })
+          .catch(error => console.log('Error: ' + error))
+      }
     }
   }
 }
@@ -211,9 +211,9 @@ export default new Vuex.Store({
   },
   state: {
     deviceTypes: [
-      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels'},
-      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets'},
-      { name: 'Switch', idType: 'Switch', apiUrl: 'switches'},
+      { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels' },
+      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
+      { name: 'Switch', idType: 'Switch', apiUrl: 'switches' },
       { name: 'Router', idType: 'Router' },
       { name: 'Server', idType: 'Server' },
       { name: 'Printer', idType: 'Printer' },
@@ -229,7 +229,7 @@ export default new Vuex.Store({
     },
 
     getTypeName: (state) => {
-          return (payload) => state.deviceTypes.find(item => item.idType === payload).name
+      return (payload) => state.deviceTypes.find(item => item.idType === payload).name
     },
 
     getUrlByType: (state) => {

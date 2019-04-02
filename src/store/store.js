@@ -146,7 +146,11 @@ const moduleData = {
       if (indexType > -1) {
         const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.id)
         if (indexDevice > -1) {
-          state.data[indexType].devices[indexDevice].ports.push(payload.port)
+          if(state.data[indexType].devices[indexDevice].ports !== null){
+            state.data[indexType].devices[indexDevice].ports.push(payload.port)
+          }else{
+            state.data[indexType].devices[indexDevice].ports = [payload.port]
+          }
         }
       }
     }

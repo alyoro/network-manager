@@ -8,9 +8,11 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
 
-            <v-btn flat color="grey">
+            <BottomSheetCart />
+
+            <!-- <v-btn flat color="grey">
                 About
-            </v-btn>
+            </v-btn> -->
         </v-toolbar>
 
         <v-navigation-drawer v-model="drawer" app class="primary text-uppercase">
@@ -19,7 +21,7 @@
                     <v-list-tile-action>
                         <v-icon class="white--text">{{ button.icon }}</v-icon>
                     </v-list-tile-action>
-                    <v-list-tile-content>                
+                    <v-list-tile-content>
                         <v-list-tile-title class="white--text">{{ button.title }}</v-list-tile-title>
                     </v-list-tile-content>
 
@@ -30,14 +32,19 @@
 </template>
 
 <script>
+import BottomSheetCart from '@/components/BottomSheetCart.vue'
 export default {
+    components:{
+        BottomSheetCart,
+    },
     data() {
         return {
             drawer: false,
             buttons: [
                 {title: 'Dashboard', icon: 'dashboard', route: '/'},
                 {title: 'Search', icon: 'search', route: '/search'},
-                {title: 'Add New', icon: 'add_box', route: '/add'}
+                {title: 'Add New', icon: 'add_box', route: '/add'},
+                {title: 'Connect Devices', icon: 'settings_input_component', route: '/connect'}
             ]
         }
     }

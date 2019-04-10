@@ -47,7 +47,7 @@
         </v-flex>
         <v-flex>
           <div class="grey--text subheading">Connection</div>
-          <v-chip v-if="port.connections !== null" color="error">Occupied</v-chip>
+        <v-chip v-if="port.connections !== null" color="error">Occupied</v-chip>
           <v-chip v-if="port.connections === null" color="success ">Free</v-chip>
         </v-flex>
         <v-flex xs4 md2 lg1 v-if="masterBtn">

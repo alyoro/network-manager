@@ -191,7 +191,7 @@ const moduleData = {
     deleteDevice: (context, payload) => {
       let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.id
       NetworkManagerBackend.delete(url)
-        .then(res => {
+        .then(response => {
           context.commit("deleteDeviceFromStore", payload)
         })
         .catch(error => console.log('Error: ' + error));
@@ -199,7 +199,7 @@ const moduleData = {
     deletePort: (context, payload) => {
       let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.deviceId + "/ports/" + payload.portId
       NetworkManagerBackend.delete(url)
-        .then(respone => {
+        .then(response => {
           context.commit("deletePortFromStore", payload)
         })
         .catch(error => console.log('Error: ' + error));
@@ -277,15 +277,28 @@ const moduleConnectionsToMakeCart = {
   actions: {
     makeConnection: (context) => {
       const url = '/connections'
-      if (context.portMaster !== {} && context.portSlave !== {}) {
+      if (context.state.portMaster !== {} && context.state.portSlave !== {}) {
         var payload = []
         payload.push(context.state.portMaster, context.state.portSlave)
-        console.log(payload)
         NetworkManagerBackend.post(url, payload)
           .then(response => {
-            context.state.deviceList.forEach(item => { item.deviceSlave = false; item.deviceMaster = false });
-            context.state.portMaster = {}
-            context.state.portSlave = {}
+            context.state.deviceList.forEach(item => {
+              item.deviceSlave = false;
+              item.deviceMaster = false;
+              console.log(response)
+                let indexPortMaster = item.device.ports.findIndex(port => port.id === context.state.portMaster.id)
+                let indexPortSlave = item.device.ports.findIndex(port => port.id === context.state.portSlave.id)
+                if(indexPortMaster > -1){
+                  item.device.ports[indexPortMaster].connections = [response]
+                  indexPortMaster = -1
+                }
+                if(indexPortSlave > -1){
+                  item.device.ports[indexPortSlave].connections = [response]
+                  indexPortSlave = -1
+                }
+            });
+            context.state.portMaster = Object.assign({},{});
+            context.state.portSlave = Object.assign({},{});
           })
           .catch(error => console.log('Error: ' + error))
       }

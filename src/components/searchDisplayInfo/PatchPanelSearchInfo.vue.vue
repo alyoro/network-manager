@@ -41,6 +41,7 @@
             <v-flex xs12 md6 lg2 class="pa-1">
               <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
             </v-flex>
+
           </v-layout>
         </div>
         <div>
@@ -72,48 +73,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import AddPortDialog from "@/components/addForms/AddPortDialog.vue";
+import searchInfoMixin from "@/mixins/searchInfoMixin";
 
 export default {
-  components: {
-    AddPortDialog
-  },
-
-  props: {
-    deviceType: {
-      type: String,
-      required: true
-    }
-  },
-
-  computed: {
-    ...mapGetters({
-      getData: "moduleData/getData",
-      getTypeName: "getTypeName"
-    })
-  },
-
-  methods: {
-    displayDevicePlugged(devicePlugged) {
-      return this.getTypeName(devicePlugged);
-    },
-
-    deleteDevice(id) {
-      this.$store.dispatch("moduleData/deleteDevice", {
-        id: id,
-        type: this.deviceType
-      });
-    },
-
-    deletePort(deviceId, portId) {
-      this.$store.dispatch("moduleData/deletePort", {
-        deviceId: deviceId,
-        portId: portId,
-        type: this.deviceType
-      });
-    }
-  }
+  mixins: [searchInfoMixin],
 };
 </script>
 

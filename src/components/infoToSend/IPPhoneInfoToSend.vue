@@ -22,28 +22,10 @@ f<template>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-export default {
-  props: {
-    deviceType: {
-      type: String,
-      required: true
-    }
-  },
+import infoToSendMixin from "@/mixins/infoToSendMixin";
 
-  computed: {
-    ...mapGetters({
-      getDeviceInfo: "moduleAdding/getDeviceInfo",
-      getUrlByType: "getUrlByType"
-    })
-  },
-  methods: {
-    sendDataToServer() {
-      this.$store.dispatch("moduleAdding/sendDataToServer", {
-        type: this.deviceType
-      });
-    }
-  }
+export default {
+  mixins: [infoToSendMixin]
 };
 </script>
 

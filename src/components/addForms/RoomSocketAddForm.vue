@@ -22,15 +22,10 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import addFormMixin from "@/mixins/addFormMixin";
 
 export default {
-  props: {
-    deviceType: {
-      type: String,
-      required: true
-    }
-  },
+  mixins: [addFormMixin],
 
   data() {
     return {
@@ -44,12 +39,6 @@ export default {
         numberOfPorts: 2
       }
     };
-  },
-
-  methods: {
-    saveToStore() {
-      this.$store.commit("moduleAdding/saveDeviceInfo", this.deviceInfo);
-    }
   }
 };
 </script>

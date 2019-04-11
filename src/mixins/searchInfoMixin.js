@@ -14,7 +14,8 @@ const searchInfoMixin = {
   },
   computed: {
     ...mapGetters({
-      getNameByType: "getNameByType"
+      getNameByType: "getNameByType",
+      getData: "moduleData/getData"
     })
   },
   methods: {

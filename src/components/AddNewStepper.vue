@@ -26,7 +26,6 @@
         <v-divider></v-divider>
         <v-btn color="primary" flat @click="stepperStage = 2">Next</v-btn>
       </v-stepper-content>
-
       <v-stepper-content step="2">
         <v-card class="item" flat>
           <div v-if="radioDevice === 'PatchPanel'">

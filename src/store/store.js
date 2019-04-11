@@ -122,13 +122,18 @@ const moduleData = {
       { type: 'Printer', devices: [] },
       { type: 'AccessPoint', devices: [] },
       { type: 'IPPhone', devices: [] }
-    ]
+    ],
+
+    countedDevices: [],
   },
   getters: {
     getData: (state) => (payload) => {
       let resultArr = state.data.find(item => item.type == payload)
       return resultArr.devices
     },
+    getCountedDevices: (state) => {
+      return state.countedDevices
+    }
   },
   mutations: {
     setSearchConditions: (state, payload) => {
@@ -175,6 +180,9 @@ const moduleData = {
         }
       }
     },
+    setCountedDevices: (state, payload) => {
+      state.countedDevices = payload
+    }
   },
   actions: {
     getAll: (context, payload) => {
@@ -204,6 +212,20 @@ const moduleData = {
         })
         .catch(error => console.log('Error: ' + error));
     },
+    getCountedDevices(context) {
+      return new Promise((resolve, reject) => {
+        const url = "/countingdevices"
+        NetworkManagerBackend.get(url)
+        .then(response => {
+          context.commit("setCountedDevices", response)
+          resolve()
+        })
+        .catch(error => {
+          console.log('Error: ' + error)
+          reject()
+        });
+      })
+    }
   },
 }
 
@@ -223,7 +245,6 @@ export default new Vuex.Store({
       { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },
       { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
       { name: 'None', idType: 'None' },
-
     ],
   },
   getters: {

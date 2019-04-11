@@ -1,9 +1,10 @@
 <template>
   <div class="dashboard">
-    <h1 class="subheading">Dasboard</h1>
-    <v-container class="my-5">
-      <v-card flat v-for="item in items" :key="item.type">
-        <v-layout row wrap class="pa-3">
+    <v-progress-circular v-if="loading" color="primary child-loading" :size="70" :width="7"></v-progress-circular>
+    <v-container v-else class="ma-2">
+      <v-card flat v-for="item in getCountedDevices" :key="item.type">
+        <v-layout row wrap class="pa-2">
+          <v-spacer></v-spacer>
           <v-flex xs12 md6>
             <div class="caption grey--text">Device Type</div>
             <div>{{ item.type }}</div>
@@ -16,11 +17,9 @@
             <v-btn>View</v-btn>
           </v-flex>
           <v-flex xs3 sm2 md1>
-            <v-btn>Add</v-btn>
+            <v-btn router-link :to="{name: 'add'}">Add</v-btn>
           </v-flex>
-          <v-flex xs3 sm2 md1>
-            <v-btn>Delete</v-btn>
-          </v-flex>
+          <v-spacer></v-spacer>
         </v-layout>
       </v-card>
     </v-container>
@@ -28,15 +27,38 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
-      items: [
-        { type: "Switch", number: 12 },
-        { type: "Router", number: 3 },
-        { type: "PatchPanel", number: 40 }
-      ]
+      loading: true
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      getCountedDevices: "moduleData/getCountedDevices"
+    })
+  },
+  created() {
+    this.$store.dispatch("moduleData/getCountedDevices").then(response => {
+      this.loading = false;
+    });
   }
 };
 </script>
+
+<style>
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}
+
+.child-loading {
+  flex-shrink: 0;
+}
+</style>
+

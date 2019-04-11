@@ -26,10 +26,6 @@
             <v-flex xs12 md6 lg2 class="pa-1">
               <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
             </v-flex>
-
-            <v-flex xs12 md6 lg2 class="pa-1">
-              <AddDeviceToConnectCart :device="item" :deviceType="deviceType"/>
-            </v-flex>
           </v-layout>
         </div>
         <div>
@@ -62,14 +58,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import NetworkManagerBackend from "@/services/api/NetworkManagerBackend";
 import AddPortDialog from "@/components/addForms/AddPortDialog.vue";
-import AddDeviceToConnectCart from "@/components/addForms/AddDeviceToConnectCart.vue";
 
 export default {
   components: {
-    AddPortDialog,
-    AddDeviceToConnectCart
+    AddPortDialog
   },
 
   props: {
@@ -90,12 +83,14 @@ export default {
     displayDevicePlugged(devicePlugged) {
       return this.getTypeName(devicePlugged);
     },
+
     deleteDevice(id) {
       this.$store.dispatch("moduleData/deleteDevice", {
         id: id,
         type: this.deviceType
       });
     },
+
     deletePort(deviceId, portId) {
       this.$store.dispatch("moduleData/deletePort", {
         deviceId: deviceId,

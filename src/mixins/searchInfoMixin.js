@@ -14,13 +14,12 @@ const searchInfoMixin = {
   },
   computed: {
     ...mapGetters({
-      getData: "moduleData/getData",
-      getTypeName: "getTypeName"
+      getNameByType: "getNameByType"
     })
   },
   methods: {
     displayDevicePlugged(devicePlugged) {
-      return this.getTypeName(devicePlugged);
+      return this.getNameByType(devicePlugged);
     },
 
     deleteDevice(id) {

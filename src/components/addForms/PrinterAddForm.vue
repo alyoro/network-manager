@@ -1,6 +1,9 @@
 <template>
-  <div class="pa-4">
-    <v-form v-model="valid">
+  <v-layout column class="layout">
+    <v-flex class="item titleText">
+      <h1 class="title primary--text">{{getNameByType(deviceType)}}</h1>
+    </v-flex>
+    <v-form v-model="valid" class="item">
       <v-text-field v-model="deviceInfo.localization" label="Localization" required></v-text-field>
 
       <v-text-field v-model="deviceInfo.ip" label="Ip Address" required></v-text-field>
@@ -14,7 +17,7 @@
 
       <v-btn color="primary" @click="saveToStore()">Save changes</v-btn>
     </v-form>
-  </div>
+  </v-layout>
 </template>
 
 <script>

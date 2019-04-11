@@ -231,7 +231,7 @@ export default new Vuex.Store({
       return state.deviceTypes.slice(0, -1)
     },
 
-    getTypeName: (state) => {
+    getNameByType: (state) => {
       return (payload) => state.deviceTypes.find(item => item.idType === payload).name
     },
 

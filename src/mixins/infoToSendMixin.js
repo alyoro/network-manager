@@ -10,7 +10,8 @@ const infoToSendMixin = {
 
   computed: {
     ...mapGetters({
-      getDeviceInfo: "moduleAdding/getDeviceInfo"
+      getDeviceInfo: "moduleAdding/getDeviceInfo",
+      getNameByType: "getNameByType"
     })
   },
 

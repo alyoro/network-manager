@@ -1,4 +1,4 @@
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 const addFormMixin = {
   props: {
@@ -6,6 +6,11 @@ const addFormMixin = {
       type: String,
       required: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      getNameByType: "getNameByType"
+    })
   },
   methods: {
     saveToStore() {

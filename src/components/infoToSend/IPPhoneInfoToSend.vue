@@ -20,7 +20,7 @@ f<template>
       </v-flex>
     </v-layout>
 
-    <v-btn @click="sendDataToServer">Save in Database</v-btn>
+    <v-btn color="primary" @click="sendDataToServer">Save in Database</v-btn>
   </v-card>
 </template>
 

@@ -23,7 +23,8 @@
             ></v-radio>
           </v-radio-group>
         </v-card>
-        <v-btn color="primary" @click="stepperStage = 2">Continue</v-btn>
+        <v-divider></v-divider>
+        <v-btn color="primary" flat @click="stepperStage = 2">Next</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2">
@@ -39,8 +40,6 @@
           <div v-if="radioDevice === 'Switch'">
             <SwitchAddForm :deviceType="radioDevice"/>
           </div>
-
-          <div v-if="radioDevice === 'Router'"></div>
 
           <div v-if="radioDevice === 'Server'">
             <ServerAddForm :deviceType="radioDevice"/>
@@ -58,8 +57,9 @@
             <IPPhoneAddForm :deviceType="radioDevice"/>
           </div>
         </v-card>
-        <v-btn color="primary" @click="stepperStage = 3">Continue</v-btn>
-        <v-btn flat @click="stepperStage -= 1">Back</v-btn>
+        <v-divider></v-divider>
+        <v-btn color="primary" flat @click="stepperStage = 3">Next</v-btn>
+        <v-btn color="secondary" flat @click="stepperStage -= 1">Back</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
@@ -94,8 +94,9 @@
             <IPPhoneInfoToSend :deviceType="radioDevice"/>
           </div>
         </v-card>
-        <v-btn color="primary" @click="stepperStage = 1">Add New Device</v-btn>
-        <v-btn flat @click="stepperStage -= 1">Back</v-btn>
+        <v-divider></v-divider>
+        <v-btn color="primary" flat @click="stepperStage = 1">Add Next Device</v-btn>
+        <v-btn color="secondary" flat @click="stepperStage -= 1">Back</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>

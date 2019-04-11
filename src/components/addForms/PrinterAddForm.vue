@@ -15,7 +15,7 @@
         required
       ></v-text-field>
 
-      <v-btn color="primary" @click="saveToStore()">Save changes</v-btn>
+      <v-btn color="primary" @click="saveToStore()">Save locally</v-btn>
     </v-form>
   </v-layout>
 </template>

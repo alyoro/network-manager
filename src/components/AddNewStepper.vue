@@ -1,32 +1,33 @@
 <template>
   <v-stepper v-model="stepperStage">
     <v-stepper-header>
-      <v-stepper-step :complete="stepperStage > 1" step="1">Chose device type</v-stepper-step>
+      <v-spacer></v-spacer>
+      <v-stepper-step :complete="stepperStage > 1" step="1" editable>Chose device type</v-stepper-step>
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="stepperStage > 2" step="2">Fill device info</v-stepper-step>
+      <v-stepper-step :complete="stepperStage > 2" step="2" editable>Fill device info</v-stepper-step>
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="stepperStage > 3" step="3">Checking info and save</v-stepper-step>
-      <v-divider></v-divider>
+      <v-stepper-step :complete="stepperStage > 3" step="3" editable>Checking info and save</v-stepper-step>
+      <v-spacer></v-spacer>
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1">
-        <v-card class="mb-5" flat height="260px">
-          <v-radio-group class="ma-2 pa-2" v-model="radioDevice">
+        <v-card class="item" flat height="260px">
+          <v-radio-group class="ml-1 item" v-model="radioDevice">
             <v-radio
-              v-for="type in getDeviceTypes"
-              :key="`${type.idType}`"
-              :label="`${type.name}`"
-              :value="`${type.idType}`"
+              v-for="deviceType in getDeviceTypes"
+              :key="deviceType.idType"
+              :label="deviceType.name"
+              :value="deviceType.idType"
             ></v-radio>
           </v-radio-group>
         </v-card>
-        <v-btn color="primary" @click="stepperStage = 2">Continue</v-btn>
+        <v-divider></v-divider>
+        <v-btn color="primary" flat @click="stepperStage = 2">Next</v-btn>
       </v-stepper-content>
-
       <v-stepper-content step="2">
-        <v-card class="mb-5" flat>
+        <v-card class="item" flat>
           <div v-if="radioDevice === 'PatchPanel'">
             <PatchPanelAddForm :deviceType="radioDevice"/>
           </div>
@@ -38,8 +39,6 @@
           <div v-if="radioDevice === 'Switch'">
             <SwitchAddForm :deviceType="radioDevice"/>
           </div>
-
-          <div v-if="radioDevice === 'Router'"></div>
 
           <div v-if="radioDevice === 'Server'">
             <ServerAddForm :deviceType="radioDevice"/>
@@ -57,12 +56,13 @@
             <IPPhoneAddForm :deviceType="radioDevice"/>
           </div>
         </v-card>
-        <v-btn color="primary" @click="stepperStage = 3">Continue</v-btn>
-        <v-btn flat @click="stepperStage -= 1">Back</v-btn>
+        <v-divider></v-divider>
+        <v-btn color="primary" flat @click="stepperStage = 3">Next</v-btn>
+        <v-btn color="secondary" flat @click="stepperStage -= 1">Back</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
-        <v-card class="mb-5" color="grey lighten-5" flat>
+        <v-card class="item" flat>
           <div v-if="radioDevice === 'PatchPanel'">
             <PatchPanelInfoToSend :deviceType="radioDevice"/>
           </div>
@@ -93,8 +93,9 @@
             <IPPhoneInfoToSend :deviceType="radioDevice"/>
           </div>
         </v-card>
-        <v-btn color="primary" @click="stepperStage = 1">Add New Device</v-btn>
-        <v-btn flat @click="stepperStage -= 1">Back</v-btn>
+        <v-divider></v-divider>
+        <v-btn color="primary" flat @click="stepperStage = 1">Add Next Device</v-btn>
+        <v-btn color="secondary" flat @click="stepperStage -= 1">Back</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -140,7 +141,7 @@ export default {
   data() {
     return {
       stepperStage: 0,
-      radioDevice: ""
+      radioDevice: "PatchPanel"
     };
   },
   computed: {
@@ -152,4 +153,11 @@ export default {
 </script>
 
 <style>
+.item {
+  padding: 0.3em;
+}
+
+.titleText {
+  margin-bottom: 0.75em;
+}
 </style>

@@ -122,13 +122,18 @@ const moduleData = {
       { type: 'Printer', devices: [] },
       { type: 'AccessPoint', devices: [] },
       { type: 'IPPhone', devices: [] }
-    ]
+    ],
+
+    countedDevices: [],
   },
   getters: {
     getData: (state) => (payload) => {
       let resultArr = state.data.find(item => item.type == payload)
       return resultArr.devices
     },
+    getCountedDevices: (state) => {
+      return state.countedDevices
+    }
   },
   mutations: {
     setSearchConditions: (state, payload) => {
@@ -175,6 +180,9 @@ const moduleData = {
         }
       }
     },
+    setCountedDevices: (state, payload) => {
+      state.countedDevices = payload
+    }
   },
   actions: {
     getAll: (context, payload) => {
@@ -191,7 +199,7 @@ const moduleData = {
     deleteDevice: (context, payload) => {
       let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.id
       NetworkManagerBackend.delete(url)
-        .then(res => {
+        .then(response => {
           context.commit("deleteDeviceFromStore", payload)
         })
         .catch(error => console.log('Error: ' + error));
@@ -199,107 +207,32 @@ const moduleData = {
     deletePort: (context, payload) => {
       let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.deviceId + "/ports/" + payload.portId
       NetworkManagerBackend.delete(url)
-        .then(respone => {
+        .then(response => {
           context.commit("deletePortFromStore", payload)
         })
         .catch(error => console.log('Error: ' + error));
     },
+    getCountedDevices(context) {
+      return new Promise((resolve, reject) => {
+        const url = "/countingdevices"
+        NetworkManagerBackend.get(url)
+        .then(response => {
+          context.commit("setCountedDevices", response)
+          resolve()
+        })
+        .catch(error => {
+          console.log('Error: ' + error)
+          reject()
+        });
+      })
+    }
   },
 }
-
-const moduleConnectionsToMakeCart = {
-  namespaced: true,
-  state: {
-    deviceList: [],
-    portMaster: {},
-    portSlave: {}
-  },
-  getters: {
-    getDeviceList: (state) => {
-      return state.deviceList;
-    },
-    getSlave: (state) => {
-      return state.deviceList.filter(item => item.deviceSlave === true)
-    },
-    getMaster: (state) => {
-      return state.deviceList.filter(item => item.deviceMaster === true)
-    },
-    getPortMaster: (state) => {
-      return state.portMaster
-    },
-    getPortSlave: (state) => {
-      return state.portSlave
-    },
-    getDeviceById: (state) => {
-      return (id) => state.deviceList.filter(item => item.device.id === id)
-    }
-  },
-  mutations: {
-    addNewDevice: (state, payload) => {
-      state.deviceList.push(payload)
-    },
-    clearDeviceList: (state) => {
-      state.deviceList.length = 0
-    },
-    deleteOneItem: (state, payload) => {
-      state.deviceList = state.deviceList.filter(item => item.device.id !== payload.device.id)
-    },
-    setMaster: (state, payload) => {
-      state.deviceList.forEach(item => { if (item.device.id !== payload.device.id) item.deviceMaster = false });
-      const index = state.deviceList.findIndex(item => item.device.id === payload.device.id && item.deviceSlave === false)
-      if (index > -1) {
-        state.deviceList[index].deviceMaster = !state.deviceList[index].deviceMaster;
-      }
-    },
-    setSlave: (state, payload) => {
-      state.deviceList.forEach(item => { if (item.device.id !== payload.device.id) item.deviceSlave = false });
-      const index = state.deviceList.findIndex(item => item.device.id === payload.device.id && item.deviceMaster === false)
-      if (index > -1) {
-        state.deviceList[index].deviceSlave = !state.deviceList[index].deviceSlave;
-      }
-    },
-    setPortMaster: (state, payload) => {
-      if (state.portMaster === payload) {
-        state.portMaster = {}
-      } else {
-        state.portMaster = payload
-      }
-
-    },
-    setPortSlave: (state, payload) => {
-      if (state.portSlave === payload) {
-        state.portSlave = {}
-      } else {
-        state.portSlave = payload
-      }
-    }
-  },
-  actions: {
-    makeConnection: (context) => {
-      const url = '/connections'
-      if (context.portMaster !== {} && context.portSlave !== {}) {
-        var payload = []
-        payload.push(context.state.portMaster, context.state.portSlave)
-        console.log(payload)
-        NetworkManagerBackend.post(url, payload)
-          .then(response => {
-            context.state.deviceList.forEach(item => { item.deviceSlave = false; item.deviceMaster = false });
-            context.state.portMaster = {}
-            context.state.portSlave = {}
-          })
-          .catch(error => console.log('Error: ' + error))
-      }
-    }
-  }
-}
-
-
 
 export default new Vuex.Store({
   modules: {
     moduleAdding: moduleAdding,
     moduleData: moduleData,
-    moduleConnectionsToMakeCart, moduleConnectionsToMakeCart,
   },
   state: {
     deviceTypes: [
@@ -312,7 +245,6 @@ export default new Vuex.Store({
       { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },
       { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
       { name: 'None', idType: 'None' },
-
     ],
   },
   getters: {
@@ -320,7 +252,7 @@ export default new Vuex.Store({
       return state.deviceTypes.slice(0, -1)
     },
 
-    getTypeName: (state) => {
+    getNameByType: (state) => {
       return (payload) => state.deviceTypes.find(item => item.idType === payload).name
     },
 

@@ -26,10 +26,6 @@
             <v-flex xs12 md6 lg2 class="pa-1">
               <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
             </v-flex>
-
-            <v-flex xs12 md6 lg2 class="pa-1">
-              <AddDeviceToConnectCart :device="item" :deviceType="deviceType"/>
-            </v-flex>
           </v-layout>
         </div>
         <div>
@@ -49,10 +45,6 @@
               <div class="grey--text subheading">portOnTheUpperElement</div>
               <div>{{port.portOnTheUpperElement}}</div>
             </v-flex>
-
-            <v-flex xs12 md6 lg2 class="pa-1">
-              <v-btn @click="deletePort(item.id, port.id)" @click.native.stop flat>{{port.id}}DELETE</v-btn>
-            </v-flex>
           </v-layout>
         </div>
       </v-expansion-panel-content>
@@ -61,49 +53,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import NetworkManagerBackend from "@/services/api/NetworkManagerBackend";
-import AddPortDialog from "@/components/addForms/AddPortDialog.vue";
-import AddDeviceToConnectCart from "@/components/addForms/AddDeviceToConnectCart.vue";
+import searchInfoMixin from "@/mixins/searchInfoMixin";
 
 export default {
-  components: {
-    AddPortDialog,
-    AddDeviceToConnectCart
-  },
-
-  props: {
-    deviceType: {
-      type: String,
-      required: true
-    }
-  },
-
-  computed: {
-    ...mapGetters({
-      getData: "moduleData/getData",
-      getTypeName: "getTypeName"
-    })
-  },
-
-  methods: {
-    displayDevicePlugged(devicePlugged) {
-      return this.getTypeName(devicePlugged);
-    },
-    deleteDevice(id) {
-      this.$store.dispatch("moduleData/deleteDevice", {
-        id: id,
-        type: this.deviceType
-      });
-    },
-    deletePort(deviceId, portId) {
-      this.$store.dispatch("moduleData/deletePort", {
-        deviceId: deviceId,
-        portId: portId,
-        type: this.deviceType
-      });
-    }
-  }
+  mixins: [searchInfoMixin],
 };
 </script>
 

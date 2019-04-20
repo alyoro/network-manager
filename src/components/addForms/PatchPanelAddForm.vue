@@ -1,6 +1,9 @@
 <template>
-  <div class="pa-4">
-    <v-form v-model="valid">
+  <v-layout column class="layout">
+    <v-flex class="item titleText">
+      <h1 class="title primary--text">{{getNameByType(deviceType)}}</h1>
+    </v-flex>
+    <v-form v-model="valid" class="item">
       <v-text-field v-model="deviceInfo.building" label="Building" required></v-text-field>
 
       <v-text-field v-model="deviceInfo.room" label="Room" required></v-text-field>
@@ -18,21 +21,16 @@
         type="number"
       ></v-text-field>
 
-      <v-btn color="primary" @click="saveToStore()">Save changes</v-btn>
+      <v-btn color="primary" @click="saveToStore()">Save locally</v-btn>
     </v-form>
-  </div>
+  </v-layout>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import addFormMixin from "@/mixins/addFormMixin";
 
 export default {
-  props: {
-    deviceType: {
-      type: String,
-      required: true
-    }
-  },
+  mixins: [addFormMixin],
 
   data() {
     return {
@@ -47,12 +45,6 @@ export default {
         numberOfPorts: 0
       }
     };
-  },
-
-  methods: {
-    saveToStore() {
-      this.$store.commit("moduleAdding/saveDeviceInfo", this.deviceInfo);
-    }
   }
 };
 </script>

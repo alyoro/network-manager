@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <v-progress-circular v-if="loading" color="primary child-loading" :size="70" :width="7"></v-progress-circular>
+    <v-progress-circular v-if="loading" indeterminate color="primary child-loading" :size="70" :width="7"></v-progress-circular>
     <v-container v-else class="ma-2">
       <v-card flat v-for="item in getCountedDevices" :key="item.type">
         <v-layout row wrap class="pa-2">

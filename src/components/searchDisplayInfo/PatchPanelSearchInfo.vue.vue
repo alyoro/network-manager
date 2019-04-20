@@ -63,6 +63,10 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
+              <UpdatePortDialog :deviceId="item.id" :deviceType="deviceType" :portId="port.id" :port="port"/>
+            </v-flex>
+
+            <v-flex xs12 md6 lg2 class="pa-1">
               <v-btn @click="deletePort(item.id, port.id)" @click.native.stop flat>DELETE</v-btn>
             </v-flex>
           </v-layout>

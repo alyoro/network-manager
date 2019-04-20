@@ -212,6 +212,13 @@ const moduleData = {
         })
         .catch(error => console.log('Error: ' + error));
     },
+    updatePortToServer: (context, payload) => {
+      NetworkManagerBackend.put(payload.url, payload.port)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => console.log('Error: '+ error));
+    },
     getCountedDevices(context) {
       return new Promise((resolve, reject) => {
         const url = "/countingdevices"

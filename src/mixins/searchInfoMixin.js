@@ -1,9 +1,11 @@
 import { mapGetters } from "vuex";
 import AddPortDialog from "@/components/addForms/AddPortDialog.vue";
+import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
 
 const searchInfoMixin = {
   components: {
-    AddPortDialog
+    AddPortDialog,
+    UpdatePortDialog
   },
 
   props: {

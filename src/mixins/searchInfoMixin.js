@@ -28,6 +28,7 @@ const searchInfoMixin = {
       });
     },
     showConnections(item){
+
       this.$router.push({
         name: 'connect',
         params: {

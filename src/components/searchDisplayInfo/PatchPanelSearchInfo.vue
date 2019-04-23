@@ -35,7 +35,20 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
-              <v-btn @click="showConnections(item)" flat @click.native.stop>Show Connections</v-btn>
+              <!-- <v-btn @click="showConnections(item)" flat @click.native.stop>Show Connections</v-btn> -->
+              <v-menu offset-y>
+                <template v-slot:activator="{ on }">
+                  <v-btn flat color="black" dark v-on="on" @click.native.stop>Show Connections</v-btn>
+                </template>
+                <v-list>
+                  <v-list-tile @click="showConnections(item)">
+                    <v-list-tile-title>Level Up</v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile @click="showConnections(item)">
+                    <v-list-tile-title>Level Down</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">

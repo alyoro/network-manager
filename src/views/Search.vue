@@ -74,9 +74,14 @@ export default {
     AccessPointSearchInfo,
     IPPhoneSearchInfo
   },
+  props: {
+    deviceType: {
+      default: ''
+    }
+  },
   data() {
     return {
-      devType: "",
+      devType: this.deviceType,
       identifier: ""
     };
   },

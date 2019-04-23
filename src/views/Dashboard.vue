@@ -14,10 +14,10 @@
             <div>{{ item.number }}</div>
           </v-flex>
           <v-flex xs3 sm2 md1>
-            <v-btn>View</v-btn>
+            <v-btn  router-link @click="goToSearch(item.type)" flat>View</v-btn>
           </v-flex>
           <v-flex xs3 sm2 md1>
-            <v-btn router-link @click="goToAddView(item.type)">Add</v-btn>
+            <v-btn router-link @click="goToAddView(item.type)" flat>Add</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
         </v-layout>
@@ -45,6 +45,14 @@ export default {
     goToAddView(type){
       this.$router.push({
         name: 'add',
+        params: {
+          deviceType: type
+        }
+      })
+    },
+    goToSearch(type){
+      this.$router.push({
+        name: 'search',
         params: {
           deviceType: type
         }

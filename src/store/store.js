@@ -248,29 +248,78 @@ const moduleData = {
       })
     },
     changePortStatus: (context, payload) => {
-        const url = "/ports/" + payload.portId
-        NetworkManagerBackend.patch(url)
-          .then(response => {
-            const updatePort = {
-              type: payload.type,
-              deviceId: payload.deviceId,
-              portId: payload.portId,
-              port: response
-            }
-            context.commit("updatePortInStore", updatePort);
-          })
-          .catch(error => {
-            console.log('Error: ' + error)
-            alert(error.response.data.message)
-          });
+      const url = "/ports/" + payload.portId
+      NetworkManagerBackend.patch(url)
+        .then(response => {
+          const updatePort = {
+            type: payload.type,
+            deviceId: payload.deviceId,
+            portId: payload.portId,
+            port: response
+          }
+          context.commit("updatePortInStore", updatePort);
+        })
+        .catch(error => {
+          console.log('Error: ' + error)
+          alert(error.response.data.message)
+        });
     }
   },
+}
+
+const moduleConnections = {
+  namespaced: true,
+  state: {
+    device: {},
+    devicesConnected: []
+  },
+  getters: {
+    getDevice: (state) => {
+      return state.device
+    },
+    getDevicesConnected: (state) => {
+      return state.devicesConnected
+    }
+  },
+  mutations: {
+    setDevice: (state, payload) => {
+      Vue.set(state.device, 0, payload)
+    },
+    setDevicesConnected: (state, payload) => {
+      state.devicesConnected = payload
+    }
+  },
+  actions: {
+    fetchDevicesLvlUp: (context, payload) => {
+      const url = "/deviceslevelup/" + payload.item.id
+      NetworkManagerBackend.get(url)
+        .then(response => {
+          context.commit("setDevice", payload.item)
+          context.commit("setDevicesConnected", response)
+        })
+        .catch(error => {
+          console.log('Error: ' + error)
+        })
+    },
+    fetchDevicesLvlDown: (context, payload) => {
+      const url = "/devicesleveldown/" + payload.item.id
+      NetworkManagerBackend.get(url)
+        .then(response => {
+          context.commit("setDevice", payload.item)
+          context.commit("setDevicesConnected", response)
+        })
+        .catch(error => {
+          console.log('Error: ' + error)
+        })
+    }
+  }
 }
 
 export default new Vuex.Store({
   modules: {
     moduleAdding: moduleAdding,
     moduleData: moduleData,
+    moduleConnections
   },
   state: {
     deviceTypes: [

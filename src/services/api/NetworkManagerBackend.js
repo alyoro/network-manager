@@ -1,29 +1,33 @@
 import axios from 'axios';
-import { puts } from 'util';
 
-export default{
+export default {
 
-    async get(url){
+    async get(url) {
         return axios.get(url)
-        .then(response => {
-            return response.data;
-        })
+            .then(response => {
+                return response.data;
+            })
     },
 
-    async post(url, payload){
+    async post(url, payload) {
         const response = await axios.post(url, payload);
         return response.data;
     },
 
-    async put(url, payload){
+    async put(url, payload) {
         const response = await axios.put(url, payload);
         return response.data;
     },
 
-    async delete(url){
+    async patch(url) {
+        const response = await axios.patch(url);
+        return response.data;
+    },
+
+    async delete(url) {
         return axios.delete(url)
-        .then(response => {
-            return response.data;
-        })
+            .then(response => {
+                return response.data;
+            })
     }
 }

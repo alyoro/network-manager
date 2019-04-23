@@ -17,6 +17,20 @@
         <div>{{port.portOnTheUpperElement}}</div>
       </v-flex>
 
+      <v-flex xs12 md6 class="pa-1">
+        <div class="grey--text subheading">Port status</div>
+        <v-chip
+          v-show="port.portStatus == 'UP'"
+          color="success"
+          @click="changePortStatus(port.id)"
+        >{{port.portStatus}}</v-chip>
+        <v-chip
+          v-show="port.portStatus == 'DOWN'"
+          color="error"
+          @click="changePortStatus(port.id)"
+        >{{port.portStatus}}</v-chip>
+      </v-flex>
+
       <v-flex xs12 md6 lg2 class="pa-1">
         <UpdatePortDialog
           :deviceId="deviceId"
@@ -69,6 +83,15 @@ export default {
         portId: portId,
         type: this.deviceType
       });
+    },
+
+    changePortStatus(id) {
+      this.$store
+        .dispatch("moduleData/changePortStatus", {
+          deviceId: this.deviceId,
+          portId: id,
+          type: this.deviceType
+        });
     }
   }
 };

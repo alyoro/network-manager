@@ -180,10 +180,24 @@ const moduleData = {
         }
       }
     },
+
+    updatePortInStore: (state, payload) => {
+      const indexType = state.data.findIndex(item => item.type == payload.type)
+      if (indexType > -1) {
+        const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.deviceId)
+        if (indexDevice > -1) {
+          const indexPort = state.data[indexType].devices[indexDevice].ports.findIndex(item => item.id == payload.portId)
+          if (indexPort > -1) {
+            Vue.set(state.data[indexType].devices[indexDevice].ports, indexPort, payload.port)
+          }
+        }
+      }
+    },
     setCountedDevices: (state, payload) => {
       state.countedDevices = payload
     }
   },
+
   actions: {
     getAll: (context, payload) => {
       NetworkManagerBackend.get(payload.url)
@@ -214,24 +228,41 @@ const moduleData = {
     },
     updatePortToServer: (context, payload) => {
       NetworkManagerBackend.put(payload.url, payload.port)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => console.log('Error: '+ error));
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => console.log('Error: ' + error));
     },
-    getCountedDevices(context) {
+    getCountedDevices: (context) => {
       return new Promise((resolve, reject) => {
         const url = "/countingdevices"
         NetworkManagerBackend.get(url)
-        .then(response => {
-          context.commit("setCountedDevices", response)
-          resolve()
-        })
-        .catch(error => {
-          console.log('Error: ' + error)
-          reject()
-        });
+          .then(response => {
+            context.commit("setCountedDevices", response)
+            resolve()
+          })
+          .catch(error => {
+            console.log('Error: ' + error)
+            reject()
+          });
       })
+    },
+    changePortStatus: (context, payload) => {
+        const url = "/ports/" + payload.portId
+        NetworkManagerBackend.patch(url)
+          .then(response => {
+            const updatePort = {
+              type: payload.type,
+              deviceId: payload.deviceId,
+              portId: payload.portId,
+              port: response
+            }
+            context.commit("updatePortInStore", updatePort);
+          })
+          .catch(error => {
+            console.log('Error: ' + error)
+            alert(error.response.data.message)
+          });
     }
   },
 }

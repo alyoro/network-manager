@@ -3,7 +3,7 @@
         <h1 class="subheading">Add New</h1>
 
         <v-container class="my-5">
-            <AddNewStepper />
+            <AddNewStepper :deviceType="deviceType"/>
         </v-container>
     </div>
 </template>
@@ -12,6 +12,7 @@
 import AddNewStepper from '../components/AddNewStepper.vue'
 
 export default {
+    props: ['deviceType'],
     components:{
         AddNewStepper,
     }

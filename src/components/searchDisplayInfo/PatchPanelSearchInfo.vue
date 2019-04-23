@@ -35,16 +35,19 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
+              <v-btn @click="showConnections(item)" flat @click.native.stop>Show Connections</v-btn>
+            </v-flex>
+
+            <v-flex xs12 md6 lg2 class="pa-1">
               <AddPortDialog :deviceID="item.id" :deviceType="deviceType"/>
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
               <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
             </v-flex>
-
           </v-layout>
         </div>
-          <PortsSearchInfo :ports="item.ports" :deviceId="item.id" :deviceType="deviceType"/>
+        <PortsSearchInfo :ports="item.ports" :deviceId="item.id" :deviceType="deviceType"/>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-container>
@@ -54,7 +57,7 @@
 import searchInfoMixin from "@/mixins/searchInfoMixin";
 
 export default {
-  mixins: [searchInfoMixin],
+  mixins: [searchInfoMixin]
 };
 </script>
 

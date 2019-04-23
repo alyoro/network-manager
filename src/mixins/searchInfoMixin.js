@@ -26,6 +26,14 @@ const searchInfoMixin = {
         id: id,
         type: this.deviceType
       });
+    },
+    showConnections(item){
+      this.$router.push({
+        name: 'connect',
+        params: {
+          item: item
+        }
+      })
     }
   }
 }

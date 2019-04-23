@@ -121,6 +121,11 @@ import AccessPointInfoToSend from "@/components/infoToSend/AccessPointInfoToSend
 import IPPhoneInfoToSend from "@/components/infoToSend/IPPhoneInfoToSend.vue";
 
 export default {
+  props: {
+    deviceType: {
+      default: 'PatchPanel'
+    }
+  },
   components: {
     PatchPanelAddForm,
     RoomSocketAddForm,
@@ -141,7 +146,7 @@ export default {
   data() {
     return {
       stepperStage: 0,
-      radioDevice: "PatchPanel"
+      radioDevice: this.deviceType
     };
   },
   computed: {

@@ -17,7 +17,7 @@
             <v-btn>View</v-btn>
           </v-flex>
           <v-flex xs3 sm2 md1>
-            <v-btn router-link :to="{name: 'add'}">Add</v-btn>
+            <v-btn router-link @click="goToAddView(item.type)">Add</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
         </v-layout>
@@ -40,6 +40,16 @@ export default {
     ...mapGetters({
       getCountedDevices: "moduleData/getCountedDevices"
     })
+  },
+  methods: {
+    goToAddView(type){
+      this.$router.push({
+        name: 'add',
+        params: {
+          deviceType: type
+        }
+      })
+    }
   },
   created() {
     this.$store.dispatch("moduleData/getCountedDevices").then(response => {

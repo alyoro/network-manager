@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from './views/Dashboard.vue';
+import Search from './views/Search.vue';
+import AddNew from './views/AddNew.vue';
+import ConnectDevices from './views/ConnectDevices.vue';
 
 Vue.use(Router);
 
@@ -16,17 +19,19 @@ export default new Router({
     {
       path: '/search',
       name: 'search',
-      component: () => import('./views/Search.vue'),
+      component: Search
     },
     {
       path: '/add',
       name: 'add',
-      component: () => import('./views/AddNew.vue'),
+      component: AddNew,
+      props: true
     },
     {
       path: '/connect',
       name: 'connect',
-      component: () => import('./views/ConnectDevices.vue'),
+      component: ConnectDevices,
+      props: true
     },
   ],
 });

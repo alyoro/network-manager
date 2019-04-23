@@ -20,6 +20,10 @@
             </v-flex>
 
             <v-flex xs12 md6 lg2 class="pa-1">
+              <v-btn @click="showConnections(item)" flat @click.native.stop>Show Connections</v-btn>
+            </v-flex>
+
+            <v-flex xs12 md6 lg2 class="pa-1">
               <AddPortDialog :deviceID="item.id" :deviceType="deviceType"/>
             </v-flex>
 
@@ -38,7 +42,7 @@
 import searchInfoMixin from "@/mixins/searchInfoMixin";
 
 export default {
-  mixins: [searchInfoMixin],
+  mixins: [searchInfoMixin]
 };
 </script>
 

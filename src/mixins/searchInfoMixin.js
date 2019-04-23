@@ -1,11 +1,12 @@
 import { mapGetters } from "vuex";
 import AddPortDialog from "@/components/addForms/AddPortDialog.vue";
-import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
+import PortsSearchInfo from "@/components/searchDisplayInfo/PortsSearchInfo.vue";
+
 
 const searchInfoMixin = {
   components: {
     AddPortDialog,
-    UpdatePortDialog
+    PortsSearchInfo
   },
 
   props: {
@@ -16,26 +17,13 @@ const searchInfoMixin = {
   },
   computed: {
     ...mapGetters({
-      getNameByType: "getNameByType",
       getData: "moduleData/getData"
     })
   },
   methods: {
-    displayDevicePlugged(devicePlugged) {
-      return this.getNameByType(devicePlugged);
-    },
-
     deleteDevice(id) {
       this.$store.dispatch("moduleData/deleteDevice", {
         id: id,
-        type: this.deviceType
-      });
-    },
-
-    deletePort(deviceId, portId) {
-      this.$store.dispatch("moduleData/deletePort", {
-        deviceId: deviceId,
-        portId: portId,
         type: this.deviceType
       });
     }

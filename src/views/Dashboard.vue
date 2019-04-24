@@ -38,7 +38,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      getCountedDevices: "moduleData/getCountedDevices"
+      getCountedDevices: "moduleData/getCountedDevices",
+      getUrlByType: "getUrlByType"
     })
   },
   methods: {
@@ -51,6 +52,10 @@ export default {
       })
     },
     goToSearch(type){
+      var payload = {
+        url: "/"+ this.getUrlByType(type)
+      }
+      this.$store.dispatch("moduleData/getAll",payload)
       this.$router.push({
         name: 'search',
         params: {

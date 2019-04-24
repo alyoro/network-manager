@@ -21,11 +21,14 @@
         <div class="grey--text subheading">Connection Status</div>
         <v-menu offset-y auto>
           <template v-slot:activator="{ on }">
-            <v-btn v-if="port.connections === null" v-on="on" @click.native.stop color="cyan">Free</v-btn>
-            <v-btn v-else color="purple" v-on="on" @click.native.stop>Occupied</v-btn>
+            <v-btn v-if="port.connections === null" color="cyan accent-3" v-on="on" @click.native.stop>Free</v-btn>
+            <v-btn v-else color="pink accent-2" v-on="on" @click.native.stop>Occupied</v-btn>
           </template>
           <v-list>
-            <v-list-tile v-if="port.connections === null" @click="makeConnections(port, 'PatchPanel')">
+            <v-list-tile
+              v-if="port.connections === null"
+              @click="makeConnections(port, 'PatchPanel')"
+            >
               <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
             </v-list-tile>
             <v-list-tile v-if="port.connections === null" @click="makeConnections(port, 'Switch')">
@@ -90,7 +93,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getNameByType: "getNameByType"
+      getNameByType: "getNameByType",
+      getUrlByType: "getUrlByType"
     })
   },
   methods: {
@@ -98,7 +102,29 @@ export default {
       return this.getNameByType(devicePlugged);
     },
 
-    makeConnections(port, deviceType) {},
+    makeConnections(port, deviceType) {
+      if (deviceType === "PatchPanel") {
+        var payload = {
+          devType: deviceType,
+          url: "/" + this.getUrlByType(deviceType)
+        };
+        this.$store.dispatch("moduleData/getAll", payload);
+      } else if (deviceType === "Switch") {
+        var payload = {
+          devType: deviceType,
+          url: "/" + this.getUrlByType(deviceType)
+        };
+        this.$store.dispatch("moduleData/getAll", payload);
+      }
+
+      this.$router.push({
+        name: "connecting",
+        params: {
+          type: deviceType,
+          portSlave: port
+        }
+      });
+    },
 
     disconnectPort(id) {},
 

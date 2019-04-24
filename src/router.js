@@ -4,6 +4,7 @@ import Dashboard from './views/Dashboard.vue';
 import Search from './views/Search.vue';
 import AddNew from './views/AddNew.vue';
 import ConnectDevices from './views/ConnectDevices.vue';
+import ConnectingDevices from './views/ConnectingDevices.vue';
 
 Vue.use(Router);
 
@@ -29,10 +30,16 @@ export default new Router({
       props: true
     },
     {
-      path: '/connect',
-      name: 'connect',
+      path: '/connected',
+      name: 'connected',
       component: ConnectDevices,
       props: true
     },
+    {
+      path: '/connecting',
+      name: 'connecting',
+      component: ConnectingDevices,
+      props: true
+    }
   ],
 });

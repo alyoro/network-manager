@@ -65,7 +65,8 @@ export default {
       port: {
         portNumber: null,
         portOnTheUpperElement: null,
-        devicePlugged: null
+        devicePlugged: null,
+        portStatus: 'DOWN'
       }, portTypes: [
         {name: "Physical", value: "physical"},
         {name: "Logical", value: "logical"}

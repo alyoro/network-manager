@@ -4,7 +4,7 @@ const connectionMixim = {
       if (direction == 'UP') {
         this.$store.dispatch("moduleConnections/fetchDevicesLvlUp", {item: item})
         this.$router.push({
-          name: 'connect',
+          name: 'connected',
           params: {
             direction: direction
           }
@@ -12,7 +12,7 @@ const connectionMixim = {
       } else {
         this.$store.dispatch("moduleConnections/fetchDevicesLvlDown", {item: item})
         this.$router.push({
-          name: 'connect',
+          name: 'connected',
           params: {
             direction: direction
           }

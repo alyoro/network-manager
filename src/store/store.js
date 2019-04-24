@@ -311,6 +311,17 @@ const moduleConnections = {
         .catch(error => {
           console.log('Error: ' + error)
         })
+    },
+    makeConnection: (context,ports) => {
+      const url = "/connections"
+      NetworkManagerBackend.post(url, ports)
+      .then(response => {
+        console.log(response)
+        alert("Succesfuly added connection!")
+      })
+      .catch(error => {
+        console.log('Error: ' + error)
+      })
     }
   }
 }

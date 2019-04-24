@@ -18,14 +18,35 @@
       </v-flex>
 
       <v-flex xs12 md6 class="pa-1">
+        <div class="grey--text subheading">Connection Status</div>
+        <v-menu offset-y auto>
+          <template v-slot:activator="{ on }">
+            <v-btn v-if="port.connections === null" v-on="on" @click.native.stop color="cyan">Free</v-btn>
+            <v-btn v-else color="purple" v-on="on" @click.native.stop>Occupied</v-btn>
+          </template>
+          <v-list>
+            <v-list-tile v-if="port.connections === null" @click="makeConnections(port, 'PatchPanel')">
+              <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-if="port.connections === null" @click="makeConnections(port, 'Switch')">
+              <v-list-tile-title>Make connection to Switch</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-else @click="disconnectPort(port.id)">
+              <v-list-tile-title>Disconnect Port</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-flex>
+
+      <v-flex xs12 md6 class="pa-1">
         <div class="grey--text subheading">Port status</div>
         <v-chip
-          v-show="port.portStatus == 'UP'"
+          v-if="port.portStatus == 'UP'"
           color="success"
           @click="changePortStatus(port.id)"
         >{{port.portStatus}}</v-chip>
         <v-chip
-          v-show="port.portStatus == 'DOWN'"
+          v-if="port.portStatus == 'DOWN'"
           color="error"
           @click="changePortStatus(port.id)"
         >{{port.portStatus}}</v-chip>
@@ -77,6 +98,10 @@ export default {
       return this.getNameByType(devicePlugged);
     },
 
+    makeConnections(port, deviceType) {},
+
+    disconnectPort(id) {},
+
     deletePort(deviceId, portId) {
       this.$store.dispatch("moduleData/deletePort", {
         deviceId: deviceId,
@@ -86,12 +111,11 @@ export default {
     },
 
     changePortStatus(id) {
-      this.$store
-        .dispatch("moduleData/changePortStatus", {
-          deviceId: this.deviceId,
-          portId: id,
-          type: this.deviceType
-        });
+      this.$store.dispatch("moduleData/changePortStatus", {
+        deviceId: this.deviceId,
+        portId: id,
+        type: this.deviceType
+      });
     }
   }
 };

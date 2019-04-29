@@ -12,27 +12,21 @@
             v-model="devType"
             :items="getDeviceTypes"
           ></v-select>
-          <v-text-field v-model="identifier" label="Search for ID (whatever it can be)"></v-text-field>
+          <!-- <v-text-field v-model="identifier" label="Search for ID (whatever it can be)"></v-text-field> -->
           <v-btn color="primary" @click="searchForData()">Search</v-btn>
         </v-form>
-
-        <v-divider></v-divider>
 
         <div v-if="devType === 'PatchPanel'">
           <PatchPanelSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
 
-        <div v-if="devType === 'RoomSocket'">
+        <!-- <div v-if="devType === 'RoomSocket'">
           <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
-        </div>
+        </div> -->
 
         <div v-if="devType === 'Switch'">
           <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
-        <!--
-        <div v-if="devType === 'Router'">
-          <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
-        </div>-->
 
         <div v-if="devType === 'Server'">
           <ServerSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>

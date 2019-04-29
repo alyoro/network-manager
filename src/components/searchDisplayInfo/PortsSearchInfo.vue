@@ -1,84 +1,119 @@
 <template>
-  <div>
-    <v-divider></v-divider>
-    <v-layout row class="pa-1" v-for="port in ports" :key="port.id">
-      <v-flex xs12 md6 class="pa-1">
-        <div class="grey--text subheading">Port number</div>
-        <div>{{port.portNumber}}</div>
-      </v-flex>
+  <v-dialog v-model="dialog" max-width="1600px">
+    <template v-slot:activator="{ on }">
+      <v-btn flat v-on="on">Show Ports</v-btn>
+    </template>
+    <v-card color="white" hide-overlay>
+      <v-toolbar dark color="primary">
+        <v-toolbar-title>Ports</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon dark @click="dialog = false">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-subheader v-if="orderedPorts != []" class="px-3 text-md-center align-center">
+        <v-flex xs12 md6>Port Number</v-flex>
+        <v-flex xs12 md6>Device plugged</v-flex>
+        <v-flex xs12 md8>Port on the other side of connection</v-flex>
+        <v-flex xs12 md6><button type="click">Connection Status</button > </v-flex>
+        <v-flex xs12 md6>Port status</v-flex>
+        <v-flex xs12 md6>Update Port</v-flex>
+        <v-flex xs12 md6>Delete Port</v-flex>
+      </v-subheader>
+      <v-subheader v-else class="px-3 text-md-center align-center">
+        <v-flex lg12>Device has no ports</v-flex>
+      </v-subheader>
 
-      <v-flex xs12 md6 class="pa-1">
-        <div class="grey--text subheading">Device plugged</div>
-        <div>{{displayDevicePlugged(port.devicePlugged)}}</div>
-      </v-flex>
+      <v-list flat xl2 v-for="port in orderedPorts" :key="port.id">
+        <v-divider></v-divider>
 
-      <v-flex xs12 md6 class="pa-1">
-        <div class="grey--text subheading">portOnTheUpperElement</div>
-        <div>{{port.portOnTheUpperElement}}</div>
-      </v-flex>
+        <v-layout row class="px-3 text-md-center align-center">
+          <v-flex xs12 md6>
+            <div>{{port.portNumber}}</div>
+          </v-flex>
 
-      <v-flex xs12 md6 class="pa-1">
-        <div class="grey--text subheading">Connection Status</div>
-        <v-menu offset-y auto>
-          <template v-slot:activator="{ on }">
-            <v-btn v-if="port.connections === null" color="cyan accent-3" v-on="on" @click.native.stop>Free</v-btn>
-            <v-btn v-else color="pink accent-2" v-on="on" @click.native.stop>Occupied</v-btn>
-          </template>
-          <v-list>
-            <v-list-tile
-              v-if="port.connections === null"
-              @click="makeConnections(port, 'PatchPanel')"
-            >
-              <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile v-if="port.connections === null" @click="makeConnections(port, 'Switch')">
-              <v-list-tile-title>Make connection to Switch</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile v-else @click="disconnectPort(port.id)">
-              <v-list-tile-title>Disconnect Port</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-      </v-flex>
+          <v-flex xs12 md6>
+            <div>{{displayDevicePlugged(port.devicePlugged)}}</div>
+          </v-flex>
 
-      <v-flex xs12 md6 class="pa-1">
-        <div class="grey--text subheading">Port status</div>
-        <v-chip
-          v-if="port.portStatus == 'UP'"
-          color="success"
-          @click="changePortStatus(port.id)"
-        >{{port.portStatus}}</v-chip>
-        <v-chip
-          v-if="port.portStatus == 'DOWN'"
-          color="error"
-          @click="changePortStatus(port.id)"
-        >{{port.portStatus}}</v-chip>
-      </v-flex>
+          <v-flex xs12 md8>
+            <div>{{port.portOnTheUpperElement}}</div>
+          </v-flex>
 
-      <v-flex xs12 md6 lg2 class="pa-1">
-        <UpdatePortDialog
-          :deviceId="deviceId"
-          :deviceType="deviceType"
-          :portId="port.id"
-          :port="port"
-        />
-      </v-flex>
+          <v-flex xs12 md6>
+            <v-menu offset-y auto>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  v-if="port.connections === null"
+                  color="cyan accent-3"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Free</v-btn>
+                <v-btn v-else color="pink accent-2" flat v-on="on" @click.native.stop>Occupied</v-btn>
+              </template>
+              <v-list>
+                <v-list-tile
+                  v-if="port.connections === null"
+                  @click="makeConnections(port, 'PatchPanel')"
+                >
+                  <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile
+                  v-if="port.connections === null"
+                  @click="makeConnections(port, 'Switch')"
+                >
+                  <v-list-tile-title>Make connection to Switch</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile v-else @click="disconnectPort(port.id)">
+                  <v-list-tile-title>Disconnect Port</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </v-flex>
 
-      <v-flex xs12 md6 lg2 class="pa-1">
-        <v-btn @click="deletePort(deviceId, port.id)" @click.native.stop flat>DELETE</v-btn>
-      </v-flex>
-    </v-layout>
-  </div>
+          <v-flex xs12 md6>
+            <v-btn
+              v-if="port.portStatus == 'UP'"
+              color="success"
+              flat
+              @click="changePortStatus(port.id)"
+            >{{port.portStatus}}</v-btn>
+            <v-btn
+              v-if="port.portStatus == 'DOWN'"
+              color="error"
+              flat
+              @click="changePortStatus(port.id)"
+            >{{port.portStatus}}</v-btn>
+          </v-flex>
+
+          <v-flex xs12 md6>
+            <UpdatePortDialog
+              :deviceId="deviceId"
+              :deviceType="deviceType"
+              :portId="port.id"
+              :port="port"
+            />
+          </v-flex>
+
+          <v-flex xs12 md6>
+            <v-btn @click="deletePort(deviceId, port.id)" @click.native.stop flat>DELETE</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-list>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import _ from 'lodash';
 import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
 
 export default {
   props: {
     ports: {
-      required: true
+      default: []
     },
     deviceType: {
       type: String,
@@ -91,7 +126,15 @@ export default {
   components: {
     UpdatePortDialog
   },
+  data() {
+    return {
+      dialog: false,
+    };
+  },
   computed: {
+    orderedPorts () {
+      return _.orderBy(this.ports, 'portNumber')
+    },
     ...mapGetters({
       getNameByType: "getNameByType",
       getUrlByType: "getUrlByType"

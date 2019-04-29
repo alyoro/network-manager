@@ -335,9 +335,8 @@ export default new Vuex.Store({
   state: {
     deviceTypes: [
       { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels' },
-      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
+      // { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
       { name: 'Switch', idType: 'Switch', apiUrl: 'switches' },
-      // { name: 'Router', idType: 'Router', apiUrl: 'routers'},
       { name: 'Server', idType: 'Server', apiUrl: 'servers' },
       { name: 'Printer', idType: 'Printer', apiUrl: 'printers' },
       { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },

@@ -11,20 +11,36 @@
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-subheader v-if="orderedPorts != []" class="px-3 text-md-center align-center">
+      <v-subheader class="px-3 text-md-center align-center">
         <v-flex xs12 md6>Port Number</v-flex>
         <v-flex xs12 md6>Device plugged</v-flex>
-        <v-flex xs12 md8>Port on the other side of connection</v-flex>
-        <v-flex xs12 md6><button type="click">Connection Status</button > </v-flex>
+        <v-flex xs12 md8>Port number on the other side of connection</v-flex>
+        <v-flex xs12 md6>
+          <v-menu offset-y auto>
+            <template v-slot:activator="{ on }">
+              <button flat v-on="on" @click.native.stop>Connection Status</button>
+            </template>
+            <v-list>
+              <v-list-tile @click="changeFilter('all')">
+                <v-list-tile-title>Show All</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="changeFilter('free')">
+                <v-list-tile-title>Only Free</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="changeFilter('connected')">
+                <v-list-tile-title>Only Connected</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-flex>
         <v-flex xs12 md6>Port status</v-flex>
         <v-flex xs12 md6>Update Port</v-flex>
         <v-flex xs12 md6>Delete Port</v-flex>
       </v-subheader>
-      <v-subheader v-else class="px-3 text-md-center align-center">
-        <v-flex lg12>Device has no ports</v-flex>
-      </v-subheader>
 
-      <v-list flat xl2 v-for="port in orderedPorts" :key="port.id">
+      <v-flex lg12 v-if="!filteredPorts.length" class="pa-3 text-md-center align-center title grey--text">No ports (change filterng)</v-flex>
+
+      <v-list flat xl2 v-for="port in filteredPorts" :key="port.id">
         <v-divider></v-divider>
 
         <v-layout row class="px-3 text-md-center align-center">
@@ -37,7 +53,7 @@
           </v-flex>
 
           <v-flex xs12 md8>
-            <div>{{port.portOnTheUpperElement}}</div>
+            <div>{{port.portOnTheOtherElement}}</div>
           </v-flex>
 
           <v-flex xs12 md6>
@@ -107,7 +123,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import _ from 'lodash';
+import _ from "lodash";
 import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
 
 export default {
@@ -129,11 +145,25 @@ export default {
   data() {
     return {
       dialog: false,
+      activeFilter: "all"
     };
   },
   computed: {
-    orderedPorts () {
-      return _.orderBy(this.ports, 'portNumber')
+    orderedPorts() {
+      return _.orderBy(this.ports, "portNumber");
+    },
+    filteredPorts() {
+      if (this.activeFilter === "all") {
+        return this.orderedPorts;
+      } else if (this.activeFilter === "connected") {
+        return this.orderedPorts.filter(port => {
+          if (port.connections !== null) return port;
+        });
+      } else if (this.activeFilter === "free") {
+        return this.orderedPorts.filter(port => {
+          if (port.connections === null) return port;
+        });
+      }
     },
     ...mapGetters({
       getNameByType: "getNameByType",
@@ -141,6 +171,9 @@ export default {
     })
   },
   methods: {
+    changeFilter(filter) {
+      this.activeFilter = filter
+    },
     displayDevicePlugged(devicePlugged) {
       return this.getNameByType(devicePlugged);
     },

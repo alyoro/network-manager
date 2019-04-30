@@ -4,7 +4,7 @@ import _ from "lodash";
 const connectedMixin = {
   props: {
     ports: {
-      required: true
+      type: Array
     },
     deviceType: {
       type: String,
@@ -44,30 +44,6 @@ const connectedMixin = {
   methods: {
     changeFilter(filter) {
       this.activeFilter = filter;
-    },
-
-    makeConnections(port, deviceType) {
-      if (deviceType === "PatchPanel") {
-        var payload = {
-          devType: deviceType,
-          url: "/" + this.getUrlByType(deviceType)
-        };
-        this.$store.dispatch("moduleData/getAll", payload);
-      } else if (deviceType === "Switch") {
-        var payload = {
-          devType: deviceType,
-          url: "/" + this.getUrlByType(deviceType)
-        };
-        this.$store.dispatch("moduleData/getAll", payload);
-      }
-
-      this.$router.push({
-        name: "connecting",
-        params: {
-          type: deviceType,
-          portSlave: port
-        }
-      });
     },
 
     showConnectedDevice(port) {

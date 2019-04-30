@@ -153,9 +153,11 @@ const moduleData = {
     setData: (state, payload) => {
       const index = state.data.findIndex(item => item.type == payload.type)
       if (index > -1) {
-        state.data[index].type = payload.type
-        state.data[index].devices = payload.reciviedData
+        // state.data[index].type = { ...state.data[index].type, payload.type}
+        state.data[index].devices = payload.reciviedData.filter(item => {return item})
       }
+
+
     },
     addCreatedPort: (state, payload) => {
       const indexType = state.data.findIndex(item => item.type == payload.type)

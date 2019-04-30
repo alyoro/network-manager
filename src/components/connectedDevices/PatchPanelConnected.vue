@@ -11,7 +11,6 @@
       <v-flex xs12 md6>Number of Ports</v-flex>
     </v-subheader>
 
-
     <v-layout row class="text-md-center align-center">
       <v-flex xs12 md6>
         <div>{{item.building}}</div>

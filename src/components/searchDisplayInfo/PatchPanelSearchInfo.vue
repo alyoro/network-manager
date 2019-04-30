@@ -12,7 +12,7 @@
       <v-flex xs12 md6>Delete Device</v-flex>
     </v-subheader>
 
-    <v-list flat v-for="item in getData(deviceType)" :key="item.id">
+    <v-list flat v-for="(item, index) in getData(deviceType)" :key="index">
       <v-divider></v-divider>
       <v-layout row class="text-md-center align-center">
         <v-flex xs12 md6>

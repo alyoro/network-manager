@@ -40,14 +40,14 @@
 
       <v-flex
         lg12
-        v-if="!filteredPorts.length"
+        v-if="!filteredPorts"
         class="pa-3 text-md-center align-center title grey--text"
       >No ports (change filterng)</v-flex>
 
-      <v-list flat xl2 v-for="port in filteredPorts" :key="port.id">
+      <v-list flat xl2 >
         <v-divider></v-divider>
 
-        <v-layout row class="px-3 text-md-center align-center">
+        <v-layout v-for="(port, index) in filteredPorts" :key="index" row class="px-3 text-md-center align-center">
           <v-flex xs12 md6>
             <div>{{port.portNumber}}</div>
           </v-flex>
@@ -71,14 +71,14 @@
                   @click.native.stop
                 >Free</v-btn>
                 <v-btn
-                  v-if="port.connections && port.id === port.connections[0].portIdStart"
+                  v-else-if="port.id === port.connections[0].portIdStart"
                   color="pink accent-2"
                   flat
                   v-on="on"
                   @click.native.stop
                 >Connected UP</v-btn>
                 <v-btn
-                  v-if="port.connections && port.id === port.connections[0].portIdEnd"
+                  v-else-if="port.id === port.connections[0].portIdEnd"
                   color="pink accent-2"
                   flat
                   v-on="on"
@@ -86,18 +86,7 @@
                 >Connected DOWN</v-btn>
               </template>
               <v-list>
-                <v-list-tile
-                  v-if="port.connections === null"
-                  @click="makeConnections(port, 'PatchPanel')"
-                >
-                  <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile
-                  v-if="port.connections === null"
-                  @click="makeConnections(port, 'Switch')"
-                >
-                  <v-list-tile-title>Make connection to Switch</v-list-tile-title>
-                </v-list-tile>
+                <ConnectingDeviceDialog :port="port" />
 
                 <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
                   <v-list-tile-title>Disconnect Port</v-list-tile-title>
@@ -147,11 +136,14 @@ import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
 import ConnectedDeviceDialog from "@/components/connectedDevices/ConnectedDeviceDialog.vue";
 import connectedMixin from "@/mixins/connectedMixin";
 
+import ConnectingDeviceDialog from "@/components/connectingDevices/ConnectingDeviceDialog.vue";
+
 export default {
   mixins: [connectedMixin],
   components: {
     UpdatePortDialog,
-    ConnectedDeviceDialog
+    ConnectedDeviceDialog,
+    ConnectingDeviceDialog
   },
   data() {
     return {

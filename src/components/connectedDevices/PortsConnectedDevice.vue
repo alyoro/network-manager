@@ -50,14 +50,14 @@
               @click.native.stop
             >Free</v-btn>
             <v-btn
-              v-if="port.connections && port.id === port.connections[0].portIdStart"
+              v-else-if="port.id === port.connections[0].portIdStart"
               color="pink accent-2"
               flat
               v-on="on"
               @click.native.stop
             >Connected UP</v-btn>
             <v-btn
-              v-if="port.connections && port.id === port.connections[0].portIdEnd"
+              v-else-if="port.id === port.connections[0].portIdEnd"
               color="pink accent-2"
               flat
               v-on="on"

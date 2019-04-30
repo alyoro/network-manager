@@ -134,12 +134,23 @@ const moduleData = {
       return state.countedDevices
     },
     getDeviceByPortId: (state) => (payload) => {
-      for(let dataIndex of state.data){
-        for(let deviceIndex of dataIndex.devices){
-          for(let portIndex of deviceIndex.ports){
-            if(portIndex.id === payload.id){
-              Vue.set(deviceIndex,"deviceType",dataIndex.type)
+      for (let dataIndex of state.data) {
+        for (let deviceIndex of dataIndex.devices) {
+          for (let portIndex of deviceIndex.ports) {
+            if (portIndex.id === payload.id) {
+              Vue.set(deviceIndex, "deviceType", dataIndex.type)
               return deviceIndex;
+            }
+          }
+        }
+      }
+    },
+    getDeviceTypeByPortId: (state) => (payload) => {
+      for (let dataIndex of state.data) {
+        for (let deviceIndex of dataIndex.devices) {
+          for (let portIndex of deviceIndex.ports) {
+            if (portIndex.id === payload.id) {
+              return dataIndex.type;
             }
           }
         }
@@ -154,7 +165,7 @@ const moduleData = {
       const index = state.data.findIndex(item => item.type == payload.type)
       if (index > -1) {
         // state.data[index].type = { ...state.data[index].type, payload.type}
-        state.data[index].devices = payload.reciviedData.filter(item => {return item})
+        state.data[index].devices = payload.reciviedData.filter(item => { return item })
       }
 
 
@@ -206,6 +217,20 @@ const moduleData = {
         }
       }
     },
+
+    updatePortConnection: (state, payload) => {
+      for (let dataIndex of state.data) {
+        for (let deviceIndex of dataIndex.devices) {
+          for (let portIndex of deviceIndex.ports) {
+            if (portIndex.id === payload.id) {
+              portIndex.connections = []
+              portIndex.connections.push(payload.connection)
+            }
+          }
+        }
+      }
+    },
+
     setCountedDevices: (state, payload) => {
       state.countedDevices = payload
     }
@@ -304,7 +329,7 @@ const moduleConnections = {
     },
     updatePort: (state, payload) => {
       const indexPort = state.deviceConnected.ports.findIndex(item => item.id == payload.portId)
-      Vue.set(state.deviceConnected.ports,indexPort,payload.port)
+      Vue.set(state.deviceConnected.ports, indexPort, payload.port)
     }
   },
   actions: {
@@ -318,16 +343,16 @@ const moduleConnections = {
           console.log('Error: ' + error)
         })
     },
-    makeConnection: (context,ports) => {
+    makeConnection: (context, ports) => {
       const url = "/connections"
       NetworkManagerBackend.post(url, ports)
-      .then(response => {
-        console.log(response)
-        alert("Succesfuly added connection!")
-      })
-      .catch(error => {
-        console.log('Error: ' + error)
-      })
+        .then(response => {
+          context.commit("moduleData/updatePortConnection", {id: ports[0].id, connection: response}, { root: true })
+          context.commit("moduleData/updatePortConnection", {id: ports[1].id, connection: response}, { root: true })
+        })
+        .catch(error => {
+          console.log('Error: ' + error)
+        })
     }
   }
 }

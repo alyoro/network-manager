@@ -53,7 +53,7 @@
           </v-flex>
 
           <v-flex xs12 md6>
-            <div>{{displayDevicePlugged(port.devicePlugged)}}</div>
+            <div>{{getNameByType(port.devicePlugged)}}</div>
           </v-flex>
 
           <v-flex xs12 md8>
@@ -143,23 +143,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import _ from "lodash";
 import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
 import ConnectedDeviceDialog from "@/components/connectionDevices/ConnectedDeviceDialog.vue";
+import connectedMixin from "@/mixins/connectedMixin";
 
 export default {
-  props: {
-    ports: {
-      default: []
-    },
-    deviceType: {
-      type: String,
-      required: true
-    },
-    deviceId: {
-      required: true
-    }
-  },
+  mixins: [connectedMixin],
   components: {
     UpdatePortDialog,
     ConnectedDeviceDialog
@@ -167,92 +156,18 @@ export default {
   data() {
     return {
       dialog: false,
-      activeFilter: "All",
-      connectedDeviceDialog: false
     };
   },
   computed: {
-    orderedPorts() {
-      return _.orderBy(this.ports, "portNumber");
-    },
-    filteredPorts() {
-      if (this.activeFilter === "All") {
-        return this.orderedPorts;
-      } else if (this.activeFilter === "Connected") {
-        return this.orderedPorts.filter(port => {
-          if (port.connections !== null) return port;
-        });
-      } else if (this.activeFilter === "Free") {
-        return this.orderedPorts.filter(port => {
-          if (port.connections === null) return port;
-        });
-      }
-    },
     ...mapGetters({
-      getNameByType: "getNameByType",
-      getUrlByType: "getUrlByType",
       getDeviceConnected: "moduleConnections/getDeviceConnected"
     })
   },
   methods: {
-    changeFilter(filter) {
-      this.activeFilter = filter;
-    },
-    displayDevicePlugged(devicePlugged) {
-      return this.getNameByType(devicePlugged);
-    },
-
-    makeConnections(port, deviceType) {
-      if (deviceType === "PatchPanel") {
-        var payload = {
-          devType: deviceType,
-          url: "/" + this.getUrlByType(deviceType)
-        };
-        this.$store.dispatch("moduleData/getAll", payload);
-      } else if (deviceType === "Switch") {
-        var payload = {
-          devType: deviceType,
-          url: "/" + this.getUrlByType(deviceType)
-        };
-        this.$store.dispatch("moduleData/getAll", payload);
-      }
-
-      this.$router.push({
-        name: "connecting",
-        params: {
-          type: deviceType,
-          portSlave: port
-        }
-      });
-    },
-
-    showConnectedDevice(port) {
-      if (port.id === port.connections[0].portIdStart) {
-        this.$store.dispatch("moduleConnections/fetchConnectedDeviceByPortId", {
-          id: port.connections[0].portIdEnd
-        });
-      } else {
-        this.$store.dispatch("moduleConnections/fetchConnectedDeviceByPortId", {
-          id: port.connections[0].portIdStart
-        });
-      }
-      this.connectedDeviceDialog = true;
-    },
-
-    disconnectPort(port) {},
-
     deletePort(deviceId, portId) {
       this.$store.dispatch("moduleData/deletePort", {
         deviceId: deviceId,
         portId: portId,
-        type: this.deviceType
-      });
-    },
-
-    changePortStatus(id) {
-      this.$store.dispatch("moduleData/changePortStatus", {
-        deviceId: this.deviceId,
-        portId: id,
         type: this.deviceType
       });
     }

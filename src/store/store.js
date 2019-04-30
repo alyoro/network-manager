@@ -344,7 +344,7 @@ export default new Vuex.Store({
       { name: 'Server', idType: 'Server', apiUrl: 'servers' },
       { name: 'Printer', idType: 'Printer', apiUrl: 'printers' },
       { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },
-      { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
+      // { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
       { name: 'None', idType: 'None' },
     ],
   },

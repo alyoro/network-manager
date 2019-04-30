@@ -15,26 +15,42 @@
       </v-toolbar>
 
       <div v-if="getDeviceConnected.deviceType === 'PatchPanel'">
-       <PatchPanelConnection :item="getDeviceConnected"/>
+        <PatchPanelConnected :item="getDeviceConnected"/>
       </div>
 
-      <!-- <div v-if="getDeviceConnected.deviceType === 'Switch'">
-        {{getDeviceConnected}}
-      </div> -->
+      <div v-if="getDeviceConnected.deviceType === 'Switch'">
+        <SwitchConnected :item="getDeviceConnected"/>
+      </div>
+
+      <div v-if="getDeviceConnected.deviceType === 'Server'">
+        <ServerConnected :item="getDeviceConnected"/>
+      </div>
+
+      <div v-if="getDeviceConnected.deviceType === 'AccessPoint'">
+        <AccessPointConnected :item="getDeviceConnected"/>
+      </div>
+
+      <div v-if="getDeviceConnected.deviceType === 'AccessPoint'">
+        <PrinterConnected :item="getDeviceConnected"/>
+      </div>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import PatchPanelConnection from "@/components/connectionDevices/PatchPanelConnection.vue";
-// import SwitchSearchInfo from "@/components/searchDisplayInfo/SwitchSearchInfo.vue";
+import PatchPanelConnected from "@/components/connectedDevices/PatchPanelConnected.vue";
+import SwitchConnected from "@/components/connectedDevices/SwitchConnected.vue";
+import ServerConnected from "@/components/connectedDevices/ServerConnected.vue";
+import AccessPointConnected from "@/components/connectedDevices/AccessPointConnected.vue";
+import PrinterConnected from "@/components/connectedDevices/PrinterConnected.vue";
 
 export default {
-  name: 'ConnectedDevice',
   components: {
-    PatchPanelConnection,
-    // SwitchSearchInfo
+    PatchPanelConnected,
+    SwitchConnected,
+    AccessPointConnected,
+    PrinterConnected
   },
   props: ["port"],
   data() {

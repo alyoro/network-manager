@@ -33,8 +33,8 @@ export default {
         { title: "Dashboard", icon: "dashboard", route: "/" },
         { title: "Search", icon: "search", route: "/search" },
         { title: "Add New", icon: "add_box", route: "/add" },
-        { title: "Connected Devices", icon: "settings_input_component", route: "/connected"},
-        { title: "Connecting Devices", icon: "insert_link", route: "/connecting"}
+        // { title: "Connected Devices", icon: "settings_input_component", route: "/connected"},
+        // { title: "Connecting Devices", icon: "insert_link", route: "/connecting"}
       ]
     };
   }

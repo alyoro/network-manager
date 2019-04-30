@@ -144,7 +144,7 @@
 <script>
 import { mapGetters } from "vuex";
 import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
-import ConnectedDeviceDialog from "@/components/connectionDevices/ConnectedDeviceDialog.vue";
+import ConnectedDeviceDialog from "@/components/connectedDevices/ConnectedDeviceDialog.vue";
 import connectedMixin from "@/mixins/connectedMixin";
 
 export default {

@@ -38,7 +38,7 @@
             </v-flex>
           </v-layout>
         </div>
-        <PortsConnectingDevice :ports="item.ports" :deviceId="item.id" :deviceType="deviceType" :portSlave="portSlave"/>
+        <PortsConnectedDevice :ports="item.ports" :deviceId="item.id" :deviceType="deviceType" :portSlave="portSlave"/>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-container>
@@ -46,12 +46,12 @@
 
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
-import PortsConnectingDevice from "@/components/connectionDevices/PortsConnectingDevice.vue";
+import PortsConnectedDevice from "@/components/connectedDevices/PortsConnectedDevice.vue";
 
 export default {
   mixins: [searchInfoMixin],
   components: {
-    PortsConnectingDevice
+    PortsConnectedDevice
   },
   props: {
     portSlave: {

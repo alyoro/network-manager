@@ -51,11 +51,11 @@
 
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
-import connectionsMixin from "@/mixins/connectionsMixin";
+
 import PortsConnectingDevice from '@/components/connectionDevices/PortsConnectingDevice.vue';
 
 export default {
-  mixins: [searchInfoMixin, connectionsMixin],
+  mixins: [searchInfoMixin],
   components: {
     PortsConnectingDevice
   },

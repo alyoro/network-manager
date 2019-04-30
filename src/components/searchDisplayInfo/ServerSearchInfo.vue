@@ -42,10 +42,9 @@
 
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
-import connectionsMixin from "@/mixins/connectionsMixin";
 
 export default {
-  mixins: [searchInfoMixin, connectionsMixin]
+  mixins: [searchInfoMixin]
 };
 </script>
 

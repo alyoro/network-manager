@@ -51,7 +51,7 @@ export default {
   computed: {
     ...mapGetters({
       getDevice: "moduleConnections/getDevice",
-      getDevicesConnected: "moduleConnections/getDevicesConnected"
+      getDeviceConnected: "moduleConnections/getDeviceConnected"
     })
   }
 };

@@ -14,21 +14,21 @@
       <v-subheader class="px-3 text-md-center align-center">
         <v-flex xs12 md6>Port Number</v-flex>
         <v-flex xs12 md6>Device plugged</v-flex>
-        <v-flex xs12 md8>Port number on the other side of connection</v-flex>
+        <v-flex xs12 md8>Port number on the other element</v-flex>
         <v-flex xs12 md6>
           <v-menu offset-y auto>
             <template v-slot:activator="{ on }">
-              <button flat v-on="on" @click.native.stop>Connection Status</button>
+              <button flat v-on="on" @click.native.stop>Connection Status ({{activeFilter}})</button>
             </template>
             <v-list>
-              <v-list-tile @click="changeFilter('all')">
+              <v-list-tile @click="changeFilter('All')">
                 <v-list-tile-title>Show All</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="changeFilter('free')">
-                <v-list-tile-title>Only Free</v-list-tile-title>
+              <v-list-tile @click="changeFilter('Free')">
+                <v-list-tile-title>Free</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="changeFilter('connected')">
-                <v-list-tile-title>Only Connected</v-list-tile-title>
+              <v-list-tile @click="changeFilter('Connected')">
+                <v-list-tile-title>Connected</v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
@@ -38,7 +38,11 @@
         <v-flex xs12 md6>Delete Port</v-flex>
       </v-subheader>
 
-      <v-flex lg12 v-if="!filteredPorts.length" class="pa-3 text-md-center align-center title grey--text">No ports (change filterng)</v-flex>
+      <v-flex
+        lg12
+        v-if="!filteredPorts.length"
+        class="pa-3 text-md-center align-center title grey--text"
+      >No ports (change filterng)</v-flex>
 
       <v-list flat xl2 v-for="port in filteredPorts" :key="port.id">
         <v-divider></v-divider>
@@ -66,7 +70,20 @@
                   v-on="on"
                   @click.native.stop
                 >Free</v-btn>
-                <v-btn v-else color="pink accent-2" flat v-on="on" @click.native.stop>Occupied</v-btn>
+                <v-btn
+                  v-if="port.connections && port.id === port.connections[0].portIdStart"
+                  color="pink accent-2"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Connected UP</v-btn>
+                <v-btn
+                  v-if="port.connections && port.id === port.connections[0].portIdEnd"
+                  color="pink accent-2"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Connected DOWN</v-btn>
               </template>
               <v-list>
                 <v-list-tile
@@ -81,9 +98,12 @@
                 >
                   <v-list-tile-title>Make connection to Switch</v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile v-else @click="disconnectPort(port.id)">
+
+                <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
                   <v-list-tile-title>Disconnect Port</v-list-tile-title>
                 </v-list-tile>
+
+                <ConnectedDeviceDialog :port="port"/>
               </v-list>
             </v-menu>
           </v-flex>
@@ -125,6 +145,7 @@
 import { mapGetters } from "vuex";
 import _ from "lodash";
 import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
+import ConnectedDeviceDialog from "@/components/connectionDevices/ConnectedDeviceDialog.vue";
 
 export default {
   props: {
@@ -140,12 +161,14 @@ export default {
     }
   },
   components: {
-    UpdatePortDialog
+    UpdatePortDialog,
+    ConnectedDeviceDialog
   },
   data() {
     return {
       dialog: false,
-      activeFilter: "all"
+      activeFilter: "All",
+      connectedDeviceDialog: false
     };
   },
   computed: {
@@ -153,13 +176,13 @@ export default {
       return _.orderBy(this.ports, "portNumber");
     },
     filteredPorts() {
-      if (this.activeFilter === "all") {
+      if (this.activeFilter === "All") {
         return this.orderedPorts;
-      } else if (this.activeFilter === "connected") {
+      } else if (this.activeFilter === "Connected") {
         return this.orderedPorts.filter(port => {
           if (port.connections !== null) return port;
         });
-      } else if (this.activeFilter === "free") {
+      } else if (this.activeFilter === "Free") {
         return this.orderedPorts.filter(port => {
           if (port.connections === null) return port;
         });
@@ -167,12 +190,13 @@ export default {
     },
     ...mapGetters({
       getNameByType: "getNameByType",
-      getUrlByType: "getUrlByType"
+      getUrlByType: "getUrlByType",
+      getDeviceConnected: "moduleConnections/getDeviceConnected"
     })
   },
   methods: {
     changeFilter(filter) {
-      this.activeFilter = filter
+      this.activeFilter = filter;
     },
     displayDevicePlugged(devicePlugged) {
       return this.getNameByType(devicePlugged);
@@ -202,7 +226,24 @@ export default {
       });
     },
 
-    disconnectPort(id) {},
+    showConnectedDevice(port) {
+      if (port.id === port.connections[0].portIdStart) {
+        this.$store.dispatch("moduleConnections/fetchConnectedDeviceByPortId", {
+          id: port.connections[0].portIdEnd
+        });
+      } else {
+        this.$store.dispatch("moduleConnections/fetchConnectedDeviceByPortId", {
+          id: port.connections[0].portIdStart
+        });
+      }
+      this.connectedDeviceDialog = true;
+    },
+
+    myDialogClose() {
+      this.connectedDeviceDialog = false;
+    },
+
+    disconnectPort(port) {},
 
     deletePort(deviceId, portId) {
       this.$store.dispatch("moduleData/deletePort", {

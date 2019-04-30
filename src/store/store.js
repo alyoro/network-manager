@@ -115,9 +115,8 @@ const moduleData = {
     insertedIdentifier: '',
     data: [
       { type: 'PatchPanel', devices: [] },
-      { type: 'RoomSocket', devices: [] },
+      // { type: 'RoomSocket', devices: [] },
       { type: 'Switch', devices: [] },
-      { type: 'Router', devices: [] },
       { type: 'Server', devices: [] },
       { type: 'Printer', devices: [] },
       { type: 'AccessPoint', devices: [] },
@@ -133,6 +132,18 @@ const moduleData = {
     },
     getCountedDevices: (state) => {
       return state.countedDevices
+    },
+    getDeviceByPortId: (state) => (payload) => {
+      for(let dataIndex of state.data){
+        for(let deviceIndex of dataIndex.devices){
+          for(let portIndex of deviceIndex.ports){
+            if(portIndex.id === payload.id){
+              Vue.set(deviceIndex,"deviceType",dataIndex.type)
+              return deviceIndex;
+            }
+          }
+        }
+      }
     }
   },
   mutations: {
@@ -271,42 +282,30 @@ const moduleConnections = {
   namespaced: true,
   state: {
     device: {},
-    devicesConnected: []
+    deviceConnected: {}
   },
   getters: {
     getDevice: (state) => {
       return state.device
     },
-    getDevicesConnected: (state) => {
-      return state.devicesConnected
+    getDeviceConnected: (state) => {
+      return state.deviceConnected
     }
   },
   mutations: {
     setDevice: (state, payload) => {
       Vue.set(state.device, 0, payload)
     },
-    setDevicesConnected: (state, payload) => {
-      state.devicesConnected = payload
+    setDeviceConnected: (state, payload) => {
+      state.deviceConnected = payload
     }
   },
   actions: {
-    fetchDevicesLvlUp: (context, payload) => {
-      const url = "/deviceslevelup/" + payload.item.id
+    fetchConnectedDeviceByPortId: (context, payload) => {
+      const url = "/connecteddevice/" + payload.id
       NetworkManagerBackend.get(url)
         .then(response => {
-          context.commit("setDevice", payload.item)
-          context.commit("setDevicesConnected", response)
-        })
-        .catch(error => {
-          console.log('Error: ' + error)
-        })
-    },
-    fetchDevicesLvlDown: (context, payload) => {
-      const url = "/devicesleveldown/" + payload.item.id
-      NetworkManagerBackend.get(url)
-        .then(response => {
-          context.commit("setDevice", payload.item)
-          context.commit("setDevicesConnected", response)
+          context.commit("setDeviceConnected", response)
         })
         .catch(error => {
           console.log('Error: ' + error)

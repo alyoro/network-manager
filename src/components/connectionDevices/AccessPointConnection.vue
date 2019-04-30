@@ -40,11 +40,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import connectionsMixin from "@/mixins/connectionsMixin";
+
 
 export default {
   props: ["item"],
-  mixins: [connectionsMixin],
   computed: {
     ...mapGetters({
       getNameByType: "getNameByType"

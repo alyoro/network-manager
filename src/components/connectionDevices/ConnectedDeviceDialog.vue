@@ -5,15 +5,37 @@
         <v-list-tile-title>Show Connected Device</v-list-tile-title>
       </v-list-tile>
     </template>
-    <v-card color="white" hide-overlay>{{getDeviceConnected}}</v-card>
+    <v-card color="white" hide-overlay>
+      <v-toolbar dark color="primary">
+        <v-toolbar-title>Connected Device</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon dark @click="dialog = false">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-toolbar>
+
+      <div v-if="getDeviceConnected.deviceType === 'PatchPanel'">
+       <PatchPanelConnection :item="getDeviceConnected"/>
+      </div>
+
+      <!-- <div v-if="getDeviceConnected.deviceType === 'Switch'">
+        {{getDeviceConnected}}
+      </div> -->
+    </v-card>
   </v-dialog>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import _ from "lodash";
+import PatchPanelConnection from "@/components/connectionDevices/PatchPanelConnection.vue";
+// import SwitchSearchInfo from "@/components/searchDisplayInfo/SwitchSearchInfo.vue";
 
 export default {
+  name: 'ConnectedDevice',
+  components: {
+    PatchPanelConnection,
+    // SwitchSearchInfo
+  },
   props: ["port"],
   data() {
     return {
@@ -23,6 +45,7 @@ export default {
 
   computed: {
     ...mapGetters({
+      getUrlByType: "getUrlByType",
       getDeviceConnected: "moduleConnections/getDeviceConnected"
     })
   },
@@ -38,10 +61,6 @@ export default {
         });
       }
       this.connectedDeviceDialog = true;
-    },
-
-    myDialogClose() {
-      this.connectedDeviceDialog = false;
     }
   }
 };

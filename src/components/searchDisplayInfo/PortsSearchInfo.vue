@@ -239,10 +239,6 @@ export default {
       this.connectedDeviceDialog = true;
     },
 
-    myDialogClose() {
-      this.connectedDeviceDialog = false;
-    },
-
     disconnectPort(port) {},
 
     deletePort(deviceId, portId) {

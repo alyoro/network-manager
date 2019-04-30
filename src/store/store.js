@@ -269,6 +269,7 @@ const moduleData = {
             port: response
           }
           context.commit("updatePortInStore", updatePort);
+          context.commit('moduleConnections/updatePort', updatePort, { root: true })
         })
         .catch(error => {
           console.log('Error: ' + error)
@@ -298,6 +299,10 @@ const moduleConnections = {
     },
     setDeviceConnected: (state, payload) => {
       state.deviceConnected = payload
+    },
+    updatePort: (state, payload) => {
+      const indexPort = state.deviceConnected.ports.findIndex(item => item.id == payload.portId)
+      Vue.set(state.deviceConnected.ports,indexPort,payload.port)
     }
   },
   actions: {

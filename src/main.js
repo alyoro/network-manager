@@ -8,6 +8,8 @@ import axios from 'axios';
 Vue.config.productionTip = false;
 axios.defaults.baseURL = 'http://localhost:8090/api';
 
+export const EventBus = new Vue();
+
 new Vue({
   router,
   store,

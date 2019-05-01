@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
+import { EventBus } from "@/main";
 
 Vue.use(Vuex)
 
@@ -89,7 +90,9 @@ const moduleAdding = {
       let clone = Object.assign({}, item);
       delete clone.type;
       NetworkManagerBackend.post(url, clone)
-        .then(/* TODO add to store */)
+        .then(
+          EventBus.$emit('snackbar-alert', {message: 'Device successfuly added', color: 'success'})
+        )
         .catch(error => console.log('Error: ' + error))
     },
 

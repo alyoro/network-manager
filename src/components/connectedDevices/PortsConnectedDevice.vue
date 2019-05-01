@@ -65,7 +65,7 @@
             >Connected DOWN</v-btn>
           </template>
           <v-list>
-<ConnectingDeviceDialog :port="port" />
+            <ConnectingDeviceDialog :port="port"/>
 
             <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
               <v-list-tile-title>Disconnect Port</v-list-tile-title>
@@ -98,10 +98,11 @@
 
 <script>
 import connectedMixin from "@/mixins/connectedMixin";
+import filteringPortsMixin from "@/mixins/filteringPortsMixin";
 import ConnectingDeviceDialog from "@/components/connectingDevices/ConnectingDeviceDialog.vue";
 
 export default {
-  mixins: [connectedMixin],
+  mixins: [connectedMixin, filteringPortsMixin],
   components: {
     ConnectingDeviceDialog
   }

@@ -79,55 +79,18 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import connectedMixin from "@/mixins/connectedMixin";
+import filteringPortsMixin from "@/mixins/filteringPortsMixin";
 
 export default {
-  props: {
-    ports: {
-      required: true
-    },
-    portSlave: {
-      required: true
-    }
-  },
-  data() {
-    return {
-      activeFilter: "All"
-    };
-  },
-  computed: {
-    orderedPorts() {
-      return _.orderBy(this.ports, "portNumber");
-    },
-    filteredPorts() {
-      if (this.activeFilter === "All") {
-        return this.orderedPorts;
-      } else if (this.activeFilter === "Connected") {
-        return this.orderedPorts.filter(port => {
-          if (port.connections !== null) return port;
-        });
-      } else if (this.activeFilter === "Free") {
-        return this.orderedPorts.filter(port => {
-          if (port.connections === null) return port;
-        });
-      }
-    },
-    ...mapGetters({
-      getNameByType: "getNameByType"
-    })
-  },
+  mixins: [filteringPortsMixin],
   methods: {
-    changeFilter(filter) {
-      this.activeFilter = filter;
-    },
-
     makeConnection(port) {
       var ports = [];
       ports.push(port);
       ports.push(this.portSlave);
       this.$store.dispatch("moduleConnections/makeConnection", ports);
-    }
+    },
+    disconnectPort(port) {}
   }
 };
 </script>

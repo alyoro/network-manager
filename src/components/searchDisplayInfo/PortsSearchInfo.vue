@@ -135,11 +135,12 @@ import { mapGetters } from "vuex";
 import UpdatePortDialog from "@/components/addForms/UpdatePortDialog.vue";
 import ConnectedDeviceDialog from "@/components/connectedDevices/ConnectedDeviceDialog.vue";
 import connectedMixin from "@/mixins/connectedMixin";
+import filteringPortsMixin from "@/mixins/filteringPortsMixin";
 
 import ConnectingDeviceDialog from "@/components/connectingDevices/ConnectingDeviceDialog.vue";
 
 export default {
-  mixins: [connectedMixin],
+  mixins: [connectedMixin, filteringPortsMixin],
   components: {
     UpdatePortDialog,
     ConnectedDeviceDialog,

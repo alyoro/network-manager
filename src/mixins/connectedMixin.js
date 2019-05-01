@@ -1,51 +1,17 @@
-import { mapGetters } from "vuex";
 import _ from "lodash";
 
 const connectedMixin = {
   props: {
-    ports: {
-      type: Array
-    },
     deviceType: {
       type: String,
       required: true
     },
     deviceId: {
+      type: Number,
       required: true
     }
   },
-  data() {
-    return {
-      activeFilter: "All"
-    }
-  },
-  computed: {
-    orderedPorts() {
-      return _.orderBy(this.ports, "portNumber");
-    },
-    filteredPorts() {
-      if (this.activeFilter === "All") {
-        return this.orderedPorts;
-      } else if (this.activeFilter === "Connected") {
-        return this.orderedPorts.filter(port => {
-          if (port.connections !== null) return port;
-        });
-      } else if (this.activeFilter === "Free") {
-        return this.orderedPorts.filter(port => {
-          if (port.connections === null) return port;
-        });
-      }
-    },
-    ...mapGetters({
-      getNameByType: "getNameByType",
-      getUrlByType: "getUrlByType",
-    })
-  },
   methods: {
-    changeFilter(filter) {
-      this.activeFilter = filter;
-    },
-
     showConnectedDevice(port) {
       if (port.id === port.connections[0].portIdStart) {
         this.$store.dispatch("moduleConnections/fetchConnectedDeviceByPortId", {
@@ -58,7 +24,7 @@ const connectedMixin = {
       }
     },
 
-    disconnectPort(port) {},
+    disconnectPort(port) { },
 
     changePortStatus(id) {
       this.$store.dispatch("moduleData/changePortStatus", {
@@ -69,5 +35,6 @@ const connectedMixin = {
     }
   }
 };
+
 
 export default connectedMixin;

@@ -23,8 +23,12 @@ const connectedMixin = {
         });
       }
     },
-
-    disconnectPort(port) { },
+    disconnectPort(port) {
+      var payload = {
+        connection: port.connections[0]
+      }
+      this.$store.dispatch("moduleConnections/deleteConnection", payload)
+    },
 
     changePortStatus(id) {
       this.$store.dispatch("moduleData/changePortStatus", {

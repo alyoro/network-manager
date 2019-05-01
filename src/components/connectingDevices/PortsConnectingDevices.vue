@@ -83,6 +83,11 @@ import filteringPortsMixin from "@/mixins/filteringPortsMixin";
 
 export default {
   mixins: [filteringPortsMixin],
+  props: {
+    portSlave: {
+      type: Object
+    }
+  },
   methods: {
     makeConnection(port) {
       var ports = [];
@@ -90,7 +95,12 @@ export default {
       ports.push(this.portSlave);
       this.$store.dispatch("moduleConnections/makeConnection", ports);
     },
-    disconnectPort(port) {}
+    disconnectPort(port) {
+      var payload = {
+        connection: port.connections[0]
+      };
+      this.$store.dispatch("moduleConnections/deleteConnection", payload);
+    }
   }
 };
 </script>

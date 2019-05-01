@@ -231,6 +231,20 @@ const moduleData = {
       }
     },
 
+    updatePortAfterDisconnect: (state, payload) => {
+      for (let dataIndex of state.data) {
+        for (let deviceIndex of dataIndex.devices) {
+          for (let portIndex of deviceIndex.ports) {
+            if (portIndex.id === payload.id) {
+              portIndex.connections = null
+              portIndex.devicePlugged = "None"
+              portIndex.portOnTheOtherElement = "None"
+            }
+          }
+        }
+      }
+    },
+
     setCountedDevices: (state, payload) => {
       state.countedDevices = payload
     }
@@ -353,6 +367,17 @@ const moduleConnections = {
         .catch(error => {
           console.log('Error: ' + error)
         })
+    },
+    deleteConnection: (context, payload) => {
+      var url = "/connections/" + payload.connection.id
+      NetworkManagerBackend.delete(url)
+      .then(response => {
+        context.commit("moduleData/updatePortAfterDisconnect", {id: payload.connection.portIdStart}, {root: true})
+        context.commit("moduleData/updatePortAfterDisconnect", {id: payload.connection.portIdEnd}, {root: true})
+      })
+      .catch(error => {
+        console.log('Error: ' + error)
+      })
     }
   }
 }

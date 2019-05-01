@@ -30,21 +30,8 @@
       </div>
 
       <div v-if="deviceType === 'Switch'">
-        <!-- <SwitchConnecting :item="getDeviceConnected"/> -->
-        Switch
+        <SwitchConnecting :portSlave="portSlave" :deviceType="deviceType"/>
       </div>
-      <!--
-      <div v-if="deviceType === 'Server'">
-        <ServerConnecting :item="getDeviceConnected"/>
-      </div>
-
-      <div v-if="deviceType === 'AccessPoint'">
-        <AccessPointConnecting :item="getDeviceConnected"/>
-      </div>
-
-      <div v-if="deviceType === 'AccessPoint'">
-        <PrinterConnecting :item="getDeviceConnected"/>
-      </div>-->
     </v-card>
   </v-dialog>
 </template>
@@ -52,17 +39,14 @@
 <script>
 import { mapGetters } from "vuex";
 import PatchPanelConnecting from "@/components/connectingDevices/PatchPanelConnecting.vue";
-// import SwitchConnected from "@/components/connectingDevices/SwitchConnected.vue";
-// import ServerConnected from "@/components/connectingDevices/ServerConnected.vue";
-// import AccessPointConnected from "@/components/connectingDevices/AccessPointConnected.vue";
-// import PrinterConnected from "@/components/connectingDevices/PrinterConnected.vue";
+import SwitchConnecting from "@/components/connectingDevices/SwitchConnecting.vue";
+
 
 export default {
   components: {
-    PatchPanelConnecting
-    // SwitchConnected,
-    // AccessPointConnected,
-    // PrinterConnected
+    PatchPanelConnecting,
+    SwitchConnecting
+
   },
   props: ["port"],
   data() {

@@ -6,30 +6,16 @@
     >{{getNameByType(deviceType)}}</v-flex>
 
     <v-subheader class="pa-0 text-md-center align-center">
-      <v-flex xs12 md6>Building</v-flex>
-      <v-flex xs12 md6>Room</v-flex>
       <v-flex xs12 md6>Identifier</v-flex>
       <v-flex xs12 md6>Localization</v-flex>
-      <v-flex xs12 md6>Description</v-flex>
+      <v-flex xs12 md6>Date of purchase</v-flex>
+      <v-flex xs12 md6>Managment IP</v-flex>
       <v-flex xs12 md6>Number of Ports</v-flex>
       <v-flex xs12 md6>Show Ports</v-flex>
     </v-subheader>
-
-    <v-list
-      flat
-      v-for="(item, index) in devices"
-      :key="index"
-    >
+    <v-list flat v-for="(item, index) in devices" :key="index">
       <v-divider></v-divider>
       <v-layout row class="text-md-center align-center">
-        <v-flex xs12 md6>
-          <div>{{item.building}}</div>
-        </v-flex>
-
-        <v-flex xs12 md6>
-          <div>{{item.room}}</div>
-        </v-flex>
-
         <v-flex xs12 md6>
           <div>{{item.identifier}}</div>
         </v-flex>
@@ -39,7 +25,11 @@
         </v-flex>
 
         <v-flex xs12 md6>
-          <div>{{item.description}}</div>
+          <div>{{item.dateOfPurchase}}</div>
+        </v-flex>
+
+        <v-flex xs12 md6>
+          <div>{{item.managementIP}}</div>
         </v-flex>
 
         <v-flex xs12 md6>

@@ -65,15 +65,7 @@
             >Connected DOWN</v-btn>
           </template>
           <v-list>
-            <v-list-tile
-              v-if="port.connections === null"
-              @click="makeConnections(port, 'PatchPanel')"
-            >
-              <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile v-if="port.connections === null" @click="makeConnections(port, 'Switch')">
-              <v-list-tile-title>Make connection to Switch</v-list-tile-title>
-            </v-list-tile>
+<ConnectingDeviceDialog :port="port" />
 
             <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
               <v-list-tile-title>Disconnect Port</v-list-tile-title>
@@ -106,9 +98,13 @@
 
 <script>
 import connectedMixin from "@/mixins/connectedMixin";
+import ConnectingDeviceDialog from "@/components/connectingDevices/ConnectingDeviceDialog.vue";
 
 export default {
-  mixins: [connectedMixin]
+  mixins: [connectedMixin],
+  components: {
+    ConnectingDeviceDialog
+  }
 };
 </script>
 

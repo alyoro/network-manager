@@ -93,7 +93,10 @@ const moduleAdding = {
         .then(
           EventBus.$emit('snackbar-alert', {message: 'Device successfuly added', color: 'success'})
         )
-        .catch(error => console.log('Error: ' + error))
+        .catch(error => {
+          // EventBus.$emit('snackbar-alert', {message: error.response.data.message, color: 'error'})
+          console.log('Error: ' + error)
+        })
     },
 
     savePortToServer: (context, payload) => {
@@ -105,6 +108,7 @@ const moduleAdding = {
             type: payload.deviceType
           }
           context.commit('moduleData/addCreatedPort', newPort, { root: true })
+          EventBus.$emit('snackbar-alert', {message: 'Port successfuly added', color: 'success'})
         })
         .catch(error => console.log('Error: ' + error))
     }
@@ -270,6 +274,7 @@ const moduleData = {
       NetworkManagerBackend.delete(url)
         .then(response => {
           context.commit("deleteDeviceFromStore", payload)
+          EventBus.$emit('snackbar-alert', {message: 'Device successfuly deleted', color: 'success'})
         })
         .catch(error => console.log('Error: ' + error));
     },
@@ -278,6 +283,7 @@ const moduleData = {
       NetworkManagerBackend.delete(url)
         .then(response => {
           context.commit("deletePortFromStore", payload)
+          EventBus.$emit('snackbar-alert', {message: 'Port successfuly deleted', color: 'success'})
         })
         .catch(error => console.log('Error: ' + error));
     },
@@ -285,6 +291,7 @@ const moduleData = {
       NetworkManagerBackend.put(payload.url, payload.port)
         .then(response => {
           console.log(response)
+          EventBus.$emit('snackbar-alert', {message: 'Port successfuly updated', color: 'success'})
         })
         .catch(error => console.log('Error: ' + error));
     },
@@ -366,6 +373,7 @@ const moduleConnections = {
         .then(response => {
           context.commit("moduleData/updatePortConnection", {id: ports[0].id, connection: response}, { root: true })
           context.commit("moduleData/updatePortConnection", {id: ports[1].id, connection: response}, { root: true })
+          EventBus.$emit('snackbar-alert', {message: 'Connection successfuly maded', color: 'success'})
         })
         .catch(error => {
           console.log('Error: ' + error)
@@ -377,6 +385,7 @@ const moduleConnections = {
       .then(response => {
         context.commit("moduleData/updatePortAfterDisconnect", {id: payload.connection.portIdStart}, {root: true})
         context.commit("moduleData/updatePortAfterDisconnect", {id: payload.connection.portIdEnd}, {root: true})
+        EventBus.$emit('snackbar-alert', {message: 'Connection successfuly deleted', color: 'success'})
       })
       .catch(error => {
         console.log('Error: ' + error)

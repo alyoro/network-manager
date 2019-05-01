@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       snackbar: false,
-      timeout: 6000,
+      timeout: 3000,
       message: "",
       color: "info"
     };

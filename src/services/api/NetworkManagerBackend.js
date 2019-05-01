@@ -25,9 +25,7 @@ export default {
     },
 
     async delete(url) {
-        return axios.delete(url)
-            .then(response => {
-                return response.data;
-            })
+        const response = await axios.delete(url);
+        return response;
     }
 }

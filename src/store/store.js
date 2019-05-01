@@ -90,11 +90,13 @@ const moduleAdding = {
       let clone = Object.assign({}, item);
       delete clone.type;
       NetworkManagerBackend.post(url, clone)
-        .then(
-          EventBus.$emit('snackbar-alert', {message: 'Device successfuly added', color: 'success'})
-        )
+        .then(response => {
+          if (response) {
+            EventBus.$emit('snackbar-alert', { message: 'Device successfuly added', color: 'success' })
+          }
+        })
         .catch(error => {
-          // EventBus.$emit('snackbar-alert', {message: error.response.data.message, color: 'error'})
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
           console.log('Error: ' + error)
         })
     },
@@ -108,9 +110,14 @@ const moduleAdding = {
             type: payload.deviceType
           }
           context.commit('moduleData/addCreatedPort', newPort, { root: true })
-          EventBus.$emit('snackbar-alert', {message: 'Port successfuly added', color: 'success'})
+          if (response) {
+            EventBus.$emit('snackbar-alert', { message: 'Port successfuly added', color: 'success' })
+          }
         })
-        .catch(error => console.log('Error: ' + error))
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     }
   }
 }
@@ -274,26 +281,41 @@ const moduleData = {
       NetworkManagerBackend.delete(url)
         .then(response => {
           context.commit("deleteDeviceFromStore", payload)
-          EventBus.$emit('snackbar-alert', {message: 'Device successfuly deleted', color: 'success'})
+          if (response.status < 400) {
+            EventBus.$emit('snackbar-alert', { message: 'Device successfuly deleted', color: 'success' })
+          }
         })
-        .catch(error => console.log('Error: ' + error));
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     },
     deletePort: (context, payload) => {
       let url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.deviceId + "/ports/" + payload.portId
       NetworkManagerBackend.delete(url)
         .then(response => {
           context.commit("deletePortFromStore", payload)
-          EventBus.$emit('snackbar-alert', {message: 'Port successfuly deleted', color: 'success'})
+          if (response.status < 400) {
+            EventBus.$emit('snackbar-alert', { message: 'Port successfuly deleted', color: 'success' })
+          }
         })
-        .catch(error => console.log('Error: ' + error));
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     },
     updatePortToServer: (context, payload) => {
       NetworkManagerBackend.put(payload.url, payload.port)
         .then(response => {
           console.log(response)
-          EventBus.$emit('snackbar-alert', {message: 'Port successfuly updated', color: 'success'})
+          if (response) {
+            EventBus.$emit('snackbar-alert', { message: 'Port successfuly updated', color: 'success' })
+          }
         })
-        .catch(error => console.log('Error: ' + error));
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     },
     getCountedDevices: (context) => {
       return new Promise((resolve, reject) => {
@@ -371,25 +393,31 @@ const moduleConnections = {
       const url = "/connections"
       NetworkManagerBackend.post(url, ports)
         .then(response => {
-          context.commit("moduleData/updatePortConnection", {id: ports[0].id, connection: response}, { root: true })
-          context.commit("moduleData/updatePortConnection", {id: ports[1].id, connection: response}, { root: true })
-          EventBus.$emit('snackbar-alert', {message: 'Connection successfuly maded', color: 'success'})
+          context.commit("moduleData/updatePortConnection", { id: ports[0].id, connection: response }, { root: true })
+          context.commit("moduleData/updatePortConnection", { id: ports[1].id, connection: response }, { root: true })
+          if (response) {
+            EventBus.$emit('snackbar-alert', { message: 'Connection successfuly created', color: 'success' })
+          }
         })
         .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
           console.log('Error: ' + error)
         })
     },
     deleteConnection: (context, payload) => {
       var url = "/connections/" + payload.connection.id
       NetworkManagerBackend.delete(url)
-      .then(response => {
-        context.commit("moduleData/updatePortAfterDisconnect", {id: payload.connection.portIdStart}, {root: true})
-        context.commit("moduleData/updatePortAfterDisconnect", {id: payload.connection.portIdEnd}, {root: true})
-        EventBus.$emit('snackbar-alert', {message: 'Connection successfuly deleted', color: 'success'})
-      })
-      .catch(error => {
-        console.log('Error: ' + error)
-      })
+        .then(response => {
+          context.commit("moduleData/updatePortAfterDisconnect", { id: payload.connection.portIdStart }, { root: true })
+          context.commit("moduleData/updatePortAfterDisconnect", { id: payload.connection.portIdEnd }, { root: true })
+          if (response) {
+            EventBus.$emit('snackbar-alert', { message: 'Connection successfuly deleted', color: 'success' })
+          }
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     }
   }
 }

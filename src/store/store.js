@@ -206,6 +206,15 @@ const moduleData = {
         }
       }
     },
+    updateDeviceInStore: (state, payload) => {
+      const indexType = state.data.findIndex(item => item.type == payload.type)
+      if (indexType > -1) {
+        const indexDevice = state.data[indexType].devices.findIndex(item => item.id == payload.response.id)
+        if (indexDevice > -1) {
+          Vue.set(state.data[indexType].devices, indexDevice, payload.response)
+        }
+      }
+    },
     deletePortFromStore: (state, payload) => {
       const indexType = state.data.findIndex(item => item.type == payload.type)
       if (indexType > -1) {
@@ -348,6 +357,23 @@ const moduleData = {
           console.log('Error: ' + error)
           alert(error.response.data.message)
         });
+    },
+
+    updateDevice: (context, payload) => {
+      const url = "/" + context.rootGetters.getUrlByType(payload.deviceType) + "/" + payload.device.id
+      NetworkManagerBackend.put(url, payload.device)
+      .then(response => {
+        const updateDevice = {
+          type: payload.type,
+          response: response
+        }
+        context.commit("updateDeviceInStore", updateDevice);
+        EventBus.$emit('snackbar-alert', { message: 'Device successfuly updated', color: 'success' })
+      })
+      .catch(error => {
+        EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+        console.log('Error: ' + error)
+      })
     }
   },
 }

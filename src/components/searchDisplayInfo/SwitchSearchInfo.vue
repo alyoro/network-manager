@@ -3,11 +3,12 @@
     <v-subheader class="pa-0 text-md-center align-center">
       <v-flex xs12 md6>Identifier</v-flex>
       <v-flex xs12 md6>Localization</v-flex>
-      <v-flex xs12 md6>Dat of Purchase</v-flex>
+      <v-flex xs12 md6>Date of Purchase</v-flex>
       <v-flex xs12 md6>Management IP</v-flex>
       <v-flex xs12 md6>Number of Ports</v-flex>
       <v-flex xs12 md6>Show Ports</v-flex>
       <v-flex xs12 md6>Add Port</v-flex>
+      <v-flex xs12 md6>Update Device</v-flex>
       <v-flex xs12 md6>Delete Device</v-flex>
     </v-subheader>
 
@@ -43,6 +44,10 @@
         </v-flex>
 
         <v-flex xs12 md6>
+          <UpdateSwitchDialog :device="item" :deviceType="deviceType"/>
+        </v-flex>
+
+        <v-flex xs12 md6>
           <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
         </v-flex>
       </v-layout>
@@ -52,9 +57,11 @@
 
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
+import UpdateSwitchDialog from "@/components/updateDevices/UpdateSwitchDialog.vue";
 
 export default {
-  mixins: [searchInfoMixin]
+  mixins: [searchInfoMixin],
+  components: { UpdateSwitchDialog }
 };
 </script>
 

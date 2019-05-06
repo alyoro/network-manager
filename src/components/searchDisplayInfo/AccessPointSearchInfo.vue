@@ -6,6 +6,7 @@
       <v-flex xs12 md6>Number of Ports</v-flex>
       <v-flex xs12 md6>Show Ports</v-flex>
       <v-flex xs12 md6>Add Port</v-flex>
+      <v-flex xs12 md6>Update Device</v-flex>
       <v-flex xs12 md6>Delete Device</v-flex>
     </v-subheader>
 
@@ -33,6 +34,10 @@
         </v-flex>
 
         <v-flex xs12 md6>
+          <UpdateAccessPointDialog :device="item" :deviceType="deviceType"/>
+        </v-flex>
+
+        <v-flex xs12 md6>
           <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
         </v-flex>
       </v-layout>
@@ -42,9 +47,13 @@
 
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
+import UpdateAccessPointDialog from "@/components/updateDevices/UpdateAccessPointDialog.vue";
 
 export default {
-  mixins: [searchInfoMixin]
+  mixins: [searchInfoMixin],
+  components: {
+    UpdateAccessPointDialog
+  }
 };
 </script>
 

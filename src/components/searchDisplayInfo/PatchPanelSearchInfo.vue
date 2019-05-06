@@ -8,7 +8,8 @@
       <v-flex xs12 md6>Description</v-flex>
       <v-flex xs12 md6>Number of Ports</v-flex>
       <v-flex xs12 md6>Show Ports</v-flex>
-      <v-flex xs12 md6>Add Port</v-flex>
+      <v-flex xs12 md6>Add Ports</v-flex>
+      <v-flex xs12 md6>Update Device</v-flex>
       <v-flex xs12 md6>Delete Device</v-flex>
     </v-subheader>
 
@@ -48,6 +49,10 @@
         </v-flex>
 
         <v-flex xs12 md6>
+          <UpdatePatchPanelDialog :device="item" :deviceType="deviceType"/>
+        </v-flex>
+
+        <v-flex xs12 md6>
           <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
         </v-flex>
       </v-layout>
@@ -57,9 +62,11 @@
 
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
+import UpdatePatchPanelDialog from "@/components/updateDevices/UpdatePatchPanelDialog.vue";
 
 export default {
-  mixins: [searchInfoMixin]
+  mixins: [searchInfoMixin],
+  components: { UpdatePatchPanelDialog }
 };
 </script>
 

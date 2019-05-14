@@ -13,6 +13,7 @@
       </v-toolbar>
       <v-subheader class="px-3 text-md-center align-center">
         <v-flex xs12 md6>Port Number</v-flex>
+        <v-flex xs12 md6>Port Speed</v-flex>
         <v-flex xs12 md6>Device plugged</v-flex>
         <v-flex xs12 md8>Port number on the other element</v-flex>
         <v-flex xs12 md6>
@@ -44,12 +45,21 @@
         class="pa-3 text-md-center align-center title grey--text"
       >No ports (change filterng)</v-flex>
 
-      <v-list flat xl2 >
+      <v-list flat xl2>
         <v-divider></v-divider>
 
-        <v-layout v-for="(port, index) in filteredPorts" :key="index" row class="px-3 text-md-center align-center">
+        <v-layout
+          v-for="(port, index) in filteredPorts"
+          :key="index"
+          row
+          class="px-3 text-md-center align-center"
+        >
           <v-flex xs12 md6>
             <div>{{port.portNumber}}</div>
+          </v-flex>
+
+          <v-flex xs12 md6>
+            <div>{{port.portSpeed}}</div>
           </v-flex>
 
           <v-flex xs12 md6>
@@ -86,7 +96,7 @@
                 >Connected DOWN</v-btn>
               </template>
               <v-list>
-                <ConnectingDeviceDialog :port="port" />
+                <ConnectingDeviceDialog :port="port"/>
 
                 <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
                   <v-list-tile-title>Disconnect Port</v-list-tile-title>
@@ -148,7 +158,7 @@ export default {
   },
   data() {
     return {
-      dialog: false,
+      dialog: false
     };
   },
   computed: {

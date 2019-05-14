@@ -3,6 +3,7 @@
     <v-divider></v-divider>
     <v-subheader class="text-md-center align-center">
       <v-flex xs12 md6>Port Number</v-flex>
+      <v-flex xs12 md6>Port Speed</v-flex>
       <v-flex xs12 md6>Device plugged</v-flex>
       <v-flex xs12 md6>Port number on the other element</v-flex>
       <v-flex xs12 md6>
@@ -28,6 +29,10 @@
     <v-layout row v-for="port in filteredPorts" :key="port.id" class="text-md-center align-center">
       <v-flex xs12 md6>
         <div>{{port.portNumber}}</div>
+      </v-flex>
+
+      <v-flex xs12 md6>
+        <div>{{port.portSpeed}}</div>
       </v-flex>
 
       <v-flex xs12 md6>

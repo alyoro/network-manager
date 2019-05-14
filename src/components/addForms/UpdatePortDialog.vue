@@ -10,7 +10,11 @@
           <v-container>
             <v-layout wrap>
               <v-flex xs12 lg6 class="pa-1">
-                <v-text-field label="Port Number*" required v-model="port.portNumber"></v-text-field>
+                <v-text-field label="Port Number" required v-model="port.portNumber"></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 lg6 class="pa-1">
+                <v-text-field label="Port Speed" required v-model="port.portSpeed"></v-text-field>
               </v-flex>
 
               <v-flex xs12 lg6 class="pa-1">
@@ -34,7 +38,6 @@
                   hide-selected
                 ></v-combobox>
               </v-flex>
-
             </v-layout>
           </v-container>
         </v-card-text>
@@ -49,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   props: {
@@ -57,10 +60,10 @@ export default {
     deviceType: null,
     portId: null,
     port: {
-        portNumber: null,
-        portOnTheUpperElement: null,
-        devicePlugged: null
-      },
+      portNumber: null,
+      portOnTheUpperElement: null,
+      devicePlugged: null
+    }
   },
 
   data() {
@@ -69,21 +72,27 @@ export default {
       portType: "physical",
       vlanType: [],
       portTypes: [
-        {name: "Physical", value: "physical"},
-        {name: "Logical", value: "logical"}
+        { name: "Physical", value: "physical" },
+        { name: "Logical", value: "logical" }
       ],
-      vlans: ["vlan1","vlan2"]
-
+      vlans: ["vlan1", "vlan2"]
     };
   },
 
   computed: {
-    apiUrl: function(){
-      return '/' + this.getUrlByType(this.deviceType) + '/' + this.deviceId + '/ports/' + this.portId
+    apiUrl: function() {
+      return (
+        "/" +
+        this.getUrlByType(this.deviceType) +
+        "/" +
+        this.deviceId +
+        "/ports/" +
+        this.portId
+      );
     },
     ...mapGetters({
-      getDeviceTypes: 'getDeviceTypes',
-      getUrlByType: 'getUrlByType'
+      getDeviceTypes: "getDeviceTypes",
+      getUrlByType: "getUrlByType"
     })
   },
 
@@ -96,7 +105,7 @@ export default {
         url: this.apiUrl,
         port: this.port
       };
-      this.$store.dispatch('moduleData/updatePortToServer', payload);
+      this.$store.dispatch("moduleData/updatePortToServer", payload);
       this.dialog = false;
     }
   }

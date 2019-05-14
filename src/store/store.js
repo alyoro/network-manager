@@ -5,6 +5,60 @@ import { EventBus } from "@/main";
 
 Vue.use(Vuex)
 
+const moduleSpeedPorts = {
+  namespaced: true,
+  state: {
+    portSpeedNames: []
+  },
+  getters: {
+    getPortSpeedNames: (state) => {
+      return state.portSpeedNames
+    }
+  },
+  mutations: {
+    setPortSpeedNames: (state, payload) => {
+      state.portSpeedNames = payload
+    }
+  },
+  actions: {
+    fetchPortSpeedNames: (context) => {
+      const url = "/portspeednames"
+      NetworkManagerBackend.get(url)
+        .then(response => {
+          context.commit("setPortSpeedNames", response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    updatePortSpeedNames: (context, payload) => {
+      const url = "/portspeednames/" + payload.name
+      NetworkManagerBackend.patch(url)
+        .then(response => {
+          context.commit("setPortSpeedNames", response)
+          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfuly updated', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log(error)
+        })
+    },
+
+    deleteNameFromPortSpeedNames: (context, payload) => {
+      const url = "/portspeednames/" + payload.name
+      NetworkManagerBackend.delete(url)
+        .then(response => {
+          context.commit("setPortSpeedNames", response)
+          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfuly deleted', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log(error)
+        })
+    }
+  }
+}
+
 const moduleAdding = {
   namespaced: true,
   state: {
@@ -129,7 +183,6 @@ const moduleData = {
     insertedIdentifier: '',
     data: [
       { type: 'PatchPanel', devices: [] },
-      // { type: 'RoomSocket', devices: [] },
       { type: 'Switch', devices: [] },
       { type: 'Server', devices: [] },
       { type: 'Printer', devices: [] },
@@ -178,7 +231,6 @@ const moduleData = {
     setData: (state, payload) => {
       const index = state.data.findIndex(item => item.type == payload.type)
       if (index > -1) {
-        // state.data[index].type = { ...state.data[index].type, payload.type}
         state.data[index].devices = payload.reciviedData.filter(item => { return item })
       }
 
@@ -362,18 +414,18 @@ const moduleData = {
     updateDevice: (context, payload) => {
       const url = "/" + context.rootGetters.getUrlByType(payload.deviceType) + "/" + payload.device.id
       NetworkManagerBackend.put(url, payload.device)
-      .then(response => {
-        const updateDevice = {
-          type: payload.type,
-          response: response
-        }
-        context.commit("updateDeviceInStore", updateDevice);
-        EventBus.$emit('snackbar-alert', { message: 'Device successfuly updated', color: 'success' })
-      })
-      .catch(error => {
-        EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
-        console.log('Error: ' + error)
-      })
+        .then(response => {
+          const updateDevice = {
+            type: payload.type,
+            response: response
+          }
+          context.commit("updateDeviceInStore", updateDevice);
+          EventBus.$emit('snackbar-alert', { message: 'Device successfuly updated', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     }
   },
 }
@@ -450,14 +502,14 @@ const moduleConnections = {
 
 export default new Vuex.Store({
   modules: {
+    moduleSpeedPorts: moduleSpeedPorts,
     moduleAdding: moduleAdding,
     moduleData: moduleData,
-    moduleConnections
+    moduleConnections: moduleConnections
   },
   state: {
     deviceTypes: [
       { name: 'Patch Panel', idType: 'PatchPanel', apiUrl: 'patchpanels' },
-      // { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
       { name: 'Switch', idType: 'Switch', apiUrl: 'switches' },
       { name: 'Server', idType: 'Server', apiUrl: 'servers' },
       { name: 'Printer', idType: 'Printer', apiUrl: 'printers' },

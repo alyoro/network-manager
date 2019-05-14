@@ -65,6 +65,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("moduleSpeedPorts/fetchPortSpeedNames")
     this.$store.dispatch("moduleData/getCountedDevices").then(response => {
       this.loading = false;
     });

@@ -14,6 +14,10 @@
               </v-flex>
 
               <v-flex xs12 lg6 class="pa-1">
+                <v-select label="Port Speed" :items="getPortSpeedNames" v-model="port.portSpeed"></v-select>
+              </v-flex>
+
+              <v-flex xs12 lg6 class="pa-1">
                 <v-select
                   label="Port Type"
                   v-model="portType"
@@ -34,7 +38,6 @@
                   hide-selected
                 ></v-combobox>
               </v-flex>
-
             </v-layout>
           </v-container>
         </v-card-text>
@@ -49,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   props: {
@@ -66,23 +69,30 @@ export default {
         portNumber: null,
         portOnTheUpperElement: null,
         devicePlugged: null,
-        portStatus: 'DOWN'
-      }, portTypes: [
-        {name: "Physical", value: "physical"},
-        {name: "Logical", value: "logical"}
+        portStatus: "DOWN"
+      },
+      portTypes: [
+        { name: "Physical", value: "physical" },
+        { name: "Logical", value: "logical" }
       ],
-      vlans: ["vlan1","vlan2"]
-
+      vlans: ["vlan1", "vlan2"]
     };
   },
 
   computed: {
-    apiUrl: function(){
-      return '/' + this.getUrlByType(this.deviceType) + '/' + this.deviceID + '/ports'
+    apiUrl: function() {
+      return (
+        "/" +
+        this.getUrlByType(this.deviceType) +
+        "/" +
+        this.deviceID +
+        "/ports"
+      );
     },
     ...mapGetters({
-      getDeviceTypes: 'getDeviceTypes',
-      getUrlByType: 'getUrlByType'
+      getDeviceTypes: "getDeviceTypes",
+      getUrlByType: "getUrlByType",
+      getPortSpeedNames: "moduleSpeedPorts/getPortSpeedNames"
     })
   },
 
@@ -94,8 +104,13 @@ export default {
         port: this.port,
         deviceType: this.deviceType
       };
-      this.$store.dispatch('moduleAdding/savePortToServer', payload);
+      this.$store.dispatch("moduleAdding/savePortToServer", payload);
       this.dialog = false;
+    }
+  },
+  created() {
+    if (this.getPortSpeedNames.length <= 0) {
+      this.$store.dispatch("moduleSpeedPorts/fetchPortSpeedNames");
     }
   }
 };

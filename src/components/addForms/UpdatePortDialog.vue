@@ -14,7 +14,7 @@
               </v-flex>
 
               <v-flex xs12 lg6 class="pa-1">
-                <v-text-field label="Port Speed" required v-model="port.portSpeed"></v-text-field>
+                <v-select label="Port Speed" :items="getPortSpeedNames" v-model="port.portSpeed"></v-select>
               </v-flex>
 
               <v-flex xs12 lg6 class="pa-1">
@@ -92,7 +92,8 @@ export default {
     },
     ...mapGetters({
       getDeviceTypes: "getDeviceTypes",
-      getUrlByType: "getUrlByType"
+      getUrlByType: "getUrlByType",
+      getPortSpeedNames: "moduleSpeedPorts/getPortSpeedNames"
     })
   },
 

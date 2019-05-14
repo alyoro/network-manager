@@ -63,7 +63,7 @@
           </v-flex>
 
           <v-flex xs12 md6>
-            <div>{{getNameByType(port.devicePlugged)}}</div>
+            <div>{{port.devicePlugged}}</div>
           </v-flex>
 
           <v-flex xs12 md8>

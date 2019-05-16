@@ -14,6 +14,10 @@
 
       <v-layout wrap class="ma-2">
         <v-flex lg6 class="pa-2">
+          <v-text-field label="Identifier" v-model="updatedDevice.identifier"></v-text-field>
+        </v-flex>
+
+        <v-flex lg6 class="pa-2">
           <v-text-field label="Localization" v-model="updatedDevice.localization"></v-text-field>
         </v-flex>
 

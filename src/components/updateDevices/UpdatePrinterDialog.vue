@@ -14,6 +14,10 @@
 
       <v-layout wrap class="ma-2">
         <v-flex lg6 class="pa-2">
+          <v-text-field label="Identifier" v-model="updatedDevice.identifier"></v-text-field>
+        </v-flex>
+
+        <v-flex lg6 class="pa-2">
           <v-text-field label="Localization" v-model="updatedDevice.localization"></v-text-field>
         </v-flex>
 
@@ -25,18 +29,16 @@
       <v-divider></v-divider>
 
       <v-layout row nowrap class="pa-2" align-content-start>
-        <v-btn flat color="primary" class="pa-2"
-        @click="updateDevice()">Update</v-btn>
+        <v-btn flat color="primary" class="pa-2" @click="updateDevice()">Update</v-btn>
 
-        <v-btn flat class="pa-2"
-        @click="dialog = false">Close</v-btn>
+        <v-btn flat class="pa-2" @click="dialog = false">Close</v-btn>
       </v-layout>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import updateMixin from "@/mixins/updateMixin"
+import updateMixin from "@/mixins/updateMixin";
 
 export default {
   mixins: [updateMixin]

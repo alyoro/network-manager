@@ -4,11 +4,11 @@
       <h1 class="title primary--text">{{getNameByType(deviceType)}}</h1>
     </v-flex>
     <v-form v-model="valid" class="item">
+      <v-text-field v-model="deviceInfo.identifier" label="Identifier" required></v-text-field>
+
       <v-text-field v-model="deviceInfo.building" label="Building" required></v-text-field>
 
       <v-text-field v-model="deviceInfo.room" label="Room" required></v-text-field>
-
-      <v-text-field v-model="deviceInfo.identifier" label="Identifier" required></v-text-field>
 
       <v-text-field v-model="deviceInfo.description" label="Description" required></v-text-field>
 

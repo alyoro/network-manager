@@ -54,7 +54,7 @@
             </v-flex>
           </v-layout>
         </div>
-        <PortsSearchInfo :ports="item.ports" :deviceId="item.id" :deviceType="deviceType"/>
+        <PortsSearchInfo :ports="item.ports" :device="item" :deviceType="deviceType"/>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-container>

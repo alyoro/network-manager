@@ -4,6 +4,12 @@
       <v-flex class="item titleText">
         <h1 class="title primary--text">{{getNameByType(deviceType)}}</h1>
       </v-flex>
+
+      <v-flex xs12 md6 class="item">
+        <div class="grey--text subheading">Identifier</div>
+        <div>{{getDeviceInfo(deviceType).identifier}}</div>
+      </v-flex>
+
       <v-flex xs12 md6 class="item">
         <div class="grey--text subheading">Building</div>
         <div>{{getDeviceInfo(deviceType).building}}</div>
@@ -12,11 +18,6 @@
       <v-flex xs12 md6 class="item">
         <div class="grey--text subheading">Room</div>
         <div>{{getDeviceInfo(deviceType).room}}</div>
-      </v-flex>
-
-      <v-flex xs12 md6 class="item">
-        <div class="grey--text subheading">Identifier</div>
-        <div>{{getDeviceInfo(deviceType).identifier}}</div>
       </v-flex>
 
       <v-flex xs12 md6 class="item">

@@ -31,7 +31,7 @@
         </v-flex>
 
         <v-flex xs12 md6>
-          <PortsSearchInfo :ports="item.ports" :deviceId="item.id" :deviceType="deviceType"/>
+          <PortsSearchInfo :ports="item.ports" :device="item" :deviceType="deviceType"/>
         </v-flex>
 
         <v-flex xs12 md6>

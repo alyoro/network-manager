@@ -5,7 +5,7 @@
     </template>
     <v-card color="white" hide-overlay>
       <v-toolbar dark color="primary">
-        <v-toolbar-title>Ports</v-toolbar-title>
+        <v-toolbar-title>Ports{{displayedDeviceIdentifier}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="dialog = false">
           <v-icon>close</v-icon>
@@ -124,7 +124,7 @@
 
           <v-flex xs12 md6>
             <UpdatePortDialog
-              :deviceId="deviceId"
+              :deviceId="device.id"
               :deviceType="deviceType"
               :portId="port.id"
               :port="port"
@@ -132,7 +132,7 @@
           </v-flex>
 
           <v-flex xs12 md6>
-            <v-btn @click="deletePort(deviceId, port.id)" @click.native.stop flat>DELETE</v-btn>
+            <v-btn @click="deletePort(device.id, port.id)" @click.native.stop flat>DELETE</v-btn>
           </v-flex>
         </v-layout>
       </v-list>
@@ -162,6 +162,13 @@ export default {
     };
   },
   computed: {
+    displayedDeviceIdentifier() {
+      if (this.device.identifier !== null) {
+        return " - " + this.device.identifier;
+      } else {
+        return " "
+      }
+    },
     ...mapGetters({
       getDeviceConnected: "moduleConnections/getDeviceConnected"
     })

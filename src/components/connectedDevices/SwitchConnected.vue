@@ -35,7 +35,7 @@
       </v-flex>
     </v-layout>
 
-    <PortsConnectedDevice :ports="item.ports" :deviceId="item.id" :deviceType="item.deviceType"/>
+    <PortsConnectedDevice :ports="item.ports" :device="item" :deviceType="item.deviceType"/>
   </v-container>
 </template>
 

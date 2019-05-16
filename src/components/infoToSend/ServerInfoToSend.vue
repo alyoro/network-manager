@@ -4,6 +4,12 @@
       <v-flex class="item titleText">
         <h1 class="title primary--text">{{getNameByType(deviceType)}}</h1>
       </v-flex>
+
+      <v-flex xs12 md6 class="item">
+        <div class="grey--text subheading">Identifier</div>
+        <div>{{getDeviceInfo(deviceType).identifier}}</div>
+      </v-flex>
+
       <v-flex xs12 md6 class="item">
         <div class="grey--text subheading">Localization</div>
         <div>{{getDeviceInfo(deviceType).localization}}</div>

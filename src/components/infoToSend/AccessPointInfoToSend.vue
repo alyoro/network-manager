@@ -6,6 +6,10 @@ f<template>
       </v-flex>
       <v-flex xs12 md6 class="item">
         <div class="grey--text subheading">Localization</div>
+        <div>{{getDeviceInfo(deviceType).identifier}}</div>
+      </v-flex>
+      <v-flex xs12 md6 class="item">
+        <div class="grey--text subheading">Localization</div>
         <div>{{getDeviceInfo(deviceType).localization}}</div>
       </v-flex>
 

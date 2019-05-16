@@ -6,8 +6,8 @@ const connectedMixin = {
       type: String,
       required: true
     },
-    deviceId: {
-      type: Number,
+    device: {
+      type: Object,
       required: true
     }
   },
@@ -32,7 +32,7 @@ const connectedMixin = {
 
     changePortStatus(id) {
       this.$store.dispatch("moduleData/changePortStatus", {
-        deviceId: this.deviceId,
+        deviceId: this.device.id,
         portId: id,
         type: this.deviceType
       });

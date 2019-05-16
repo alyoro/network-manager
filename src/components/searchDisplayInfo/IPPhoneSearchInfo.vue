@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-subheader class="pa-0 text-md-center align-center">
+      <v-flex xs12 md6>Identifier</v-flex>
       <v-flex xs12 md6>Localization</v-flex>
       <v-flex xs12 md6>Ip Address</v-flex>
       <v-flex xs12 md6>Number of Ports</v-flex>
@@ -12,6 +13,10 @@
     <v-list flat v-for="item in getData(deviceType)" :key="item.id">
       <v-divider></v-divider>
       <v-layout row class="text-md-center align-center">
+        <v-flex xs12 md6>
+          <div>{{item.identifier}}</div>
+        </v-flex>
+
         <v-flex xs12 md6>
           <div>{{item.localization}}</div>
         </v-flex>

@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-subheader class="pa-0 text-md-center align-center">
+      <v-flex xs12 md6>Identifier</v-flex>
       <v-flex xs12 md6>Building</v-flex>
       <v-flex xs12 md6>Room</v-flex>
-      <v-flex xs12 md6>Identifier</v-flex>
       <v-flex xs12 md6>Localization</v-flex>
       <v-flex xs12 md6>Description</v-flex>
       <v-flex xs12 md6>Number of Ports</v-flex>
@@ -17,15 +17,15 @@
       <v-divider></v-divider>
       <v-layout row class="text-md-center align-center">
         <v-flex xs12 md6>
+          <div>{{item.identifier}}</div>
+        </v-flex>
+
+        <v-flex xs12 md6>
           <div>{{item.building}}</div>
         </v-flex>
 
         <v-flex xs12 md6>
           <div>{{item.room}}</div>
-        </v-flex>
-
-        <v-flex xs12 md6>
-          <div>{{item.identifier}}</div>
         </v-flex>
 
         <v-flex xs12 md6>

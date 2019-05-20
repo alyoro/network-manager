@@ -11,6 +11,7 @@
             item-value="idType"
             v-model="devType"
             :items="getDeviceTypes"
+            @change="searchForData()"
           ></v-select>
           <!-- <v-text-field v-model="identifier" label="Search for ID (whatever it can be)"></v-text-field> -->
           <v-btn color="primary" @click="searchForData()">Search</v-btn>

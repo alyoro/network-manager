@@ -452,8 +452,11 @@ const moduleConnections = {
       state.deviceConnected = payload
     },
     updatePort: (state, payload) => {
+      state.deviceConnected.ports = []
       const indexPort = state.deviceConnected.ports.findIndex(item => item.id == payload.portId)
-      Vue.set(state.deviceConnected.ports, indexPort, payload.port)
+      if (indexPort > -1) {
+        Vue.set(state.deviceConnected.ports, indexPort, payload.port)
+      }
     }
   },
   actions: {

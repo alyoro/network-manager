@@ -34,6 +34,7 @@
             </v-list>
           </v-menu>
         </v-flex>
+        <v-flex xs12 md6 v-if="deviceType=='PatchPanel'">Connect Wire</v-flex>
         <v-flex xs12 md6>Port status</v-flex>
         <v-flex xs12 md6>Update Port</v-flex>
         <v-flex xs12 md6>Delete Port</v-flex>
@@ -70,7 +71,7 @@
             <div>{{port.portOnTheOtherElement}}</div>
           </v-flex>
 
-          <v-flex xs12 md6>
+          <v-flex xs12 md6 v-if="deviceType != 'PatchPanel'">
             <v-menu offset-y auto>
               <template v-slot:activator="{ on }">
                 <v-btn
@@ -96,13 +97,94 @@
                 >Connected DOWN</v-btn>
               </template>
               <v-list>
-                <ConnectingDeviceDialog :port="port"/>
-
                 <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
                   <v-list-tile-title>Disconnect Port</v-list-tile-title>
                 </v-list-tile>
 
                 <ConnectedDeviceDialog :port="port"/>
+
+                <ConnectingDeviceDialog :port="port"/>
+              </v-list>
+            </v-menu>
+          </v-flex>
+
+          <v-flex xs12 md6 v-if="deviceType == 'PatchPanel'">
+            <v-menu offset-y auto>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  v-if="port.connections == null || port.connections[0] == null"
+                  color="cyan accent-3"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Free</v-btn>
+                <v-btn
+                  v-else-if="port.id = port.connections[0].portIdStart"
+                  color="pink accent-2"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Connected UP</v-btn>
+                <v-btn
+                  v-else-if="port.id === port.connections[0].portIdEnd"
+                  color="pink accent-2"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Connected DOWN</v-btn>
+              </template>
+              <v-list>
+                <v-list-tile v-if="port.connections && typeof port.connections[0] !== 'undefined'" @click="disconnectPort(port)">
+                  <v-list-tile-title>Disconnect Port</v-list-tile-title>
+                </v-list-tile>
+
+                <ConnectedDeviceDialog :port="port"/>
+
+                <ConnectingDeviceDialog :port="port"/>
+              </v-list>
+            </v-menu>
+          </v-flex>
+
+          <v-flex xs12 md6 v-if="deviceType == 'PatchPanel'">
+            <v-menu offset-y auto>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  v-if="port.connections == null || port.connections[1] == null"
+                  color="cyan accent-3"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Free</v-btn>
+                <v-btn
+                  v-else-if="port.id == port.connections[1].portIdStart"
+                  color="pink accent-2"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Connected UP</v-btn>
+                <v-btn
+                  v-else-if="port.id === port.connections[1].portIdEnd"
+                  color="pink accent-2"
+                  flat
+                  v-on="on"
+                  @click.native.stop
+                >Connected DOWN</v-btn>
+              </template>
+              <v-list>
+                <v-list-tile
+                  v-if="port.connections == null || port.connections[1] == null"
+                  @click="disconnectPort(port)"
+                >
+                  <v-list-tile-title>Make connection</v-list-tile-title>
+                </v-list-tile>
+
+                <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
+                  <v-list-tile-title>Show Details</v-list-tile-title>
+                </v-list-tile>
+
+                <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
+                  <v-list-tile-title>Disconnect</v-list-tile-title>
+                </v-list-tile>
               </v-list>
             </v-menu>
           </v-flex>
@@ -166,7 +248,7 @@ export default {
       if (this.device.identifier !== null) {
         return " - " + this.device.identifier;
       } else {
-        return " "
+        return " ";
       }
     },
     ...mapGetters({

@@ -3,14 +3,14 @@
     <template v-slot:activator="{ on }">
       <v-list-tile
         v-on="on"
-        v-if="port.connections === null"
+
         @click="makeConnections(portSlave, 'PatchPanel')"
       >
         <v-list-tile-title>Make connection to Patch Panel</v-list-tile-title>
       </v-list-tile>
       <v-list-tile
         v-on="on"
-        v-if="port.connections === null"
+
         @click="makeConnections(portSlave, 'Switch')"
       >
         <v-list-tile-title>Make connection to Switch</v-list-tile-title>

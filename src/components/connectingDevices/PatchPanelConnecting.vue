@@ -47,7 +47,7 @@
         </v-flex>
       </v-layout>
       <div v-if="visible[index]">
-        <PortsConnectingDevices :ports="item.ports" :portSlave="portSlave"/>
+        <PortsConnectingDevices :ports="item.ports" :portSlave="portSlave" deviceType="PatchPanel"/>
       </div>
     </v-list>
   </v-container>

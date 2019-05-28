@@ -49,6 +49,7 @@ export default {
   components: {
     PatchPanelConnected,
     SwitchConnected,
+    ServerConnected,
     AccessPointConnected,
     PrinterConnected
   },

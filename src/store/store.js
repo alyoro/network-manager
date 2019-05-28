@@ -470,12 +470,12 @@ const moduleConnections = {
           console.log('Error: ' + error)
         })
     },
-    makeConnection: (context, ports) => {
-      const url = "/connections"
-      NetworkManagerBackend.post(url, ports)
+    makeConnection: (context, payload) => {
+      const url = "/connections/" + payload.connectionType
+      NetworkManagerBackend.post(url, payload.ports)
         .then(response => {
-          context.commit("moduleData/updatePortConnection", { id: ports[0].id, connection: response }, { root: true })
-          context.commit("moduleData/updatePortConnection", { id: ports[1].id, connection: response }, { root: true })
+          context.commit("moduleData/updatePortConnection", { id: payload.ports[0].id, connection: response }, { root: true })
+          context.commit("moduleData/updatePortConnection", { id: payload.ports[1].id, connection: response }, { root: true })
           if (response) {
             EventBus.$emit('snackbar-alert', { message: 'Connection successfuly created', color: 'success' })
           }

@@ -23,9 +23,9 @@ const connectedMixin = {
         });
       }
     },
-    disconnectPort(port) {
+    deleteConnection(connection) {
       var payload = {
-        connection: port.connections[0]
+        connection: connection
       }
       this.$store.dispatch("moduleConnections/deleteConnection", payload)
     },

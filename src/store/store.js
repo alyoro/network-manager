@@ -453,8 +453,11 @@ const moduleConnections = {
       state.deviceConnected = payload
     },
     updatePort: (state, payload) => {
+      state.deviceConnected.ports = []
       const indexPort = state.deviceConnected.ports.findIndex(item => item.id == payload.portId)
-      Vue.set(state.deviceConnected.ports, indexPort, payload.port)
+      if (indexPort > -1) {
+        Vue.set(state.deviceConnected.ports, indexPort, payload.port)
+      }
     }
   },
   actions: {
@@ -468,12 +471,12 @@ const moduleConnections = {
           console.log('Error: ' + error)
         })
     },
-    makeConnection: (context, ports) => {
-      const url = "/connections"
-      NetworkManagerBackend.post(url, ports)
+    makeConnection: (context, payload) => {
+      const url = "/connections/" + payload.connectionType
+      NetworkManagerBackend.post(url, payload.ports)
         .then(response => {
-          context.commit("moduleData/updatePortConnection", { id: ports[0].id, connection: response }, { root: true })
-          context.commit("moduleData/updatePortConnection", { id: ports[1].id, connection: response }, { root: true })
+          context.commit("moduleData/updatePortConnection", { id: payload.ports[0].id, connection: response }, { root: true })
+          context.commit("moduleData/updatePortConnection", { id: payload.ports[1].id, connection: response }, { root: true })
           if (response) {
             EventBus.$emit('snackbar-alert', { message: 'Connection successfuly created', color: 'success' })
           }

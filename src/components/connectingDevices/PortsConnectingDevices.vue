@@ -24,6 +24,7 @@
           </v-list>
         </v-menu>
       </v-flex>
+      <v-flex xs12 md6 v-if="deviceType=='PatchPanel'">Connect Wire</v-flex>
     </v-subheader>
 
     <v-layout row v-for="port in filteredPorts" :key="port.id" class="text-md-center align-center">
@@ -43,7 +44,7 @@
         <div>{{port.portOnTheOtherElement}}</div>
       </v-flex>
 
-      <v-flex xs12 md6>
+      <v-flex xs12 md6 v-if="deviceType != 'PatchPanel'">
         <v-menu offset-y auto>
           <template v-slot:activator="{ on }">
             <v-btn
@@ -69,11 +70,94 @@
             >Connected DOWN</v-btn>
           </template>
           <v-list>
-            <v-list-tile v-if="port.connections === null" @click="makeConnection(port)">
+            <v-list-tile v-if="port.connections === null" @click="makeConnection(port, 'SOCKET')">
               <v-list-tile-title>Make connection</v-list-tile-title>
             </v-list-tile>
 
-            <v-list-tile v-else @click="disconnectPort(port)">
+            <v-list-tile
+              v-if="port.connections !== null"
+              @click="deleteConnection(port.connections[0])"
+            >
+              <v-list-tile-title>Disconnect Port</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-flex>
+
+      <v-flex xs12 md6 v-if="deviceType == 'PatchPanel'">
+        <v-menu offset-y auto>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-if="connectionsSocket(port) == null"
+              color="cyan accent-3"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Free</v-btn>
+            <v-btn
+              v-else-if="port.id = connectionsSocket(port).portIdStart"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected UP</v-btn>
+            <v-btn
+              v-else-if="port.id === connectionsSocket(port).portIdEnd"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected DOWN</v-btn>
+          </template>
+          <v-list>
+            <v-list-tile v-if="!(connectionsSocket(port))" @click="makeConnection(port, 'SOCKET')">
+              <v-list-tile-title>Make connection</v-list-tile-title>
+            </v-list-tile>
+
+            <v-list-tile
+              v-if="connectionsSocket(port)"
+              @click="deleteConnection(connectionsSocket(port))"
+            >
+              <v-list-tile-title>Disconnect Port</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-flex>
+
+      <v-flex xs12 md6 v-if="deviceType == 'PatchPanel'">
+        <v-menu offset-y auto>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-if="connectionsPlug(port) == null"
+              color="cyan accent-3"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Free</v-btn>
+            <v-btn
+              v-else-if="port.id == connectionsPlug(port).portIdStart"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected UP</v-btn>
+            <v-btn
+              v-else-if="port.id === connectionsPlug(port).portIdEnd"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected DOWN</v-btn>
+          </template>
+          <v-list>
+            <v-list-tile v-if="!(connectionsPlug(port))" @click="makeConnection(port, 'PLUG')">
+              <v-list-tile-title>Make connection(PLUG)</v-list-tile-title>
+            </v-list-tile>
+
+            <v-list-tile
+              v-if="connectionsPlug(port)"
+              @click="deleteConnection(connectionsPlug(port))"
+            >
               <v-list-tile-title>Disconnect Port</v-list-tile-title>
             </v-list-tile>
           </v-list>
@@ -91,20 +175,38 @@ export default {
   props: {
     portSlave: {
       type: Object
+    },
+    deviceType: {
+      type: String
     }
   },
   methods: {
-    makeConnection(port) {
+    makeConnection(port, connectionType) {
       var ports = [];
       ports.push(port);
       ports.push(this.portSlave);
-      this.$store.dispatch("moduleConnections/makeConnection", ports);
-    },
-    disconnectPort(port) {
       var payload = {
-        connection: port.connections[0]
+        ports: ports,
+        connectionType: connectionType
+      };
+      this.$store.dispatch("moduleConnections/makeConnection", payload);
+    },
+    deleteConnection(connection) {
+      var payload = {
+        connection: connection
       };
       this.$store.dispatch("moduleConnections/deleteConnection", payload);
+    },
+    connectionsSocket(port) {
+      if (port.connections != null) {
+        return port.connections.find(conn => conn.connectionType === "SOCKET");
+      } else return null;
+    },
+
+    connectionsPlug(port) {
+      if (port.connections != null) {
+        return port.connections.find(conn => conn.connectionType === "PLUG");
+      } else return null;
     }
   }
 };

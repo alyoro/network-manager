@@ -24,6 +24,7 @@
           </v-list>
         </v-menu>
       </v-flex>
+      <v-flex xs12 md6 v-if="deviceType=='PatchPanel'">Connect Wire</v-flex>
       <v-flex xs12 md6>Port status</v-flex>
     </v-subheader>
 
@@ -44,7 +45,7 @@
         <div>{{port.portOnTheOtherElement}}</div>
       </v-flex>
 
-      <v-flex xs12 md6>
+      <v-flex xs12 md6 v-if="deviceType != 'PatchPanel'">
         <v-menu offset-y auto>
           <template v-slot:activator="{ on }">
             <v-btn
@@ -72,11 +73,95 @@
           <v-list>
             <ConnectingDeviceDialog :port="port"/>
 
-            <v-list-tile v-if="port.connections" @click="disconnectPort(port)">
+            <v-list-tile v-if="port.connections" @click="deleteConnection(port.connections[0])">
               <v-list-tile-title>Disconnect Port</v-list-tile-title>
             </v-list-tile>
 
             <v-list-tile v-if="port.connections" @click="showConnectedDevice(port)">
+              <v-list-tile-title>Show Connected Device</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-flex>
+
+      <v-flex xs12 md6 v-if="deviceType == 'PatchPanel'">
+        <v-menu offset-y auto>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-if="connectionsSocket(port) == null"
+              color="cyan accent-3"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Free</v-btn>
+            <v-btn
+              v-else-if="port.id = connectionsSocket(port).portIdStart"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected UP</v-btn>
+            <v-btn
+              v-else-if="port.id === connectionsSocket(port).portIdEnd"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected DOWN</v-btn>
+          </template>
+          <v-list>
+            <ConnectingDeviceDialog v-if="!(connectionsSocket(port))" :port="port"/>
+
+            <v-list-tile
+              v-if="connectionsSocket(port)"
+              @click="deleteConnection(port.connections[0])"
+            >
+              <v-list-tile-title>Disconnect Port</v-list-tile-title>
+            </v-list-tile>
+
+            <v-list-tile v-if="connectionsSocket(port)" @click="showConnectedDevice(port)">
+              <v-list-tile-title>Show Connected Device</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-flex>
+
+      <v-flex xs12 md6 v-if="deviceType == 'PatchPanel'">
+        <v-menu offset-y auto>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-if="connectionsPlug(port) == null"
+              color="cyan accent-3"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Free</v-btn>
+            <v-btn
+              v-else-if="port.id == connectionsPlug(port).portIdStart"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected UP</v-btn>
+            <v-btn
+              v-else-if="port.id === connectionsPlug(port).portIdEnd"
+              color="pink accent-2"
+              flat
+              v-on="on"
+              @click.native.stop
+            >Connected DOWN</v-btn>
+          </template>
+          <v-list>
+            <ConnectingDeviceDialog v-if="!(connectionsPlug(port))" :port="port"/>
+
+            <v-list-tile
+              v-if="connectionsPlug(port)"
+              @click="deleteConnection(port.connections[0])"
+            >
+              <v-list-tile-title>Disconnect Port</v-list-tile-title>
+            </v-list-tile>
+
+            <v-list-tile v-if="connectionsPlug(port)" @click="showConnectedDevice(port)">
               <v-list-tile-title>Show Connected Device</v-list-tile-title>
             </v-list-tile>
           </v-list>
@@ -110,6 +195,19 @@ export default {
   mixins: [connectedMixin, filteringPortsMixin],
   components: {
     ConnectingDeviceDialog
+  },
+  methods: {
+    connectionsSocket(port) {
+      if (port.connections != null) {
+        return port.connections.find(conn => conn.connectionType === "SOCKET");
+      } else return null;
+    },
+
+    connectionsPlug(port) {
+      if (port.connections != null) {
+        return port.connections.find(conn => conn.connectionType === "PLUG");
+      } else return null;
+    }
   }
 };
 </script>

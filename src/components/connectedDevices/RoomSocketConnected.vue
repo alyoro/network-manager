@@ -7,8 +7,9 @@
 
     <v-subheader class="pa-0 text-md-center align-center">
       <v-flex xs12 md6>Identifier</v-flex>
-      <v-flex xs12 md6>Localization</v-flex>
-      <v-flex xs12 md6>IP Address</v-flex>
+      <v-flex xs12 md6>Building</v-flex>
+      <v-flex xs12 md6>Room</v-flex>
+      <v-flex xs12 md6>Description</v-flex>
       <v-flex xs12 md6>Number of Ports</v-flex>
     </v-subheader>
 
@@ -18,11 +19,15 @@
       </v-flex>
 
       <v-flex xs12 md6>
-        <div>{{item.localization}}</div>
+        <div>{{item.building}}</div>
       </v-flex>
 
       <v-flex xs12 md6>
-        <div>{{item.ip}}</div>
+        <div>{{item.room}}</div>
+      </v-flex>
+
+      <v-flex xs12 md6>
+        <div>{{item.description}}</div>
       </v-flex>
 
       <v-flex xs12 md6>

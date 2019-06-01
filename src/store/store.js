@@ -187,7 +187,8 @@ const moduleData = {
       { type: 'Server', devices: [] },
       { type: 'Printer', devices: [] },
       { type: 'AccessPoint', devices: [] },
-      { type: 'IPPhone', devices: [] }
+      { type: 'IPPhone', devices: [] },
+      { type: 'RoomSocket', devices: [] }
     ],
 
     countedDevices: [],
@@ -515,6 +516,7 @@ export default new Vuex.Store({
       { name: 'Printer', idType: 'Printer', apiUrl: 'printers' },
       { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },
       // { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
+      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets'},
       { name: 'None', idType: 'None' },
     ],
   },

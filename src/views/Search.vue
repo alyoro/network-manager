@@ -21,9 +21,9 @@
           <PatchPanelSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
         </div>
 
-        <!-- <div v-if="devType === 'RoomSocket'">
+        <div v-if="devType === 'RoomSocket'">
           <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
-        </div> -->
+        </div>
 
         <div v-if="devType === 'Switch'">
           <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>

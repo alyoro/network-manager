@@ -16,6 +16,7 @@
         <v-flex xs12 md6>Port Speed</v-flex>
         <v-flex xs12 md6>Device plugged</v-flex>
         <v-flex xs12 md8>Port number on the other element</v-flex>
+        <v-flex xs12 md8 v-if="deviceType == 'Switch' || deviceType == 'Server'">Vlans</v-flex>
         <v-flex xs12 md6>
           <v-menu offset-y auto>
             <template v-slot:activator="{ on }">
@@ -34,7 +35,7 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-flex xs12 md6 v-if="deviceType=='PatchPanel'">Connect Wire</v-flex>
+        <v-flex xs12 md8 v-if="deviceType=='PatchPanel'">Connect Wire</v-flex>
         <v-flex xs12 md6>Port status</v-flex>
         <v-flex xs12 md6>Update Port</v-flex>
         <v-flex xs12 md6>Delete Port</v-flex>
@@ -69,6 +70,13 @@
 
           <v-flex xs12 md8>
             <div>{{port.portOnTheOtherElement}}</div>
+          </v-flex>
+
+          <v-flex xs12 md8 v-if="deviceType == 'Switch' || deviceType == 'Server'">
+            <v-chip v-for="(vlan, index) in port.vlans" :key="index"
+              small>
+              {{vlan}}
+            </v-chip>
           </v-flex>
 
           <v-flex xs12 md6 v-if="deviceType != 'PatchPanel'">

@@ -36,7 +36,7 @@ const moduleSpeedPorts = {
       NetworkManagerBackend.patch(url)
         .then(response => {
           context.commit("setPortSpeedNames", response)
-          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfuly updated', color: 'success' })
+          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfully updated', color: 'success' })
         })
         .catch(error => {
           EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
@@ -49,7 +49,7 @@ const moduleSpeedPorts = {
       NetworkManagerBackend.delete(url)
         .then(response => {
           context.commit("setPortSpeedNames", response)
-          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfuly deleted', color: 'success' })
+          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfully deleted', color: 'success' })
         })
         .catch(error => {
           EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
@@ -58,6 +58,61 @@ const moduleSpeedPorts = {
     }
   }
 }
+
+const moduleVlans = {
+  namespaced: true,
+  state: {
+    vlansNames: []
+  },
+  getters: {
+    getVlansNames: (state) => {
+      return state.vlansNames
+    }
+  },
+  mutations: {
+    setVlansNames: (state, payload) => {
+      state.vlansNames = payload
+    }
+  },
+  actions: {
+    fetchVlansNames: (context) => {
+      const url = "/vlans"
+      NetworkManagerBackend.get(url)
+        .then(response => {
+          context.commit("setVlansNames", response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    updateVlansNames: (context, payload) => {
+      const url = "/vlans/" + payload.name
+      NetworkManagerBackend.patch(url)
+        .then(response => {
+          context.commit("setVlansNames", response)
+          EventBus.$emit('snackbar-alert', { message: 'Vlan Names successfully updated', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log(error)
+        })
+    },
+
+    deleteNameFromVlansNames: (context, payload) => {
+      const url = "/vlans/" + payload.name
+      NetworkManagerBackend.delete(url)
+        .then(response => {
+          context.commit("setVlansNames", response)
+          EventBus.$emit('snackbar-alert', { message: 'Vlan Name successfully deleted', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log(error)
+        })
+    }
+  }
+}
+
 
 const moduleAdding = {
   namespaced: true,
@@ -369,7 +424,6 @@ const moduleData = {
     updatePortToServer: (context, payload) => {
       NetworkManagerBackend.put(payload.url, payload.port)
         .then(response => {
-          console.log(response)
           if (response) {
             EventBus.$emit('snackbar-alert', { message: 'Port successfuly updated', color: 'success' })
           }
@@ -421,7 +475,7 @@ const moduleData = {
             response: response
           }
           context.commit("updateDeviceInStore", updateDevice);
-          EventBus.$emit('snackbar-alert', { message: 'Device successfuly updated', color: 'success' })
+          EventBus.$emit('snackbar-alert', { message: 'Device successfully updated', color: 'success' })
         })
         .catch(error => {
           EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
@@ -507,6 +561,7 @@ const moduleConnections = {
 export default new Vuex.Store({
   modules: {
     moduleSpeedPorts: moduleSpeedPorts,
+    moduleVlans: moduleVlans,
     moduleAdding: moduleAdding,
     moduleData: moduleData,
     moduleConnections: moduleConnections

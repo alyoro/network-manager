@@ -20,23 +20,21 @@
               <v-flex xs12 lg6 class="pa-1">
                 <v-select
                   label="Port Type"
-                  v-model="portType"
+                  v-model="port.logical"
                   item-text="name"
                   item-value="value"
                   :items="portTypes"
                 ></v-select>
               </v-flex>
 
-              <v-flex xs12 lg6 v-if="portType == 'logical'">
-                <v-combobox
-                  label="Insert Vlans"
-                  v-model="vlanType"
-                  :items="vlans"
-                  chips
+              <v-flex xs12 lg6 class="pa-1" v-if="port.logical == true">
+                <v-select
+                  label="Vlans"
+                  v-model="port.vlans"
+                  :items="getVlansNames"
+                  small-chips
                   multiple
-                  persistent-hint
-                  hide-selected
-                ></v-combobox>
+                ></v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -69,13 +67,11 @@ export default {
   data() {
     return {
       dialog: false,
-      portType: "physical",
-      vlanType: [],
+      portType: false,
       portTypes: [
-        { name: "Physical", value: "physical" },
-        { name: "Logical", value: "logical" }
+        { name: "Physical", value: false },
+        { name: "Logical", value: true }
       ],
-      vlans: ["vlan1", "vlan2"]
     };
   },
 
@@ -93,18 +89,20 @@ export default {
     ...mapGetters({
       getDeviceTypes: "getDeviceTypes",
       getUrlByType: "getUrlByType",
-      getPortSpeedNames: "moduleSpeedPorts/getPortSpeedNames"
+      getPortSpeedNames: "moduleSpeedPorts/getPortSpeedNames",
+      getVlansNames: "moduleVlans/getVlansNames"
     })
   },
 
   methods: {
     updatePort() {
+      this.port.logical ? {} : this.port.vlans=null
       var payload = {
         deviceId: this.deviceId,
         deviceType: this.deviceType,
         portId: this.portId,
         url: this.apiUrl,
-        port: this.port
+        port: this.port,
       };
       this.$store.dispatch("moduleData/updatePortToServer", payload);
       this.dialog = false;

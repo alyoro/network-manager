@@ -98,6 +98,9 @@ export default {
       };
       this.$store.dispatch("moduleData/getAll", payload);
     }
+  },
+  created() {
+    this.$store.dispatch("moduleVlans/fetchVlansNames")
   }
 };
 </script>

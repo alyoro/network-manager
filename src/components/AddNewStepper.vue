@@ -24,7 +24,7 @@
           </v-radio-group>
         </v-card>
         <v-divider></v-divider>
-        <v-btn color="primary" flat @click="stepperStage = 2">Next</v-btn>
+        <v-btn color="primary" flat @click="next()">Next</v-btn>
       </v-stepper-content>
       <v-stepper-content step="2">
         <v-card class="item" flat>
@@ -57,8 +57,8 @@
           </div>
         </v-card>
         <v-divider></v-divider>
-        <v-btn color="primary" flat @click="stepperStage = 3">Next</v-btn>
-        <v-btn color="secondary" flat @click="stepperStage -= 1">Back</v-btn>
+        <v-btn color="primary" flat @click="next()">Next</v-btn>
+        <v-btn color="secondary" flat @click="back()">Back</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
@@ -94,8 +94,9 @@
           </div>
         </v-card>
         <v-divider></v-divider>
-        <v-btn color="primary" flat @click="stepperStage = 1">Add Next Device</v-btn>
-        <v-btn color="secondary" flat @click="stepperStage -= 1">Back</v-btn>
+        <v-btn color="primary" flat @click="next()">Add Next Device</v-btn>
+        <v-btn color="secondary" flat @click="back()">Back</v-btn>
+        <AddNewMessage />
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -120,6 +121,9 @@ import PrinterInfoToSend from "@/components/infoToSend/PrinterInfoToSend.vue";
 import AccessPointInfoToSend from "@/components/infoToSend/AccessPointInfoToSend.vue";
 import IPPhoneInfoToSend from "@/components/infoToSend/IPPhoneInfoToSend.vue";
 
+import AddNewMessage from "@/components/AddNewMessage.vue";
+import { EventBus } from "@/main";
+
 export default {
   props: {
     deviceType: {
@@ -141,11 +145,13 @@ export default {
     ServerInfoToSend,
     PrinterInfoToSend,
     AccessPointInfoToSend,
-    IPPhoneInfoToSend
+    IPPhoneInfoToSend,
+
+    AddNewMessage
   },
   data() {
     return {
-      stepperStage: 0,
+      stepperStage: 1,
       radioDevice: this.deviceType
     };
   },
@@ -153,6 +159,17 @@ export default {
     ...mapGetters({
       getDeviceTypes: "getDeviceTypes"
     })
+  },
+  methods: {
+    next(){
+      this.stepperStage += 1;
+      EventBus.$emit('clear-addMessage', {})
+    },
+
+    back() {
+      this.stepperStage -= 1;
+      EventBus.$emit('clear-addMessage', {})
+    }
   }
 };
 </script>

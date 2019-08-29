@@ -1,7 +1,5 @@
 <template>
   <div class="search">
-    <h1 class="subheading">Search</h1>
-
     <v-container class="my-5">
       <v-card flat xs12 md4 lg3 class="pa-3">
         <v-form>

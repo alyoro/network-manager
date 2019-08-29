@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Dashboard from './views/Dashboard.vue';
 import Search from './views/Search.vue';
 import AddNew from './views/AddNew.vue';
+import Settings from './views/Settings.vue';
 
 Vue.use(Router);
 
@@ -26,6 +27,11 @@ export default new Router({
       name: 'add',
       component: AddNew,
       props: true
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings
     }
   ],
 });

@@ -31,10 +31,24 @@ const moduleSpeedPorts = {
           console.log(error)
         })
     },
-    updatePortSpeedNames: (context, payload) => {
+    addPortSpeedNames: (context, payload) => {
       const url = "/portspeednames/" + payload.name
       NetworkManagerBackend.patch(url)
         .then(response => {
+          context.commit("setPortSpeedNames", response)
+          EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfully updated', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log(error)
+        })
+    },
+
+    updatePortSpeedNames: (context, payload) => {
+      const url = "/portspeednames/" + payload.name + "/" + payload.newName
+      NetworkManagerBackend.patch(url)
+        .then(response => {
+          console.log(response)
           context.commit("setPortSpeedNames", response)
           EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfully updated', color: 'success' })
         })
@@ -48,7 +62,8 @@ const moduleSpeedPorts = {
       const url = "/portspeednames/" + payload.name
       NetworkManagerBackend.delete(url)
         .then(response => {
-          context.commit("setPortSpeedNames", response)
+          console.log(response)
+          context.commit("setPortSpeedNames", response.data)
           EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfully deleted', color: 'success' })
         })
         .catch(error => {

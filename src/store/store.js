@@ -171,7 +171,7 @@ const moduleVlans = {
         })
     },
     updateVlansNames: (context, payload) => {
-      const url = "/vlans/" + payload.name
+      const url = "/vlans/" + payload.name + "/" + payload.newName
       NetworkManagerBackend.patch(url)
         .then(response => {
           context.commit("setVlansNames", response)
@@ -187,7 +187,7 @@ const moduleVlans = {
       const url = "/vlans/" + payload.name
       NetworkManagerBackend.delete(url)
         .then(response => {
-          context.commit("setVlansNames", response)
+          context.commit("setVlansNames", response.data)
           EventBus.$emit('snackbar-alert', { message: 'Vlan Name successfully deleted', color: 'success' })
         })
         .catch(error => {

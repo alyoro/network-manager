@@ -66,18 +66,18 @@ export default {
   },
   methods: {
     addNewVlanName() {
-      this.$store.dispatch("moduleVlans/addPortSpeedNames", {
+      this.$store.dispatch("moduleVlans/addVlansNames", {
         name: this.newName
       });
     },
-    deleteVlanName(portSpeedName) {
+    deleteVlanName(VlanName) {
       this.$store.dispatch("moduleVlans/deleteNameFromVlansNames", {
-        name: portSpeedName
+        name: VlanName
       });
     }
   },
   created() {
-    if (this.getPortSpeedNames.length <= 0) {
+    if (this.getVlansNames.length <= 0) {
       this.$store.dispatch("moduleVlans/fetchVlansNames");
     }
   }

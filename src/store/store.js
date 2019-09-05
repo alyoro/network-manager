@@ -170,6 +170,21 @@ const moduleVlans = {
           console.log(error)
         })
     },
+
+    addVlansNames: (context, payload) => {
+      const url = "/vlans/" + payload.name
+      NetworkManagerBackend.patch(url)
+        .then(response => {
+          context.commit("setVlansNames", response)
+          EventBus.$emit('snackbar-alert', { message: 'Vlan Names successfully added', color: 'success' })
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log(error)
+        })
+    },
+
+
     updateVlansNames: (context, payload) => {
       const url = "/vlans/" + payload.name + "/" + payload.newName
       NetworkManagerBackend.patch(url)

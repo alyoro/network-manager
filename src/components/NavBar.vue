@@ -7,6 +7,13 @@
         <span>Manager</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <div v-if="isLoggedIn">
+        <span>Hello, {{username}}</span>
+        <v-btn @click="logout" flat>Logout</v-btn>
+      </div>
+
+      <v-btn v-else to="/login" flat>Log in</v-btn>
     </v-toolbar>
 
     <v-navigation-drawer v-model="drawer" app class="primary text-uppercase">
@@ -25,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -33,9 +41,22 @@ export default {
         { title: "Dashboard", icon: "dashboard", route: "/" },
         { title: "Search", icon: "search", route: "/search" },
         { title: "Add New", icon: "add_box", route: "/add" },
-        { title: "Settings", icon: "settings_applications", route: "/settings"},
-      ]
+        { title: "Settings", icon: "settings_applications", route: "/settings" },
+        { title: "Login", icon: "vpn_key", route: "/login" }
+      ],
     };
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "moduleAuthentication/isLoggedIn",
+      username: "moduleAuthentication/getUsername"
+    })
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("moduleAuthentication/logout");
+      this.$router.push("/login");
+    }
   }
 };
 </script>

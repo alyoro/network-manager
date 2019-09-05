@@ -2,8 +2,78 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
 import { EventBus } from "@/main";
+import axios from 'axios';
 
 Vue.use(Vuex)
+
+const moduleAuthentication = {
+  namespaced: true,
+  state: {
+    status: '',
+    token: localStorage.getItem('token') || '',
+    username: localStorage.getItem('username') || '',
+    login: {},
+    errorMessageLogin: ''
+  },
+
+  getters: {
+    isLoggedIn: state => !!state.token,
+    authStatus: state => state.status,
+    getToken: state => state.token,
+    getUsername: state => state.username,
+    errorMessageLogin: state => state.errorMessageLogin
+  },
+
+  mutations: {
+    auth_request(state) {
+      state.status = 'loading'
+    },
+    auth_success(state, token, login) {
+      state.status = 'success'
+      state.token = token
+      state.login = login
+    },
+    auth_error(state, errorMessage) {
+      state.status = 'error',
+      state.errorMessageLogin = errorMessage
+    },
+    logout(state) {
+      state.status = ''
+      state.token = ''
+      state.login = {}
+    },
+  },
+  actions: {
+    doLogin(context, payload) {
+      axios.post('/authenticate?username=' + payload.username + '&password=' + payload.password)
+        .then(response => {
+          const token = response.headers.authorization
+          const login = payload.username
+          localStorage.setItem('token', token)
+          localStorage.setItem('username', payload.username)
+          context.commit('auth_success', token, login)
+          context.commit('auth_error', "")
+          return new Promise((resolve, reject) => {
+            resolve();
+          })
+        })
+        .catch(error => {
+          context.commit('auth_error', error)
+          localStorage.removeItem('token')
+        })
+    },
+
+    logout(context) {
+      return new Promise((resolve, reject) => {
+        context.commit('logout')
+        localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        delete axios.defaults.headers.common['Authorization']
+        resolve();
+      })
+    },
+  }
+}
 
 const moduleSpeedPorts = {
   namespaced: true,
@@ -575,6 +645,7 @@ const moduleConnections = {
 
 export default new Vuex.Store({
   modules: {
+    moduleAuthentication: moduleAuthentication,
     moduleSpeedPorts: moduleSpeedPorts,
     moduleVlans: moduleVlans,
     moduleAdding: moduleAdding,
@@ -589,7 +660,7 @@ export default new Vuex.Store({
       { name: 'Printer', idType: 'Printer', apiUrl: 'printers' },
       { name: 'Access Point', idType: 'AccessPoint', apiUrl: 'accesspoints' },
       // { name: 'IP Phone', idType: 'IPPhone', apiUrl: 'ipphones' },
-      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets'},
+      { name: 'Room Socket', idType: 'RoomSocket', apiUrl: 'roomsockets' },
       { name: 'None', idType: 'None' },
     ],
   },

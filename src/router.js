@@ -4,10 +4,12 @@ import Dashboard from './views/Dashboard.vue';
 import Search from './views/Search.vue';
 import AddNew from './views/AddNew.vue';
 import Settings from './views/Settings.vue';
+import LoginPage from './views/LoginPage.vue';
+import store from '@/store/store.js'
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -32,6 +34,23 @@ export default new Router({
       path: '/settings',
       name: 'settings',
       component: Settings
+    },
+    {
+      path:'/login',
+      name: 'login',
+      component: LoginPage
     }
   ],
 });
+
+router.beforeEach((to, from, next) => {
+ const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = store.getters["moduleAuthentication/isLoggedIn"];
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+  next();
+})
+
+export default router

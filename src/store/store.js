@@ -6,6 +6,21 @@ import axios from 'axios';
 
 Vue.use(Vuex)
 
+const parseJwt = function(token) {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+}
+
 const moduleAuthentication = {
   namespaced: true,
   state: {
@@ -21,7 +36,19 @@ const moduleAuthentication = {
     authStatus: state => state.status,
     getToken: state => state.token,
     getUsername: state => state.username,
-    errorMessageLogin: state => state.errorMessageLogin
+    errorMessageLogin: state => state.errorMessageLogin,
+    isExpired: (state) => {
+      if (state.token) {
+        const decoded = parseJwt(state.token);
+        if (Date.now() >= decoded.exp * 1000) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    }
   },
 
   mutations: {
@@ -72,6 +99,23 @@ const moduleAuthentication = {
         resolve();
       })
     },
+    checkExpiration: (context) => {
+      if (context.state.token) {
+        const decoded = parseJwt(context.state.token);
+        if (Date.now() >= decoded.exp * 1000) {
+          delete axios.defaults.headers.common['Authorization']
+          context.state.token = ''
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          location.reload();
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    }
   }
 }
 

@@ -8,7 +8,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <div v-if="isLoggedIn">
+      <div v-if="!isExpired">
         <span>Hello, {{username}}</span>
         <v-btn @click="logout" flat>Logout</v-btn>
       </div>
@@ -33,6 +33,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -41,16 +42,22 @@ export default {
         { title: "Dashboard", icon: "dashboard", route: "/" },
         { title: "Search", icon: "search", route: "/search" },
         { title: "Add New", icon: "add_box", route: "/add" },
-        { title: "Settings", icon: "settings_applications", route: "/settings" },
+        {
+          title: "Settings",
+          icon: "settings_applications",
+          route: "/settings"
+        },
         { title: "Login", icon: "vpn_key", route: "/login" }
-      ],
+      ]
     };
   },
   computed: {
     ...mapGetters({
       isLoggedIn: "moduleAuthentication/isLoggedIn",
-      username: "moduleAuthentication/getUsername"
-    })
+      username: "moduleAuthentication/getUsername",
+      isExpired: "moduleAuthentication/isExpired",
+    }),
+
   },
   methods: {
     logout() {
@@ -58,6 +65,8 @@ export default {
       this.$router.push("/login");
     }
   }
+
+
 };
 </script>
 

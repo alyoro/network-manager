@@ -23,13 +23,18 @@
         </v-layout>
       </v-card>
     </v-container>
+    <CheckLogin/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import CheckLogin from '@/components/CheckLogin.vue'
 
 export default {
+  components: {
+    CheckLogin
+  },
   data() {
     return {
       loading: true

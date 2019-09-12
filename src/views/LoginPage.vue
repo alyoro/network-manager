@@ -33,6 +33,7 @@
         </v-flex>
       </v-form>
     </v-card>
+    <CheckLogin/>
   </v-container>
 </template>
 
@@ -40,7 +41,12 @@
 <script>
 import { mapGetters } from "vuex";
 import { setTimeout } from "timers";
+import CheckLogin from '@/components/CheckLogin.vue'
+
 export default {
+  components: {
+    CheckLogin
+  },
   data() {
     return {
       username: "",

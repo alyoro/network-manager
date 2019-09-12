@@ -44,6 +44,7 @@
         </div>
       </v-card>
     </v-container>
+    <CheckLogin/>
   </div>
 </template>
 <script>
@@ -56,6 +57,7 @@ import ServerSearchInfo from "@/components/searchDisplayInfo/ServerSearchInfo.vu
 import PrinterSearchInfo from "@/components/searchDisplayInfo/PrinterSearchInfo.vue";
 import AccessPointSearchInfo from "@/components/searchDisplayInfo/AccessPointSearchInfo.vue";
 import IPPhoneSearchInfo from "@/components/searchDisplayInfo/IPPhoneSearchInfo.vue";
+import CheckLogin from '@/components/CheckLogin.vue'
 
 export default {
   components: {
@@ -65,7 +67,8 @@ export default {
     ServerSearchInfo,
     PrinterSearchInfo,
     AccessPointSearchInfo,
-    IPPhoneSearchInfo
+    IPPhoneSearchInfo,
+    CheckLogin
   },
   props: {
     deviceType: {

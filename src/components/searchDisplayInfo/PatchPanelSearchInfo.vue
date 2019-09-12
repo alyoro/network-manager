@@ -11,6 +11,7 @@
       <v-flex xs12 md6>Add Ports</v-flex>
       <v-flex xs12 md6>Update Device</v-flex>
       <v-flex xs12 md6>Delete Device</v-flex>
+      <v-flex xs12 md6>Download Report</v-flex>
     </v-subheader>
 
     <v-list flat v-for="(item, index) in getData(deviceType)" :key="index">
@@ -54,6 +55,10 @@
 
         <v-flex xs12 md6>
           <v-btn @click="deleteDevice(item.id)" flat>DELETE</v-btn>
+        </v-flex>
+
+        <v-flex xs12 md6>
+          <v-btn flat @click="fetchReport(item)">Report</v-btn>
         </v-flex>
       </v-layout>
     </v-list>

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import NetworkManagerBackend from '@/services/api/NetworkManagerBackend'
 import { EventBus } from "@/main";
 import axios from 'axios';
+import router from '@/router.js'
 
 Vue.use(Vuex)
 
@@ -389,8 +390,8 @@ const moduleData = {
       { type: 'IPPhone', devices: [] },
       { type: 'RoomSocket', devices: [] }
     ],
-
     countedDevices: [],
+    report: ''
   },
   getters: {
     getData: (state) => (payload) => {
@@ -422,6 +423,9 @@ const moduleData = {
           }
         }
       }
+    },
+    getReport: (state) => {
+      return state.report
     }
   },
   mutations: {
@@ -522,6 +526,10 @@ const moduleData = {
 
     setCountedDevices: (state, payload) => {
       state.countedDevices = payload
+    },
+
+    setReport: (state, payload) => {
+      state.report = payload
     }
   },
 
@@ -625,6 +633,19 @@ const moduleData = {
           EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
           console.log('Error: ' + error)
         })
+    },
+    fetchReport: (context, payload) => {
+      const url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.id + "/report"
+      NetworkManagerBackend.get(url)
+      .then(response => {
+        console.log(response)
+        context.commit('setReport', response)
+        router.push('/report')
+      })
+      .catch(error => {
+        EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+        console.log('Error: ' + error)
+      })
     }
   },
 }

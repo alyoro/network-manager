@@ -11,8 +11,8 @@
             :items="getDeviceTypes"
             @change="searchForData()"
           ></v-select>
-          <!-- <v-text-field v-model="identifier" label="Search for ID (whatever it can be)"></v-text-field> -->
           <v-btn color="primary" @click="searchForData()">Search</v-btn>
+          <v-btn v-if="!!devType" color="primary" @click="getReport">Get Report</v-btn>
         </v-form>
 
         <div v-if="devType === 'PatchPanel'">
@@ -98,6 +98,12 @@ export default {
         url: this.url
       };
       this.$store.dispatch("moduleData/getAll", payload);
+    },
+    getReport(){
+      var payload = {
+        deviceType: this.devType
+      }
+      this.$store.dispatch("moduleData/getAllReport", payload);
     }
   },
   created() {

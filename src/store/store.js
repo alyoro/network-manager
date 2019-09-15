@@ -7,13 +7,13 @@ import router from '@/router.js'
 
 Vue.use(Vuex)
 
-const parseJwt = function(token) {
+const parseJwt = function (token) {
   var base64Url = token.split(".")[1];
   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   var jsonPayload = decodeURIComponent(
     atob(base64)
       .split("")
-      .map(function(c) {
+      .map(function (c) {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
       .join("")
@@ -63,7 +63,7 @@ const moduleAuthentication = {
     },
     auth_error(state, errorMessage) {
       state.status = 'error',
-      state.errorMessageLogin = errorMessage
+        state.errorMessageLogin = errorMessage
     },
     logout(state) {
       state.status = ''
@@ -637,15 +637,29 @@ const moduleData = {
     fetchReport: (context, payload) => {
       const url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.id + "/report"
       NetworkManagerBackend.get(url)
-      .then(response => {
-        console.log(response)
-        context.commit('setReport', response)
-        router.push('/report')
-      })
-      .catch(error => {
-        EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
-        console.log('Error: ' + error)
-      })
+        .then(response => {
+          console.log(response)
+          context.commit('setReport', response)
+          router.push('/report')
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
+    },
+
+    getAllReport: (context, payload) => {
+      const url = "/" + context.rootGetters.getUrlByType(payload.deviceType) + "/report"
+      NetworkManagerBackend.get(url)
+        .then(response => {
+          console.log(response)
+          context.commit('setReport', response)
+          router.push('/report')
+        })
+        .catch(error => {
+          EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+          console.log('Error: ' + error)
+        })
     }
   },
 }

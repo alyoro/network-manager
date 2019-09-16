@@ -12,7 +12,10 @@
             @change="searchForData()"
           ></v-select>
           <v-btn color="primary" @click="searchForData()">Search</v-btn>
-          <v-btn v-if="!!devType" color="primary" @click="getReport">Get Report</v-btn>
+          <ReportDialog v-if="!!devType" :deviceType="devType" mutipleDevices="true">
+            <div slot="button-text">Get report for all devices</div>
+            <div slot="dialog-title">Report for all</div>
+          </ReportDialog>
         </v-form>
 
         <div v-if="devType === 'PatchPanel'">
@@ -57,7 +60,8 @@ import ServerSearchInfo from "@/components/searchDisplayInfo/ServerSearchInfo.vu
 import PrinterSearchInfo from "@/components/searchDisplayInfo/PrinterSearchInfo.vue";
 import AccessPointSearchInfo from "@/components/searchDisplayInfo/AccessPointSearchInfo.vue";
 import IPPhoneSearchInfo from "@/components/searchDisplayInfo/IPPhoneSearchInfo.vue";
-import CheckLogin from '@/components/CheckLogin.vue'
+import CheckLogin from "@/components/CheckLogin.vue";
+import ReportDialog from "@/components/ReportDialog.vue";
 
 export default {
   components: {
@@ -68,11 +72,12 @@ export default {
     PrinterSearchInfo,
     AccessPointSearchInfo,
     IPPhoneSearchInfo,
-    CheckLogin
+    CheckLogin,
+    ReportDialog
   },
   props: {
     deviceType: {
-      default: ''
+      default: ""
     }
   },
   data() {
@@ -98,16 +103,10 @@ export default {
         url: this.url
       };
       this.$store.dispatch("moduleData/getAll", payload);
-    },
-    getReport(){
-      var payload = {
-        deviceType: this.devType
-      }
-      this.$store.dispatch("moduleData/getAllReport", payload);
     }
   },
   created() {
-    this.$store.dispatch("moduleVlans/fetchVlansNames")
+    this.$store.dispatch("moduleVlans/fetchVlansNames");
   }
 };
 </script>

@@ -58,7 +58,10 @@
         </v-flex>
 
         <v-flex xs12 md6>
-          <v-btn flat @click="fetchReport(item)">Report</v-btn>
+          <ReportDialog :deviceType="deviceType" :device="item">
+            <div slot="button-text">Report</div>
+            <div slot="dialog-title">Report for PatchPanel</div>
+          </ReportDialog>
         </v-flex>
       </v-layout>
     </v-list>
@@ -68,10 +71,11 @@
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
 import UpdatePatchPanelDialog from "@/components/updateDevices/UpdatePatchPanelDialog.vue";
+import ReportDialog from "@/components/ReportDialog.vue";
 
 export default {
   mixins: [searchInfoMixin],
-  components: { UpdatePatchPanelDialog }
+  components: { UpdatePatchPanelDialog, ReportDialog }
 };
 </script>
 

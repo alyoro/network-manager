@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-preset-stage-2": "^6.24.1",
+    "file-saver": "^2.0.2",
     "http2": "^3.3.7",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",

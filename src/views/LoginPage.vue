@@ -76,7 +76,7 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.$router.push("/");
-          }, 300);
+          }, 400);
         });
     }
   }

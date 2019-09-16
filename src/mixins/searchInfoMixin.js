@@ -30,12 +30,6 @@ const searchInfoMixin = {
         type: this.deviceType
       });
     },
-    fetchReport(device) {
-      this.$store.dispatch("moduleData/fetchReport", {
-        id: device.id,
-        type: this.deviceType
-      })
-    }
   }
 }
 

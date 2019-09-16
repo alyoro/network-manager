@@ -638,9 +638,7 @@ const moduleData = {
       const url = "/" + context.rootGetters.getUrlByType(payload.type) + "/" + payload.id + "/report"
       NetworkManagerBackend.get(url)
         .then(response => {
-          console.log(response)
           context.commit('setReport', response)
-          router.push('/report')
         })
         .catch(error => {
           EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
@@ -652,14 +650,24 @@ const moduleData = {
       const url = "/" + context.rootGetters.getUrlByType(payload.deviceType) + "/report"
       NetworkManagerBackend.get(url)
         .then(response => {
-          console.log(response)
           context.commit('setReport', response)
-          router.push('/report')
         })
         .catch(error => {
           EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
           console.log('Error: ' + error)
         })
+    },
+
+    downloadAllReportCSV: (context, payload) => {
+      const url = "/" + context.rootGetters.getUrlByType(payload.deviceType) + "/report/csv";
+      NetworkManagerBackend.getWithDownloadFile(url)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => {
+        EventBus.$emit('snackbar-alert', { message: error.response.data.message, color: 'error' })
+        console.log(error)
+      })
     }
   },
 }

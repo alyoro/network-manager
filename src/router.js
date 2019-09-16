@@ -5,7 +5,7 @@ import Search from './views/Search.vue';
 import AddNew from './views/AddNew.vue';
 import Settings from './views/Settings.vue';
 import LoginPage from './views/LoginPage.vue';
-import Report from './views/Report.vue'
+import store from '@/store/store.js'
 
 Vue.use(Router);
 
@@ -39,25 +39,18 @@ let router = new Router({
       path:'/login',
       name: 'login',
       component: LoginPage
-    },
-    {
-      path: '/report',
-      name: 'report',
-      component: Report
     }
   ],
 });
 
-// TODO disable login for development
-//
-// router.beforeEach((to, from, next) => {
-//  const publicPages = ['/login'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const loggedIn = !store.getters["moduleAuthentication/isExpired"];
-//   if (authRequired && !loggedIn) {
-//     return next('/login');
-//   }
-//   next();
-// })
+router.beforeEach((to, from, next) => {
+ const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = !store.getters["moduleAuthentication/isExpired"];
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+  next();
+})
 
 export default router

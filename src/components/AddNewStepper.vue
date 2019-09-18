@@ -171,7 +171,7 @@ export default {
     },
 
     back() {
-      if (this.stepperStage <= 1) {
+      if (this.stepperStage < 1) {
         this.stepperStage = 3;
       } else {
         this.stepperStage -= 1;

@@ -144,7 +144,7 @@
               <v-list>
                 <v-list-tile
                   v-if="connectionsSocket(port) != null"
-                  @click="deleteConnection(connectionsSocket(port.connections))"
+                  @click="deleteConnection(connectionsSocket(port))"
                 >
                   <v-list-tile-title>Disconnect Port</v-list-tile-title>
                 </v-list-tile>
@@ -184,7 +184,7 @@
               <v-list>
                 <v-list-tile
                   v-if="connectionsPlug(port) != null"
-                  @click="deleteConnection(connectionsSocket(port.connections))"
+                  @click="deleteConnection(connectionsSocket(port))"
                 >
                   <v-list-tile-title>Disconnect Port</v-list-tile-title>
                 </v-list-tile>

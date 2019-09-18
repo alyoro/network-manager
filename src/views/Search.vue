@@ -11,6 +11,7 @@
             :items="getDeviceTypes"
             @change="searchForData()"
           ></v-select>
+          <v-text-field v-if="!!devType" v-model="identifierFilter" label="Filter by Identifier"></v-text-field>
           <v-btn color="primary" @click="searchForData()">Search</v-btn>
           <ReportDialog v-if="!!devType" :deviceType="devType" mutipleDevices="true">
             <div slot="button-text">Get report for all devices</div>
@@ -19,31 +20,31 @@
         </v-form>
 
         <div v-if="devType === 'PatchPanel'">
-          <PatchPanelSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <PatchPanelSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
 
         <div v-if="devType === 'RoomSocket'">
-          <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <RoomSocketSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
 
         <div v-if="devType === 'Switch'">
-          <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <SwitchSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
 
         <div v-if="devType === 'Server'">
-          <ServerSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <ServerSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
 
         <div v-if="devType === 'Printer'">
-          <PrinterSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <PrinterSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
 
         <div v-if="devType === 'AccessPoint'">
-          <AccessPointSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <AccessPointSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
 
         <div v-if="devType === 'IPPhone'">
-          <IPPhoneSearchInfo :deviceType="devType" :name="getUrlByType(devType)"/>
+          <IPPhoneSearchInfo :deviceType="devType" :name="getUrlByType(devType)" :identifierFilter="identifierFilter"/>
         </div>
       </v-card>
     </v-container>
@@ -83,7 +84,7 @@ export default {
   data() {
     return {
       devType: this.deviceType,
-      identifier: ""
+      identifierFilter: ""
     };
   },
   computed: {
@@ -99,7 +100,7 @@ export default {
     searchForData() {
       var payload = {
         devType: this.devType,
-        identifier: this.identifier,
+        identifier: this.identifierFilter,
         url: this.url
       };
       this.$store.dispatch("moduleData/getAll", payload);

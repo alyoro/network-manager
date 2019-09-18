@@ -1,18 +1,21 @@
 import { mapGetters, mapMutations } from "vuex";
 import AddPortDialog from "@/components/addForms/AddPortDialog.vue";
 import PortsSearchInfo from "@/components/searchDisplayInfo/PortsSearchInfo.vue";
+import ReportDialog from "@/components/ReportDialog.vue";
 
 const searchInfoMixin = {
   components: {
     AddPortDialog,
-    PortsSearchInfo
+    PortsSearchInfo,
+    ReportDialog
   },
 
   props: {
     deviceType: {
       type: String,
       required: true
-    }
+    },
+    identifierFilter: ''
   },
   computed: {
     ...mapGetters({
@@ -21,7 +24,14 @@ const searchInfoMixin = {
 
     ...mapMutations({
       setDevice: "moduleConnections/setDevice"
-    })
+    }),
+
+    filteredDevices() {
+      var arr = this.$store.getters["moduleData/getData"](this.deviceType);
+      return arr.filter((device) => {
+        return device.identifier.match(this.identifierFilter);
+      })
+    }
   },
   methods: {
     deleteDevice(id) {

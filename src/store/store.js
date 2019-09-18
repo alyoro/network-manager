@@ -148,7 +148,7 @@ const moduleSpeedPorts = {
     },
     addPortSpeedNames: (context, payload) => {
       const url = "/portspeednames/" + payload.name
-      NetworkManagerBackend.patch(url)
+      NetworkManagerBackend.post(url)
         .then(response => {
           context.commit("setPortSpeedNames", response)
           EventBus.$emit('snackbar-alert', { message: 'Port Speed Names successfully updated', color: 'success' })
@@ -218,7 +218,7 @@ const moduleVlans = {
 
     addVlansNames: (context, payload) => {
       const url = "/vlans/" + payload.name
-      NetworkManagerBackend.patch(url)
+      NetworkManagerBackend.post(url)
         .then(response => {
           context.commit("setVlansNames", response)
           EventBus.$emit('snackbar-alert', { message: 'Vlan Names successfully added', color: 'success' })

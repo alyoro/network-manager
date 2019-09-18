@@ -14,7 +14,7 @@
       <v-flex xs12 md6>Download Report</v-flex>
     </v-subheader>
 
-    <v-list flat v-for="(item, index) in getData(deviceType)" :key="index">
+    <v-list flat v-for="(item, index) in filteredDevices" :key="index">
       <v-divider></v-divider>
       <v-layout row class="text-md-center align-center">
         <v-flex xs12 md6>
@@ -60,7 +60,7 @@
         <v-flex xs12 md6>
           <ReportDialog :deviceType="deviceType" :device="item">
             <div slot="button-text">Report</div>
-            <div slot="dialog-title">Report for PatchPanel</div>
+            <div slot="dialog-title">Report for Switch</div>
           </ReportDialog>
         </v-flex>
       </v-layout>
@@ -71,11 +71,10 @@
 <script>
 import searchInfoMixin from "@/mixins/searchInfoMixin";
 import UpdatePatchPanelDialog from "@/components/updateDevices/UpdatePatchPanelDialog.vue";
-import ReportDialog from "@/components/ReportDialog.vue";
 
 export default {
   mixins: [searchInfoMixin],
-  components: { UpdatePatchPanelDialog, ReportDialog }
+  components: { UpdatePatchPanelDialog}
 };
 </script>
 

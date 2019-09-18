@@ -96,7 +96,7 @@
         <v-divider></v-divider>
         <v-btn color="primary" flat @click="next()">Add Next Device</v-btn>
         <v-btn color="secondary" flat @click="back()">Back</v-btn>
-        <AddNewMessage />
+        <AddNewMessage/>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -127,7 +127,7 @@ import { EventBus } from "@/main";
 export default {
   props: {
     deviceType: {
-      default: 'PatchPanel'
+      default: "PatchPanel"
     }
   },
   components: {
@@ -161,14 +161,22 @@ export default {
     })
   },
   methods: {
-    next(){
-      this.stepperStage += 1;
-      EventBus.$emit('clear-addMessage', {})
+    next() {
+      if (this.stepperStage >= 3) {
+        this.stepperStage = 1;
+      } else {
+        this.stepperStage += 1;
+      }
+      EventBus.$emit("clear-addMessage", {});
     },
 
     back() {
-      this.stepperStage -= 1;
-      EventBus.$emit('clear-addMessage', {})
+      if (this.stepperStage <= 1) {
+        this.stepperStage = 3;
+      } else {
+        this.stepperStage -= 1;
+      }
+      EventBus.$emit("clear-addMessage", {});
     }
   }
 };
